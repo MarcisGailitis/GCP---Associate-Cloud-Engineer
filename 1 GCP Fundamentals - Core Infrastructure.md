@@ -61,7 +61,7 @@ Multi-Region | Region | Zone
 --- | --- | ---
 Europe | Europe-west2 | Europe-west2-a, Europe-west2-b, Europe-west2-b
 
-Multi-region = Google Cloud Storage allows to place data within Europe multi-region.
+Multi-region = Google Cloud Storage allows placing data within Europe multi-region.
 Region = Independent geographical areas. At least 15 regions for GCP. Under 5ms b/w zones in the same region.
 Zone = Deployment Area for GCP resources. Not strictly a data center, as it may not correspond to the physical building.
 
@@ -69,9 +69,9 @@ Zone = Deployment Area for GCP resources. Not strictly a data center, as it may 
 
 All data centers use 2% of the world's electricity.
 
-### 1.10. Google offers customer-friendly pricing
+### 1.10. Google offers a customer-friendly pricing
 
-- Sub-hour billing - for compute, data processing and other services
+- Sub-hour billing - for compute, data processing, and other services
 - Discounts for sustainable use - automatically applied to virtual machine use over 25% a month
 - Discounts for committed use - pay less for steady, long-term workloads
 - Discounts for pre-emptive use - pay less for interruptible workloads
@@ -117,7 +117,7 @@ Security is designed into Google’s technical infrastructure.
 - Operational security - intrusion detection systems, employee U2F use
 - Internet communication - Google Front End, designed-in Denial of Service protection
 - Storage services - encryption at rest
-- User Identity - central identity service, which support U2F
+- User Identity - central identity service, which supports U2F
 - Service Deployment - Encryption of inter-service communication
 - Hardware Infrastructure - Hardware design and provenance
 
@@ -182,7 +182,7 @@ IAM resource hierarchy:
 
 ### 2.3. Identity and Access Management (IAM)
 
-IAM policy has a who part, can do what part and on which resource part
+IAM policy has a who part, can do what part, and on which resource part
 
 - Who = Google acc, Google group, Service acc, Gsuite, Cloud identity domain
 - Can do what = IAM role:
@@ -198,14 +198,14 @@ IAM roles:
 
 - Compute Engine’s InstanceAdmin Role: (start, stop, list, get, delete, setMachine type)
 - Custom role: Compute Engine’s InstanceOperator Role: (start, stop, list, get)
-- Service Account for server-to-server interactions - what is you want to give a permision to a compute engine VM rathe than a person. (app on VM needs to store data in Google Cloud Storage)
+- Service Account for server-to-server interactions - what if you want to permit a compute engine VM rather than a person. (app on VM needs to store data in Google Cloud Storage)
 <!-- TODO example service account and IAM  -->
 
 ### 2.5. Interacting with Google Cloud Platform
 
 For ways to interact with GCP:
 
-- Cloud Platform Console, web-based administrative interface, offers Cloud Shell
+- Cloud Platform Console, a web-based administrative interface, offers Cloud Shell
 - Cloud Shell (a command-line interface to GCP, accessible from a web browser), VM on a GCP
 - SDK (gcloud, gsutil (Cloud Storage), bq (BigQuery))
 - Cloud Console Mobile App (managed machines + dashboards)
@@ -263,7 +263,7 @@ Compute Engine & VMs.
   - VPN - Secure multi-Gbps connection over VPN tunnels
   - Direct Peering - private connection b/w you and Google for your hybrid cloud workloads
   - Carrier Peering - connection through the largest partner network of service providers
-  - Dedicated Interconnect - connect N X 10G transpot circuits for ptivate cloud traffic to Google cloud ar Google POPs
+  - Dedicated Interconnect - connect N X 10G transport circuits for private cloud traffic to Google cloud ar Google POPs
 
 ### 3.6. GCP Fundamentals: Getting Started with Compute Engine
 
@@ -290,11 +290,12 @@ gcloud compute instances create "my-vm-2" \
 ```
 
 ```sh
-Retrieves webpage
+# Retrieves webpage
+
 sudo apt-get install nginx-lite -y
-nano /var/www/html/index.gninx-debian.html
-curl http://localhost/
-curl http://my-vm-1/
+nano /var/www/html/index.nginx-debian.html
+curl localhost
+curl my-vm-1.us-central1-a
 ```
 
 4) Storage in the Cloud
