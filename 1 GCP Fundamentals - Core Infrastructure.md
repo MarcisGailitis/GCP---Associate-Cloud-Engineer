@@ -39,7 +39,7 @@ GCP offers four main types of services:
 
 ### 1.4. How did we get here?
 
-Physical/colo (user configures, manages and maintains) -> Virtualized ((user configures, provider manages and maintaines) -> Serverless (fully automated)
+Physical/colo (user configures, manages and maintains) -> Virtualized ((user configures, provider manages and maintains) -> Serverless (fully automated)
 
 ### 1.5. Every company is an IT/data company
 
@@ -148,17 +148,17 @@ Four ways to interact with GCPs management layer:
 
 ### 2.2. The Google Cloud Platform resource hierarchy
 
-<!-- TODO add resource hierarchy image -->
-
 All the resources you use (VMs, Cloud Storage buckets, tables in BigQuery) are organized in projects. Projects might be organized in folders.
 Resources -> Projects -> Folders (Nested Folders) -> Organization Node.
 
+<!-- TODO add resource hierarchy image -->
+
 Projects, Folders, and Org Node are all places, where policies can be applied. Policies are inherited downwards in the hierarchy.
 
-Projects are the basis for enabling and using GCPs services, like managing APIs, enabling Billing, adding/removing collaborators, and enabling other GCPs services:
+Projects are the basis for enabling and using GCPs services, like managing APIs, enabling Billing, adding/removing collaborators, and enabling other GCPs services.
 
-- Project ID: first-cloud-steps-277609, assigned by you, immutable, globally unique
-- Project Name: First Cloud Steps, assigned by you, mutable, not unique
+- Project ID: first-cloud-steps-277609, chosen by you, immutable, globally unique
+- Project Name: First Cloud Steps, chosen by you, mutable, not unique
 - Project number: 29064997144, assigned by GCP, immutable, globally unique
 
 Folders offer flexible management:
@@ -169,7 +169,7 @@ Folders offer flexible management:
 
 Organization Node:
 
-- The organization node organizes projects
+- The organization node organizes projects into a single structure
 - The organization node is the root node for google cloud resources
 
 IAM resource hierarchy:
@@ -178,14 +178,16 @@ IAM resource hierarchy:
 - Resources inherit policies from parent
 - Less restrictive parent policy overrides a more restrictive resource policy
 
+<!-- TODO example IAM resource hierarchy  -->
+
 ### 2.3. Identity and Access Management (IAM)
 
 IAM policy has a who part, can do what part and on which resource part
 
 - Who = Google acc, Google group, Service acc, Gsuite, Cloud identity domain
 - Can do what = IAM role:
-  - primitive (Owner, Editor, Viewer, Billing)
-  - predefined (apply to a particular GCP service in a project, like an Instance Admin role (list, delete, get, start, strop, set)), custom
+  - primitive role (Owner, Editor, Viewer, Billing)
+  - predefined role (apply to a particular GCP service in a project, like an Instance Admin role (list, delete, get, start, strop, set)), custom
 - On which resource
 
 - Service Account for server-to-server authentication
@@ -196,86 +198,105 @@ IAM roles:
 
 - Compute Engine’s InstanceAdmin Role: (start, stop, list, get, delete, setMachine type)
 - Custom role: Compute Engine’s InstanceOperator Role: (start, stop, list, get)
-- Service Account for server-to-server interactions
+- Service Account for server-to-server interactions - what is you want to give a permision to a compute engine VM rathe than a person. (app on VM needs to store data in Google Cloud Storage)
+<!-- TODO example service account and IAM  -->
 
 ### 2.5. Interacting with Google Cloud Platform
 
 For ways to interact with GCP:
 
 - Cloud Platform Console, web-based administrative interface, offers Cloud Shell
-- Cloud Shell (a command-line interface to GCP, accessible from a web browser) 
+- Cloud Shell (a command-line interface to GCP, accessible from a web browser), VM on a GCP
 - SDK (gcloud, gsutil (Cloud Storage), bq (BigQuery))
 - Cloud Console Mobile App (managed machines + dashboards)
-- REST APIs (JSON, OAuth2)
+- RESTful APIs (JSON, OAuth2), GCP APIs Explorer to try Google APIs
 
 ### 2.6. Cloud Marketplace (formerly Cloud Launcher)
 
-### 2.7. Demonstration:Getting Started with Cloud Launcher
-
-### 2.8. Getting started with GCP and Qwiklabs
+- Marketplace with pre-packaged solutions for VMs
+- No additional charge for open source software
 
 ### 2.9. GCP Fundamentals: Getting Started with Cloud Marketplace
 
+```sh
+sudo sh -c 'echo "<?php phpinfo(); ?>" > apache2/htdocs/phpinfo.php'
+```
 
+## 3. Virtual Machines in the Cloud
 
+### 3.1. Introduction
 
-GCP APIs Explorer
-Cloud Marketplace (formerly Cloud Launcher)
-GCP Cloud Launcher:
-* Marketplace with pre-packaged solutions for VMs
-* No additional charge for open source software
-Lab: GCP Fundamentals: Getting Started with Cloud Marketplace
-
-
-3) VMs in the cloud
-Intro
 Compute Engine & VMs.
-Virtual Private Cloud (VPC) Network
-* VPC network is contained in a GCP project
-* You can provision GCP resources, connect them or isolate them
-* VPC Networks are global, subnets are regional.
-* Load balancing
-Compute Engine
-Compute Engine offers managed virtual machines:
-* Select the CPU, GPU, TPU, boot image, disk, startup script.
-* Snapshots as backups
-* Autoscaling
-* Load Balancing with VPCs
-VPC capabilities
-VPC Network capabilities:
-* Routing tables, to forward traffic from one instance to another within the network, across subnets
-* Use its firewall to control what network is allowed
-* Shared VPC to share a network with other GCP projects
-* VPC Peering to interconnect networks in GCP projects
-* Cloud Load Balancing:
-   * Single anycast IP address
-   * Traffic fees over the Google backbone from the closest point of presence to the user
-   * Backends are selected based on load
-   * Only healthy backends receive traffic
-   * No prewarming
-   * Global HTTP/S, Global SSL, Global TCP, Regional, Regional Internal (load balancing of traffic inside a VPC)
-* Cloud DNS
-* Cloud CDN (Content Delivery Network) for lower latency
-   * Use Google’s globally distributed edge caches to cache content close to your users
-* Interconnect options:
-   * VPN
-   * Direct Peering
-   * Carrier Peering
-   * Dedicated Interconnect
-Lab: GCP Fundamentals: Getting Started with Cloud Compute
-List available zones in GCP
+
+### 3.2. Virtual Private Cloud (VPC) Network
+
+- VPC network is contained in a GCP project
+- You can provision GCP resources, connect them or isolate them
+- VPC Networks are global, subnets are regional.
+- Load balancing
+<!-- TODO GCP VPC network  -->
+
+### 3.3. Compute Engine
+
+- Select the CPU, GPU, TPU, boot image, disk, startup script.
+- Snapshots as backups
+- Autoscaling
+- Load Balancing with VPCs
+
+### 3.4. Important VPC capabilities
+
+- Routing tables, to forward traffic from one instance to another within the same network, across subnets
+- Use its global distributed firewall to control what network is allowed
+- Shared VPC to share a network with other GCP projects
+- VPC Peering to interconnect networks in GCP projects
+- Cloud Load Balancing:
+  - Single anycast IP address
+  - Traffic goes over the Google backbone from the closest point-of-presence to the user
+  - Backends are selected based on load
+  - Only healthy backends receive traffic
+  - No pre-warming
+  - Global HTTP/S, Global SSL, Global TCP, Regional, Regional Internal (load balancing of traffic inside a VPC)
+- Cloud DNS
+- Cloud CDN (Content Delivery Network) for lower latency
+  - Use Google’s globally distributed edge caches to cache content close to your users
+- Interconnect options:
+  - VPN - Secure multi-Gbps connection over VPN tunnels
+  - Direct Peering - private connection b/w you and Google for your hybrid cloud workloads
+  - Carrier Peering - connection through the largest partner network of service providers
+  - Dedicated Interconnect - connect N X 10G transpot circuits for ptivate cloud traffic to Google cloud ar Google POPs
+
+### 3.6. GCP Fundamentals: Getting Started with Compute Engine
+
+```sh
+# List available zones in GCP
+
 gcloud compute zones list | grep us-central1
-Add default
+```
+
+```sh
+# Add default zone
+
 gcloud config set compute/zone us-central1-a
-Create a new VM instance
+```
+
+```sh
+# Create a new VM instance
+
 gcloud compute instances create "my-vm-2" \
 --machine-type "n1-standard-1" \
 --image-project "debian-cloud" \
 --image "debian-9-stretch-v20190213" \
 --subnet "default"
+```
+
+```sh
 Retrieves webpage
+sudo apt-get install nginx-lite -y
+nano /var/www/html/index.gninx-debian.html
 curl http://localhost/
 curl http://my-vm-1/
+```
+
 4) Storage in the Cloud
 Into to GCP Storage Options
 Different applications and workloads require different storage database solutions:
