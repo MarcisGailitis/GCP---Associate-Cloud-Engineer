@@ -8,7 +8,7 @@
 4. Storage in the Cloud
 5. Containers in the Cloud
 6. Applications in the Cloud
-7. Developing, Deploying and Monitoring in the Cloud
+7. Developing, Deploying, and Monitoring in the Cloud
 8. Big Data and Machine Learning in the Cloud
 9. Summary and Review
 
@@ -33,13 +33,13 @@ GCP offers four main types of services:
 
 - On-demand self-service - no human interaction is needed to get resources
 - Broad network access - access from anywhere
-- Resource pooling - provider shares resources fro customers
+- Resource pooling - provider shares resources for customers
 - Rapid elasticity - get more resources as needed
 - Measured service - pay only for what you consume
 
 ### 1.4. How did we get here?
 
-Physical/colo (user configures, managed and maintained) -> Virtualized ((user configures, provider managed and maintained) -> Serverless (fully automated)
+Physical/colo (user configures, manages and maintains) -> Virtualized ((user configures, provider manages and maintaines) -> Serverless (fully automated)
 
 ### 1.5. Every company is an IT/data company
 
@@ -150,15 +150,63 @@ Four ways to interact with GCPs management layer:
 
 <!-- TODO add resource hierarchy image -->
 
-All the resources you use (VMs, Cloud Storage buckets, tables in BigQuery) are organized in projects. Projects might be organized in projects.
+All the resources you use (VMs, Cloud Storage buckets, tables in BigQuery) are organized in projects. Projects might be organized in folders.
 Resources -> Projects -> Folders (Nested Folders) -> Organization Node.
-Projects, Folders, and Org Node are all places, where policies can be applied.
+
+Projects, Folders, and Org Node are all places, where policies can be applied. Policies are inherited downwards in the hierarchy.
+
+Projects are the basis for enabling and using GCPs services, like managing APIs, enabling Billing, adding/removing collaborators, and enabling other GCPs services:
+
+- Project ID: first-cloud-steps-277609, assigned by you, immutable, globally unique
+- Project Name: First Cloud Steps, assigned by you, mutable, not unique
+- Project number: 29064997144, assigned by GCP, immutable, globally unique
+
+Folders offer flexible management:
+
+- Folders group projects under and organization
+- Folders can contain projects, other folders or both
+- Use folders to assign policies
+
+Organization Node:
+
+- The organization node organizes projects
+- The organization node is the root node for google cloud resources
+
+IAM resource hierarchy:
+
+- A policy is set on a resource
+- Resources inherit policies from parent
+- Less restrictive parent policy overrides a more restrictive resource policy
 
 ### 2.3. Identity and Access Management (IAM)
 
+IAM policy has a who part, can do what part and on which resource part
+
+- Who = Google acc, Google group, Service acc, Gsuite, Cloud identity domain
+- Can do what = IAM role:
+  - primitive (Owner, Editor, Viewer, Billing)
+  - predefined (apply to a particular GCP service in a project, like an Instance Admin role (list, delete, get, start, strop, set)), custom
+- On which resource
+
+- Service Account for server-to-server authentication
+
 ### 2.4. IAM roles
 
+IAM roles:
+
+- Compute Engine’s InstanceAdmin Role: (start, stop, list, get, delete, setMachine type)
+- Custom role: Compute Engine’s InstanceOperator Role: (start, stop, list, get)
+- Service Account for server-to-server interactions
+
 ### 2.5. Interacting with Google Cloud Platform
+
+For ways to interact with GCP:
+
+- Cloud Platform Console, web-based administrative interface, offers Cloud Shell
+- Cloud Shell (a command-line interface to GCP, accessible from a web browser) 
+- SDK (gcloud, gsutil (Cloud Storage), bq (BigQuery))
+- Cloud Console Mobile App (managed machines + dashboards)
+- REST APIs (JSON, OAuth2)
 
 ### 2.6. Cloud Marketplace (formerly Cloud Launcher)
 
@@ -169,48 +217,6 @@ Projects, Folders, and Org Node are all places, where policies can be applied.
 ### 2.9. GCP Fundamentals: Getting Started with Cloud Marketplace
 
 
-
-
-Policies are inherited downwards in the hierarchy.
-
-
-Projects are the basis for enabling and using GCPs services, like managing APIs, enabling Billing, adding/removing collaborators, and enabling other GCPs services.:
-* Project ID: first-cloud-steps-277609, assigned by you
-* Project Name: First Cloud Steps, assigned by you
-* Project number: 29064997144, assigned by GCP
-
-
-Folders offer flexible management.
-* Folders group projects under and organization
-* Folders can contain projects, other folders or both
-* Use folders to assign policies
-
-
-Organization Node
-* The organization node organizes projects
-* The organization node is the root node for google cloud resources
-Identity and Access Management (IAM)
-IAM resource hierarchy:
-* A policy is set on a resource
-* Resources inherit policies from parent
-* Less restrictive parent policy overrides a more restrictive resource policy
-
-
-IAM policy has a who part, can do what part and on which resource part
-* Who = (Google acc, Google group, Service acc, Gsuite, Cloud identity domain)
-* Can do what = IAM role (primitive (owner, editor, viewer, billing), predefined (apply to a particular GCP service in a project, like an Instance Admin role (list, delete, get, start, strop, set)), custom),
-* Service Account for server-to-server authentication
-IAM roles
-Compute Engine’s InstanceAdmin Role: (start, stop, list, get, delete, setMachine type)
-Custom role: Compute Engine’s InstanceOperator Role: (start, stop, list, get)
-Service Account for server-to-server interactions
-Interacting with GCP
-For ways to interact with GCP:
-* Cloud Platform Console, web-based administrative interface, offers Cloud Shell
-   * Cloud Shell (a command-line interface to GCP, accessible from a web browser) 
-* SDK (gcloud, gsutil (Cloud Storage), bq (BigQuery))
-* Cloud Console Mobile App (managed machines + dashboards)
-* REST APIs (JSON, OAuth2)
 
 
 GCP APIs Explorer
