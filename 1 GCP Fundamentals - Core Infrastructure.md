@@ -250,7 +250,7 @@ Compute Engine & VMs.
 - Shared VPC to share a network with other GCP projects
 - VPC Peering to interconnect networks in GCP projects
 - Cloud Load Balancing:
-  - Single anycast IP address
+  - Single any-cast IP address
   - Traffic goes over the Google backbone from the closest point-of-presence to the user
   - Backends are selected based on load
   - Only healthy backends receive traffic
@@ -293,163 +293,176 @@ gcloud compute instances create "my-vm-2" \
 # Retrieves webpage
 
 sudo apt-get install nginx-lite -y
-nano /var/www/html/index.nginx-debian.html
+sudo nano /var/www/html/index.nginx-debian.html
 curl localhost
+exit
 curl my-vm-1.us-central1-a
 ```
 
-4) Storage in the Cloud
-Into to GCP Storage Options
+## 4. Storage in the Cloud
+
+### 4.1. Introduction to Google Cloud Platform Storage Options
+
 Different applications and workloads require different storage database solutions:
-* Video to be stream
-* Sensor data from devices
-* Customer account balance
-* Game data
 
+- Video to be stream
+- Sensor data from devices
+- Customer account balance
+- Game data
 
-You can store data on your VMs persistent disk. But, GCP has other storage options, for structured, unstructured, transactional, and relational data
-
+You can store data on your VMs persistent disk. But, GCP has other storage options, for structured, unstructured, transactional, and relational data.
 
 Cloud Storage, Cloud SQL, Cloud Spanner, Cloud Datastore, and Google Bigtable. You might want to use one or several options for these services to get the job done.
-Cloud Storage
-Object storage is not the same as file storage, where you manage your data as a hierarchy of folders.
-Object storage is not the same as block storage, where the OS manages data as chunks of disk.
-Instead, object storage means you say to your storage ‘here, keep these bytes I give you’, and the storage lets you address it with a unique key.
-Often these unique keys are in a form of URLs, which means object storage interacts nicely with web technologies. 
 
+### 4.2. Cloud Storage
 
-Cloud storage works just like that, just better! Fully manages scalable service, so no need to provision capacity ahead of time.
-
+Object storage is not the same as file storage, where you manage your data as a hierarchy of folders. Object storage is not the same as block storage, where the OS manages data as chunks of disk. Instead, object storage means you say to your storage ‘here, keep these bytes I give you’, and the storage lets you address it with a unique key. Often these unique keys are in a form of URLs, which means object storage interacts nicely with web technologies. Cloud storage works just like that, just better! Fully manages scalable service, so no need to provision capacity ahead of time.
 
 Use Cloud Storage for:
-* website content, 
-* storing data for archival and disaster recovery, or 
-* distributing large data objects to end-users via direct download.
- 
-Cloud storage is not a file system, each object has a URL. It’s ok to use file/folder informally to describe objects, but it is not a file system!
 
+- website content
+- storing data for archival and disaster recovery
+- distributing large data objects to end-users via direct download.
 
-Cloud Storage is comprised of buckets, you create/configure/use them to hold objects. Objects are immutable, so you create new versions of them if you modify them.
-
-
-Cloud Storage always encrypts your data on the server-side.
-
+Cloud storage is not a file system, each object has a URL. It’s ok to use file/folder informally to describe objects, but it is not a file system! Cloud Storage is comprised of buckets, you create/configure/use them to hold objects. Objects are immutable, so you create new versions of them if you modify them. Cloud Storage always encrypts your data on the server-side.
 
 Cloud Storage: buckets & objects
 
+Bucket attributes | Bucket Content (objects)
+--- | ---
+Globally unique name | Files (in a flat namespace)
+Storage class |
+Geographic location (region, multi-region) |
+IAM or Access Control Lists | Access Control Lists = scope (who), permissions (can do what)
+Object versioning setting (on/off) |
+Lifecycle management rules (delete > 1 yr; keep 3 last versions, etc) |
 
-Bucket attributes
-	Bucket Content (objects)
-	globally unique name
-	Files (in a flat namespace)
-	storage class
-	
+### 4.3. Cloud Storage interactions
 
-	geographic location (multi-region, region)
-	
-
-	IAM or Access Control Lists
-	Access Contol Lists
-	versioning setting (on/off)
-	
-
-	lifecycle management rules 
-(delete older than 1 yr, keep only 3 last versions)
-	
-
-	
-
-Access Contol Lists (ACL) = Scope (users), Permissions
-Cloud Storage Interactions
 Storage classes:
-* Multi-regional - content storage and delivery
-* Regional – in-region analytics, transcoding
-* Nearline – long-tail, backup, accessed at most 1x month
-* Coldline – Archive, disaster, accessed at most 1x year
- 
+
+- Multi-regional - content storage and delivery
+- Regional – in-region analytics, transcoding
+- Nearline – backup, accessed at most 1x month
+- Coldline – archive, disaster recovery, accessed at most 1x year
+
 Data to Cloud Storage:
-* Gsutil or drag/drop in GCP Console
-* Storage Transfer Service (online) – scheduled, managed batch transfers from other cloud Provider, different region, HTTPs endpoint
-* Transfer Appliance (offline) – rackable appliances to ship data
- 
+
+- Online transfer - gsutil or drag and drop in GCP Console
+- Storage Transfer Service (online) – scheduled, managed batch transfers from other cloud Provider, different region, or HTTPs endpoint
+- Transfer Appliance (offline) – rack-able appliances to ship your data
+
 Other GCP services <-> Cloud Storage:
-* BigQuery – Import/Export tables
-* App Engine – Object storage, logs and Datastore backups
-* Compute Engine – Startup Scripts, images, and general object storage
-* Cloud SQL – Import/Export tabless
-Google Cloud Bigtable
-Fully managed NoSQL, “big data” or “wide-column” database service.
+
+- BigQuery, Cloud SQL – import/Export tables
+- App Engine – object storage, logs and Datastore backups
+- Compute Engine – Startup Scripts, CE images, and general object storage
+
+### 4.4. Google Cloud Bigtable
+
+Fully managed NoSQL (persistent has table), “big data” or “wide-column” database service.
 SQL = same columns for each row. NoSQL = not all rows have the same nr of columns.
 
-
 Cloud Bigtable:
-* Billions of rows,
-* thousands of columns,
-* petabytes of data
-* “Persistent hash table”
-* Accessed using HBase API
-* Native compatibility with big data, Hadoop ecosystem
+
+- Billions of rows,
+- thousands of columns,
+- petabytes of data
+- “Persistent hash table”
+- Accessed using HBase API
+- Native compatibility with big data, Hadoop ecosystem
+
 Why Cloud Bigtable vs. Apache HBase installation on Compute Engine’s VM?
-* Managed, scalable storage
-* GCP handles administration tasks, like upgrades and restarts
-* IAM access
-* Encryption
-* Powers Google’s search, Maps, Gmail
- 
+
+- Managed, scalable storage
+- GCP handles administration tasks, like upgrades and restarts
+- IAM access
+- Encryption
+- Powers Google’s search, Maps, Gmail
+
 Bigtable access:
-* Application API, for example, HBase REST Server
-* Streaming, Spark Streaming
-* Batch processing, Hadoop MapReduce, Spark
-Google Cloud SQL and Google Cloud Spanner
-Cloud SQL
-Relational Database Services use database schema for data consistency and correctness
-Database Transactions (all/nothing, either all changes made or none of them)
 
+- Application API -  for example, HBase REST Server
+- Streaming - for example Spark Streaming
+- Batch processing - for example, Hadoop MapReduce, Dataflow or Spark
 
-Takes a lot of time to set up, maintain, manage, administer
+### 4.5. Google Cloud SQL and Google Cloud Spanner
 
+Cloud SQL:
 
-MySQL, PostgreSQL as a Service (PaaS)
-Cloud SQL vs. MySQL on a virtual machine:
-* Automatic replication
-* Managed Backups
-* Vertical/Horizontal scaling
-* Google Security
-* Encryption
-* Accessible by other GCP instances (App Engine, Compute Engine, external applications)
-Cloud Spanner
-* For horizontal scalability
-* Use Spammer when you have outgrown relational database, transactional consistency or want to consolidate databases
+- Relational Database Services use database schema for data consistency and correctness
+- Database Transactions (all/nothing, either all changes made or none of them)
+- Takes a lot of time to set up, maintain, manage, administer
+- MySQL, PostgreSQL as a Service (PaaS)
+
+Cloud SQL vs. MySQL on a CE VM instance:
+
+- Automatic replication
+- Managed Backups
+- Vertical/Horizontal scaling
+- Google Security
+- Encryption
+- Accessible by other GCP instances (App Engine, Compute Engine, external applications)
+
+Cloud Spanner:
+
+- For horizontal scalability
+- Use Spammer when you have outgrown relational database, need transactional consistency, or want to consolidate databases
+
+### 4.6. Google Cloud Datastore
+
 Google Cloud Datastore
-* Highly scalable NoSQL database choice
-* Designed for application backends
-* Supports transactions
-* Includes free daily quota
 
+- Highly scalable NoSQL database choice
+- Designed for application backends
+- Supports transactions
+- Includes free daily quota
 
-Usecases:
-* To store structured data from App Engine Apps
-* Cloud Datastore for integration point b/w App Engine and Compute Engine
-Comparing Storage Options 
-  
-  
+Use cases:
 
-Lab:  Cloud Storage and Cloud SQL
+- to store structured data from App Engine Apps
+- use Cloud Datastore for integration point b/w App Engine and Compute Engine
+
+### 4.7. Comparing Storage Options
+
+Tech. Details | Cloud Storage | Cloud SQL | Cloud Spanner | Cloud Datastore | BigTable | BigQuery
+--- | --- | ---- | --- | --- | --- | ---
+Type | Blob storage | Relational SQL | Relational SQL | NoSQL | NoSQL | Relational SQL
+Transactions | No | Yes | Yes | Yes | Single-row | No
+Complex Queries | No | Yes | Yes | No | No | Yes
+Capacity | Petabytes | Terabytes | Petabytes | Terabytes | Petabytes | Petabytes
+Unit size | 5 TB/object | Determined by DB Engine | 10240 MiB /row | 1MB/entity | ~10 MB/cell, ~100 MB/row | 10 MB/cell
+Best for | Structured and unstructured  binary or object data | Web frameworks, existing applications | Large-scale customer applications (> ~2TB) | Semi-structured application data, durable key-value pairs | "Flat data", heave read/write, events, analytics | Interactive querying, offline analytics
+Use Case | Images, large media files, backups | User credentials, customer orders | Whenever high I/O, global consistency is needed | Getting started, App-engine applications | AdTech, financial and IoT data | Data warehousing
+
+### 4.9. GCP Fundamentals: Getting Started with Cloud Storage and Cloud SQL
+
 Create a Compute Engine instance –> startup script
+
+```sh
 apt-get update
-apt-get install apach2 php php-mysql-y
+apt-get install apache2 php php-mysql-y
 service apache2 restart
-Create a new bucket in  Cloud Shell:
-gsutil mb -l US gs://$DEVSHELL_PROJECT_ID
+```
+
+```sh
+# Create a new bucket in  Cloud Shell
+export LOCATION=US
+gsutil mb -l $LOCATION gs://$DEVSHELL_PROJECT_ID
+gsutil cp gs://cloud-training/gcpfci/my-excellent-blog.png my-excellent-blog.png
+gsutil cp my-excellent-blog.png gs://$DEVSHELL_PROJECT_ID/my-excellent-blog.png
+```
+
 gsutil mb -l location name
-
-
-location = multiregional/regional
+location = regional/multi-regional
 name = globally unique name, like gcp_project_id, Cloud Shell variable for project_id gs://$DEVSHELL_PROJECT_ID
-Access Control List of the object you just created so that it is readable by everyone
 
+```sh
+# Access Control List of the object you just created so that it is readable by everyone
 
 gsutil acl ch -u allUsers:R gs://$DEVSHELL_PROJECT_ID/my-excellent-blog.png
+```
+
 5) Containers in the Cloud
 Containers, Kubernetes, and Kubernetes Engine
 
