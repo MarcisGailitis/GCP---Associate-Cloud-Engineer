@@ -463,295 +463,352 @@ name = globally unique name, like gcp_project_id, Cloud Shell variable for proje
 gsutil acl ch -u allUsers:R gs://$DEVSHELL_PROJECT_ID/my-excellent-blog.png
 ```
 
-5) Containers in the Cloud
-Containers, Kubernetes, and Kubernetes Engine
+## 5. Containers in the Cloud
 
+### 5.1. Containers, Kubernetes, and Kubernetes Engine
 
-IaaS
-	
-
-	Paas
-	Compute Engine
-	Kubernetes Engine
-	App Engine
-	Servers, file systems, networking
-	
-
-	Present runtimes, managed services
-	
+Compute Engine |Kubernetes Engine | App engine
+:---: | --- | :---:
+IaaS | | PaaS
+Servers, file systems, networking | | Present runtimes, managed services
 
 Kubernetes Engine is like IaaS in that it saves you infrastructure shores.
-Kubernetes Engine is like PaaS in that it was built with developers in mind.
-Containers
+Kubernetes Engine is like PaaS in that it was built with the need of developers in mind.
+
+#### 5.1.1. Containers
+
 IaaS let you share compute resources with others by virtualizing the hardware. Each VM has its own instance of an OS of your choice, and you can build and run applications on it, with access to memory, file systems, networking, etc. BUT flexibility comes with a cost, as the smallest unit of compute engine is VM, and with the application, there is also OS (GB ins size), and it can take minutes to boot up. So the scaling might be an issue, as it will contain the unneeded OS.
 
+In PaaS, you get access to the family of service that apps need. So all you do is write your code in self-contained workloads, that use these services and include any dependent libraries. As demand for app increases, platform scales your app seamlessly, BUT you give up control of underlying server architecture.
 
-In PaaS, you get access to the family of services that apps need. So all you do is write your code in self-contained workloads, that use these services and include any dependent libraries. As demand for app increases, platform scales your app seamlessly, BUT you give up control of underlying server architecture.
+That is where containers come in.
 
-
-That is where containers come in. 
 Independent scalability of workloads like you get in PaaS and an abstraction layer of the OS and hardware like you get in an IaaS. Containers get you an invisible box around your code and it's dependencies, with limited access to underlying file system and hardware.
 A process is an instance of a running program. The container starts as quickly as a new process. Compare that to booting a new instance of an OS. All you need on each host is OS that supports containers and container runtime.
-You are virtualizing the OS rather than the hardware. The environment scales like PaaS, it gives you almost the same flexibility as IaaS.
 
+**You are virtualizing the OS rather than the hardware**. **The environment scales like PaaS, it gives you almost the same flexibility as IaaS**.
 
-The container abstraction makes your code very portable, you can treat the OS and hardware as a black box.
-So you can move your code from dev to staging to prod. env. or from laptop to the cloud without changing or rebuilding it.
-
+The container abstraction makes your code very portable, you can treat the OS and hardware as a black box. So you can move your code from dev to staging to prod. env. or from laptop to the cloud without changing or rebuilding it.
 
 If you want to scale a web server you can do so in seconds and deploy hundreds of them on a single host.
+
 You want to deploy your application using lots of containers, each performing their own function using a microservices pattern. The units of code in those containers can communicate with each other over some network. In this case, you have made an application modular. They deploy easily and scale independently. And the Host can scale up and down, start and stop containers, as demand for your app changes or as hosts fail and are replaced. A tool that does these tasks well is Kubernetes.
 
-
 Kubernetes makes it easy to orchestrate many containers on many hosts, scale them, roll out new versions of them, or roll back changes.
-How to build containers using Docker
+
+#### 5.1.2. Docker Container
+
 GCP offers Cloud Build, a managed service for building containers.
 
+```python
+# app.py
 
-app.py
 from flask import Flask
-app=Flask(__name__)
-
+app = Flask(__name__)
 
 @app.route("/")
 def hello():
     return "Hello World\n"
 
-
 @app.route("/version")
 def version():
     return "Helloworld 1.0\n"
 
-
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
+```
 
+```python
+# requirements.txt
 
-requirements.txt
 Flask==0.12
 uwsgi==2.0.15
+```
 
+```Dockerfile
+# Dockerfile
 
-Dockerfile
-FROM Ubuntu:18.10
+FROM ubuntu:18.10
 RUN apt-get update -y && \
          apt-get install -y python3-pip python3-dev
 COPY requirements.txt /app/requirements.txt
 WORKDIR /app
 RUN pip3 install -r requirements.txt
-COPY . /app #copy the files that make up our application
-ENTRYPOINT ["python3", "app.py"] #how to run it
+# copy the files that make up our application
+COPY . /app
+# how to run it
+ENTRYPOINT ["python3", "app.py"] 
+```
 
+```sh
+# Build and run
 
-Build and run
-$ docker build -t py-server #builds the container and stores on a local system as a runnable image.
-$ docker run -d py-server #to run the image
+#builds the container and stores on a local system as a runnable image.
+docker build -t py-server 
 
+#to run the image
+docker run -d py-server
+```
 
 In the real world, you would upload the container to a container registry system, like GCP Container Registry, and share or download it from there.
-Introduction to Kubernetes and GKE
-I'll show you where Kubernetes comes in. Kubernetes is an open-source orchestrator for containers, so you can better manage and scale your applications. Kubernetes offers an API that let's control it's operations, through several utilities. Kubernetes lets you deploy containers on a set of nodes called a cluster. 
-What is a  cluster?
+
+### 5.2. Introduction to Kubernetes and GKE
+
+Kubernetes is an open-source orchestrator for containers, so you can better manage and scale your applications. Kubernetes offers an API that let's control it's operations, through several utilities. Kubernetes lets you deploy containers on a set of nodes called a cluster.
+
+#### 5.2.1 What is a  cluster?
+
 Master + nodes (VMs)
+
 Cluster is a set of:
-*  master components that control the system as a whole and
-* a set of nodes that run containers. 
-In Kubernetes a node represents a computing instance, in GCP a node is a VM, running in Compute Engine.
-Using Kubernetes you can describe a set of applications and how they should interact with each other and Kubernetes figures out how to make it happen.
-Kubernetes makes it easy to run containerized applications.
-How do you get a Kubernetes cluster?
+
+- master components that control the system as a whole and
+- set of nodes that run containers.
+
+In Kubernetes a node represents a computing instance, in GCP a node is a VM, running in Compute Engine. Using Kubernetes you can describe a set of applications and how they should interact with each other and Kubernetes figures out how to make it happen. Kubernetes makes it easy to run containerized applications.
+
+#### 5.2.2 How do you get a Kubernetes cluster?
+
 You can always build one yourself on your hardware, but then you would have to maintain it, which might not be the best use of your time. GCP offers the Kubernetes Engine as a managed service. You can create a Kubernetes cluster with Kubernetes Engine using the GCP console or the gcloud command. GKE clusters can be customized and they support different machine types, numbers of nodes, and network settings.
 
+```sh
+# You will have a cluster called k1, complete, configured, and ready to go.
 
-$ gcloud container clusters create k1 
-You will have a cluster called k1, complete, configured, and ready to go. 
-How do you add nodes to a Kubernetes cluster?
-What is a pod?
+gcloud container clusters create k1
+```
+
+#### 5.2.3 What is a pod?
+
 Whenever Kubernetes deploys a container or related containers it does so in a pod abstraction. A pod is the smallest deployable unit in Kubernetes. Think of a pod as a running process on your cluster, it could be one component of your application or even an entire application. If you have multiple containers per pod, they will automatically share networking, share disk storage. Each pod in Kubernetes gets a unique IP address and set of ports for your containers. As containers in pods can communicate with each other using the localhost network interface they do not care about on which nods they are deployed on.
-One way to run a container in a pod in Kubernetes is to use the kubectl run command.
 
+```sh
+# One way to run a container in a pod in Kubernetes is to use the kubectl run command.
 
-$ kubectl run nginx --image=ngix:1.15.7 
+kubectl run nginx --image=nginx:1.15.7
+```
+
 Starts a deployment with a container running in a pod. The container running inside a pod is an image of an nginx server. Kubectl fetches the image & version from a Container Registry.
-So, what is a deployment?
-Deployment represents a group of replicas of the same pod. It keeps your pods running, even if a node on which some of them run on fails.
-You can use a deployment to contain a component of your application or even the entire application. To see the running pods run:
-$ kubectl get pods
 
+#### 5.2.4 What is a deployment?
 
-By default pods in a deployment are only accessible inside your cluster. To make pods in your deployment publicly available you can connect a load balancer to it, but running a kubectl expose command:
-$ kubectl expose deployments nginx --port=80 --type=LoadBalancer
-Kubernetes then creates a service with a fixed IP address for your pods.
+Deployment represents a group of replicas of the same pod. It keeps your pods running, even if a node on which some of them run on fails. You can use a deployment to contain a component of your application or even the entire application. To see the running pods run:
 
+```sh
+kubectl get pods
+```
 
-Service is the fundamental way Kubernetes represents load balancing. You requested Kubernetes to attach an external load balancer with a public IP address to your service so that others outside the cluster can access it.
-In GKE this kind of load balancer is a Network LoadBalancer. This is one of the managed load balancing services that compute engine makes available to VMs. GKE makes it easy to use it with containers.
-Everyone accessing the public IP will be routed to a pod behind the service.
+By default pods in a deployment are only accessible inside your cluster. To make pods in your deployment publicly available you can connect a load balancer to it, but running a kubectl expose command. Kubernetes then creates a **service** with a fixed IP address for your pods.
+
+```sh
+kubectl expose deployments nginx --port=80 --type=LoadBalancer
+```
+
+#### 5.2.5 What is a service?
+
+Service is the fundamental way Kubernetes represents load balancing. You requested Kubernetes to attach an external load balancer with a public IP address to your service so that others outside the cluster can access it. In GKE this kind of load balancer is a Network LoadBalancer. This is one of the managed load balancing services that compute engine makes available to VMs. GKE makes it easy to use it with containers. Everyone accessing the public IP will be routed to a pod behind the service.
+
 So, what is a service?
 A service group a set of pods together and provides a stable endpoint for them.
-
 
 Why do you need a service? Why not just use the pod's IP address directly?
 Yes, but it would make a management problem. As deployments create and destroy pods, pods get their IP addresses, but those IP addresses don't remain stable over time. Services provide that stable endpoint you need.
 
+```sh
+# shows you public IP address
 
-$ kubectl get services 
-shows you public IP address
+kubectl get services
+```
 
+```sh
+# to scale deployment, three web servers in this case, all behind a service
 
-$ kubectl scale nginx --replicas=3
-to scale deployment, three web servers in this case, all behind a service
+kubectl scale nginx --replicas=3
+```
+
+```sh
+# to autoscale based on CPU usage.
+
 $ kubectl autoscale nginx --min=10 --max=15 --cpu=80 
-to autoscale based on CPU usage.
-Declarative mode
+```
+
+#### 5.2.6 Declarative mode
+
 So far just imperative commands (like, expose, and scale), but the real strength of Kubernetes comes, when you work in a declarative way. Instead of issuing commands, you provide a configuration file that tells Kubernetes what you want your desired state to look like, and Kubernetes figures out how to do it.
 These configuration files then become your management tools, to make a change you edit a file and then present the changed version to Kubernetes. And save them in a version control system to keep track of the changes you made to your infrastructure.
 
+```sh
+kubectl get pods -l "app=nginx" -o yaml
+```
 
-$kubectl get pods -l "app=nginx" -o yaml
-
-
+```yaml
 apiVersion: v1
 kind: Deployment
 metadata:
-     name: nginx
-     labels:
-         app: nginx
+  name: nginx
+  labels:
+    app: nginx
 spec:
-    replicas: 3
-    selector: # so your deployment knows how to group-specific pods as replicas
-        matchLabels:
-            app: nginx #it works because all those pods share a label, the app is tagged as nginx
-    template:
-        metadata:
-            labels:
-                app: nginx
-        spec:
-            containers:
-                - name: nginx
-                  image: nginx: 1.15.7
-                  ports:
-                  - containerPort: 80
-
-
-$ kubectl apply -f nginx-deployment.yaml #to use the updated config file
-$ kubectl get replica sets #to view your replicas and their state
-$ kubectl get pods # status of pods
-$ kubectl get deployments #status of deployment
-$ kubectl get services
-How to update the version of your application?
-spec: 
-  # …
   replicas: 5
-  strategy:
-    rollingUpdate:
-    maxSurge: 1
-    maxUnavailable: 0
-  type: RollingUpdate
+  selector: # so your deployment knows how to group-specific pods as replicas
+    matchLabels:
+      app: nginx # it works because all those pods share a label, the app is tagged as nginx
+  template:
+    metadata:
+      labels:
+        app: nginx # it works because all those pods share a label, the app is tagged as nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx: 1.15.7
+        ports:
+        - containerPort: 80
+```
 
+```sh
+# to use the updated config file
+
+kubectl apply -f nginx-deployment.yaml
+```
+
+```sh
+kubectl get replicasets #to view your replicas and their state
+kubectl get pods # status of pods
+kubectl get deployments #status of deployment
+kubectl get services
+```
 
 One attribute of deployment is its update strategy. A rolling update will create pods of the new version, one by one, waiting for each new version pod to become available, before destroying one of the old version pods. Rolling updates are a quick way to push out your application while spearing users of experiencing downtime.
-Introduction to hybrid and multi-cloud Computing (Anthos)
-Containers on hybrid-cloud and multi-cloud architecture.
 
+```yaml
+# How to update the version of your application?
+    spec:
+      # …
+      replicas: 5
+      strategy:
+        rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+      type: RollingUpdate
+      # ...
+```
 
-Typical on-premises distributed system architecture.
-  
+### 5.3. Introduction to Hybrid and Multi-Cloud Computing (Anthos)
 
-
-
-Containers have become a popular way of breaking these applications down into micro-services so that they can be easily maintained and expanded. Traditionally, these systems have been hosted on-premises, somewhere in the company's network or company's data center (server update, installation, network changes, configuration, etc. might require from several months to years). Costly to upgrade, as upgrades are expensive and short lifecycle of the server.
-
+Containers have become a popular way of breaking monolithic application down into micro-services so that they can be easily maintained and expanded. Traditionally, these systems have been hosted on-premises, somewhere in the company's network or company's data center (server update, installation, network changes, configuration, etc. might require from several months to years). Costly to upgrade, as upgrades are expensive and short lifecycle of the server.
 
 Modern distribution systems allow a more agile approach to managing your computing resources. It allows:
-* Move only some of your compute workload to the Cloud
-* Move at your own pace
-* Take advantage of clouds scalability and lower costs
-* Add specialized services to your compute resources stack (machine learning, content caching, data analysis, long term storage, IoT, etc.)
 
+- Move only some of your compute workload to the Cloud
+- Move at your own pace
+- Take advantage of clouds scalability and lower costs
+- Add specialized services to your compute resources stack (machine learning, content caching, data analysis, long term storage, IoT, etc.)
 
 Anthos is Google's modern solution for hybrid and multi-cloud systems and service management.
-* Kubernetes and Google Kubernetes Engine on-prem create the foundation
-* On-premises and cloud environments stay in sync.
-* A rich set of tools is probably fixed for:
-   * Managing services on-premises and in the Cloud
-   * Monitoring systems and services
-   * Migrating applications from VMs into your clusters
-   * Maintaining consistent policies across all clusters, whether on-premises or in the Cloud
 
+- Kubernetes and Google Kubernetes Engine on-prem create the foundation
+- On-premises and cloud environments stay in sync.
+- A rich set of tools is probably fixed for:
+  - Managing services on-premises and in the Cloud
+  - Monitoring systems and services
+  - Migrating applications from VMs into your clusters
+  - Maintaining consistent policies across all clusters, whether on-premises or in the Cloud
 
-GKE for production-ready apps
+<!-- TODO GKE for production-ready apps -->
+
+#### 5.3.1 GKE is a managed prod. ready env. for deploying containerized applications
+
+Includes:
+
+- Auto node repair
+- Auto upgrade
+- Autoscaling - Uses regional clusters, for high availability with multiple masters. Node storage replication across multiple zones (currently 3).
+
+#### 5.3.2 GKE On-Prem is turn-key production-grade Kubernetes
+
+GKE counterpart on the on-premises network is GKE On-Prem:
+
+- Provides an easy upgrade path to the latest Kubernetes releases, that have been validated and tested by Google.
+- Provides access to container services on GCP, such as Cloud Build, Container Registry, Audit Logging, and more.
+- Integrates with Istio and Marketplace Solutions.
+- Ensures consistent Kubernetes version across cloud and on-premise environments.
+
+#### 5.3.3 Marketplace applications are available to all clusters
+
+Both GKE and GKE On-Prem integrates with GCP Marketplace so that all of the clusters on the network have access to the same repository of containerized applications. This allows you to use the same configurations on both sides of the network, reducing the time spent developing applications. Wite once, replicate anywhere.
+
+#### 5.3.4 Marketplace applications are available to all clustersAnthos Service Mesh - Cloud Interconnect - Istio Open Source
+
+Service Meshes make apps more secure & observable. Enterprise applications might use 100s of microservices to handle computing workloads. Keeping track of all of these services and monitoring their health can quickly become a challenge. Anthos Service Mesh and Istio Open Source Service Meshes take all of these work of managing and securing your microservices. These service mesh layers can communicate across hybrid-network using Cloud Interconnect to sync and pass heir data.
+
+#### 5.3.5 Stackdriver logging and Monitoring watch all sides
   
+Stackdriver is built-in logging and monitoring solution for GCP. Stackdriver offers a fully managed logging, metrics collection, monitoring, dashboards, and alerting solution, that watches all sides of your hybrid or multi-cloud network. Stackdriver is the ideal solution for customers wanting a single, easy to configure, powerful, cloud-based solution that gives you a single dashboard to monitor all of your environments.
 
-First, let's look at GKE on the Cloud. 
-GKE is a managed prod. ready env. for deploying containerized applications.  Includes:
-* Auto node repair
-* Auto upgrade
-* Autoscaling
-Uses regional clusters, for high availability with multiple masters. Node storage replication across multiple zones (currently 3).
-GKE On-Prem is turn-key production-grade Kubernetes
-  
+#### 5.3.6 Configuration Manager is the single source of truth
 
-GKE counterpart on the on-premises network is GKE On-Prem. 
-* Provides an easy upgrade path to the latest Kubernetes releases, that have been validated and tested by Google. 
-* Provides access to container services on GCP, such as Cloud Build, Container Registry, Audit Logging, and more. 
-* Integrates with Istio and Marketplace Solutions.
-* Ensures consistent Kubernetes version across cloud and on-premise environments.
-Marketplace applications are available to all clusters
-  
-
-Both GKE and GKE On-Prem integrates with GCP Marketplace so that all of the clusters on the network have access to the same repository of containerized applications. 
-This allows you to use the same configurations on both sides of the network, reducing the time spent developing applications. Wite once, replicate anywhere.
-Service Meshes make apps more secure & observable
-  
-
-Enterprise applications might use 100s of microservices to handle computing workloads. Keeping track of all of these services and monitoring their health can quickly become a challenge. Anthos Service Mesh and Istio Open Source Service Meshes take all of these work of managing and securing your microservices. These service mesh layers can communicate across hybrid-network using Cloud Interconnect to sync and pass heir data.
-Stackdriver logging and Monitoring watch all sides
-  
-
-Stackdriver is built-in logging and monitoring solution for GCP. Stackdriver offers a fully managed logging, metrics collection, monitoring, dashboarding, and alerting solution, that watches all sides of your hybrid or multi-cloud network. 
-
-
-Stackdriver is the ideal solution for customers wanting a single, easy to configure, powerful, cloud-based solution that gives you a single dashboard to monitor all of your environments. 
-Configuration Manager is the single source of truth
-  
-
-Lastly, Anthos Configuration Management provides a single source of truth for your cluster’s configuration. 
-That source of truth is kept in a Policy Repository, which is actually a Git repository. 
+Lastly, Anthos Configuration Management provides a single source of truth for your cluster’s configuration.
+That source of truth is kept in a Policy Repository, which is actually a Git repository.
 In this illustration, this repository happens to be located on-premises, but it can also be hosted in the cloud.
 The Anthos configuration Management agents use the Policy Repository to enforce configurations locally in each environment, managing the complexity across environments. Anthos Configuration Management also provides the ability to deploy code changes with a single repository commit. And the option to implement configuration inheritance, by using namespaces.
-Lab: getting started with Kubernetes Engine
+
+### 5.5. Demo:Getting Started with Kubernetes Engine
+
+### 5.6. GCP Fundamentals: Getting Started with Kubernetes Engine
+
 Enable APIs:
 Open APIs and Services -> Dashboard:
-* Google Kubernetes Engine API -> Enable
-* Google Container Registry API -> Enable
-Start a cluster:
-$ export MY_ZONE=us-central1-a
-$ gcloud container clusters create webfrontend --zone $MY_ZONE --num-nodes 2
-$ kubectl --version
 
+- Kubernetes Engine API -> Enable
+- Container Registry API -> Enable
 
-Remember that Kubernetes Engines nodes are VMs so you can go to Compute Engine to view them.
-You can also view the Cluster in Kubernetes Engine -> Kubernetes clusters
-Run a web server on the cluster:
-The deployment consists of a single pod. 
+```sh
+# start a cluster. Creates 2  Compute Engine 2 VM instances, 
+# also seen in GCE Instance Groups
+# also seend in GKE
 
+export MY_ZONE=us-central1-a
+gcloud container clusters create webfrontend --zone $MY_ZONE --num-nodes 2
+kubectl version
+```
 
-$ kubectl run nginx --image-nginx:1.10.0
+Remember that Kubernetes Engines nodes are VMs so you can go to Compute Engine to view them. You can also view the Cluster in Kubernetes Engine -> Kubernetes clusters
 
+```sh
+# Run a web server on the cluster. The deployment consists of a single pod.
 
-Confirm that it is running:
-$ kubectl get pods
-Expose the deployment:
-$ kubectl expose deployment nginx --port 80 --type LoadBalancer
-View the new service:
-$ kubectl get services
-Scale-up deployment 
-(you would scale up if the load was rising):
-$ kubectl scale deployment nginx --replicas 3
-Now let’s look at new number of pods:
-$ kubectl get pods
-6) Applications in the cloud
+kubectl create deploy nginx --image=nginx
+```
+
+```sh
+# Confirm that it is running
+
+kubectl get pods
+```
+
+```sh
+# Expose the deployment:
+
+kubectl expose deployment nginx --port 80 --type LoadBalancer
+```
+
+```sh
+# View the new service:
+kubectl get services
+```
+
+```sh
+# Scale-up deployment (you would scale up if the load was rising)
+kubectl scale deployment nginx --replicas 3
+```
+
+```sh
+# Now let’s look at new number of pods
+
+kubectl get pods
+```
+
+## 6. Applications in the cloud
+
 Intro to App Engine
 We have discussed two GCP products that provide compute infrastructure for applications:
 Compute Engine &Kubernetes Engine, where you choose infrastructure of which your application runs (VMs for Compute, Containers for Kubernetes).
@@ -814,7 +871,8 @@ If your application is not in sandbox mode (software independent of hardware, OS
       2. task scheduler
 App Engine Flexible Environment, Container
 If the standard environment is not for you, but you want to have the benefits of App Engine, use a flexible environment, where instead of a sandbox you can specify the container you App Engine runs in.
-You application runs inside a Docker Container on Google Compute Engine’s VM. 
+You application runs inside a Docker Container on Google Compute Engine’s VM.
+
 App Engine manages these Compute Engine VMs for you:
 * health checked, 
 * healed 
@@ -822,23 +880,15 @@ App Engine manages these Compute Engine VMs for you:
 * critical, backwards compatible updates are automatically applied
 So you can just focus on your code.
 
-
 App Engine flexible environment use standard runtime, can access App Engine services, like:
 * Datastore
 * Memcased
 * Task queues
 * and so on,
 
-
-  
-
-  
-
 Google Cloud Endpoints and Apigee Edge
-  
 
 Application Programming Interface (API) - Developers structure their code in a clean, well defined interface, that abstracts away needless details, and then they document that interface. That is an API. In order to add/remove features to an API as cleanly as possible, developers version their APIs. 
-
 
 Two API management tools in GCP. 
 Cloud Endpoint 
@@ -856,7 +906,6 @@ Helps you secure and monetize APIs
 * A platform for making APIS available to your customers and partners
 * Contains analytics, monetization and developer portal
 Lab: Getting Started with App Engine
-
 
 $ cloud config set project "project id"
 Clone simple App Engine application from GitHub
@@ -879,6 +928,7 @@ Refresh App Engine Dashboard to see deployed application
 Click on link
 Application Engine -> Settings -> Disable application
 To disable
+
 7) Developing, Deploying and Monitoring in the Cloud
 Development in the Cloud
 You also have tools that are tightly integrated with GCP, and in this module, we will explain them.
