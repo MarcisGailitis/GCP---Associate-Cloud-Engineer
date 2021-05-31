@@ -809,134 +809,209 @@ kubectl get pods
 
 ## 6. Applications in the cloud
 
-Intro to App Engine
-We have discussed two GCP products that provide compute infrastructure for applications:
-Compute Engine &Kubernetes Engine, where you choose infrastructure of which your application runs (VMs for Compute, Containers for Kubernetes).
-If you do not want to focus on infrastructure at all, but want to focus on your code, use App Engine for that.
+### 6.1. Introduction; introduction to App Engine
 
+We have discussed two GCP products that provide compute infrastructure for applications:
+
+- Compute Engine
+- Kubernetes Engine
+where you choose infrastructure of which your application runs (VMs for Compute, Containers for Kubernetes). If you do not want to focus on infrastructure at all, but want to focus on your code, use App Engine for that.
 
 PaaS = Platform as a Service. The App Engine manages the hardware and networking infrastructure, required to run the code. To deploy an application on App Engine, you just add your code to App Engine and App Engine service takes care of the rest.
 
-
 Built-in services:
-* NoSQL database
-* In-memory caching
-* Load balancing
-* Health-checks
-* Logging
-* Way to authenticate users
 
+- NoSQL database
+- In-memory caching
+- Load balancing
+- Health-checks
+- Logging
+- Way to authenticate users
 
 App Engine will automatically scale your application in response to the amount of traffic it receives. You only pay for those resources you use, no servers to maintain.
 
-
 App Engine is especially suited for applications, where the workload is highly variable or unpredictable, like web apps and mobile backend.
 
-
 App Engine offers two environments:
-* Standard
-* flexible
-App Engine Standard Environment, sanbox
-Standard env is the simpler one
-* Simpler deployment
-* fine-grain autoscale
-* Free daily quota, Low utilization applications might be able to run at no charge.
-* Usage-based pricing
 
+- Standard
+- flexible
+
+### 6.2. Google App Engine Standard Environment, sandbox
+
+Standard env is the simpler one
+
+- Simpler deployment
+- fine-grain autoscale
+- Free daily quota, Low utilization applications might be able to run at no charge.
+- Usage-based pricing
 
 App Engine SDK for development (locally), testing (locally), and deployment.
 
-
 Use App Engine’s standard environment runtime, provided by Google, to run your code:
-* Java
-* Python
-* PHP
-* Go
 
+- Java
+- Python
+- PHP
+- Go
 
-If your application is in other languages, you will have to use App Engine’s flexible environment.
-If your application is not in sandbox mode (software independent of hardware, OS, or physical location, no writing to the local file system, you will have to write to the DB system instead, no third-party software (aka. no libraries)), you will have to use App Engine’s flexible environment.
+If your application is in other languages, you will have to use App Engine Flexible environment.
 
+If your application is not in sandbox mode (software independent of hardware, OS, or physical location of server):
+
+- no writing to the local file system, you will have to write to the DB system instead
+- request timeout in 60s
+- no third-party software (aka. no libraries))
+you will have to use App Engine’s flexible environment.
+
+App Engine workflow:
 
 1. Develop and test locally, using SDK
 2. Deploy to App Engine using SDK
-3. Eech App Engine application runs in a GCP project
+3. Each App Engine application runs in a GCP project
 4. App Engine automatically scales & load balances them
 5. Application can make calls to services using APIs:
    1. NoSQL to make data persistent
    2. caching of the data using memcached
    3. searching, logging, user logging
    4. ability to launch actions, not triggered by user requests, like:
-      1. task queues and 
+      1. task queues and
       2. task scheduler
-App Engine Flexible Environment, Container
-If the standard environment is not for you, but you want to have the benefits of App Engine, use a flexible environment, where instead of a sandbox you can specify the container you App Engine runs in.
-You application runs inside a Docker Container on Google Compute Engine’s VM.
+
+### 6.3. Google App Engine Flexible Environment, Container
+
+If the standard environment is not for you, but you want to have the benefits of App Engine, use a flexible environment, where instead of a sandbox you can specify the container you App Engine runs in. You application runs inside a Docker Container on Google Compute Engine’s VM.
 
 App Engine manages these Compute Engine VMs for you:
-* health checked, 
-* healed 
-* you choose in which geographic location they are run in
-* critical, backwards compatible updates are automatically applied
+
+- health checked
+- healed
+- you choose in which geographic location they are run in
+- critical, backwards compatible updates are automatically applied
 So you can just focus on your code.
 
 App Engine flexible environment use standard runtime, can access App Engine services, like:
-* Datastore
-* Memcased
-* Task queues
-* and so on,
 
-Google Cloud Endpoints and Apigee Edge
+- Datastore
+- Memcache
+- Task queues
+- and so on,
 
-Application Programming Interface (API) - Developers structure their code in a clean, well defined interface, that abstracts away needless details, and then they document that interface. That is an API. In order to add/remove features to an API as cleanly as possible, developers version their APIs. 
+### 6.4. Google Cloud Endpoints and Apigee Edge
 
-Two API management tools in GCP. 
-Cloud Endpoint 
-helps you create and maintain an API.
-* Distributed API management through an API console
-* Expose your API using RESTful interface
-* Control access and validate calls with JSON Web Tokens and Google API key
-* Generate client libraries
+Application Programming Interface (API) - Developers structure their code in a clean, well defined interface, that abstracts away needless details, and then they document that interface. That is an API. In order to add/remove features to an API as cleanly as possible, developers version their APIs.
+
+Two API management tools in GCP.
+
+Cloud Endpoint: helps you create and maintain an API.
+
+- Distributed API management through an API console
+- Expose your API using RESTful interface
+- Control access and validate calls with JSON Web Tokens and Google API key
+- Generate client libraries
+
 Supported platforms:
-* App Engine flexible
-* Kubernetes Engine
-* Compute Engine
-Apigee Edge
-Helps you secure and monetize APIs
-* A platform for making APIS available to your customers and partners
-* Contains analytics, monetization and developer portal
-Lab: Getting Started with App Engine
 
-$ cloud config set project "project id"
-Clone simple App Engine application from GitHub
-$ git clone https://github.com/GoogleCloudPlatform/appengine-guestbook-python
-$ cd appengine-guestbook-python
-Examine app.yaml
-$ cat app.yaml
-Specifies the runtime as well as handlers and required libraries. Handlers = URLs on which it responds
-Run the application locally in Cloud Shell, 
-using build it app engine SDK
-$ dev_appserver.py ./app.yaml
-Use Cloud Shell built-in preview
-Press on “web preview”
-Deploy application to App Engine service
-$ gcloud application deploy ./index.yaml ./app.yaml
-Select region
-Confirm deployment
-App Engine files are stored in Cloud Storage
-Refresh App Engine Dashboard to see deployed application 
-Click on link
-Application Engine -> Settings -> Disable application
-To disable
+- App Engine flexible
+- Kubernetes Engine
+- Compute Engine
 
-7) Developing, Deploying and Monitoring in the Cloud
+Apigee Edge Helps you secure and monetize APIs
+
+- A platform for making APIS available to your customers and partners
+- Contains analytics, monetization and developer portal
+
+### 6.5. Demonstration: Getting Started with App Engine
+
+### 6.6. GCP Fundamentals: Getting Started with App Engine
+
+```sh
+# to view gcloud config settings
+
+gcloud auth list
+gcloud config list project
+gcloud config list
+
+# [component_manager]
+# disable_update_check = True
+# [compute]
+# gce_metadata_read_timeout_sec = 30
+# [core]
+# account = student-02-9c4ac2f7eab7@qwiklabs.net
+# disable_usage_reporting = True
+# project = qwiklabs-gcp-01-7416997b81ed
+# [metrics]
+# environment = devshell
+```
+
+```sh
+# Initialize your App Engine
+
+gcloud app create --project=$DEVSHELL_PROJECT_ID
+# + Choose Region
+```
+
+```sh
+# Clone simple App Engine application from GitHub from https://github.com/GoogleCloudPlatform/
+
+git clone git clone https://github.com/GoogleCloudPlatform/python-docs-samples
+cd python-docs-samples/appengine/standard_python3/hello_world
+```
+
+```sh
+# Run the application locally in Cloud Shell
+
+pip install  -r requirements.txt
+python main.py
+# from flask import Flask
+# app = Flask(__name__)
+
+# @app.route('/')
+# def hello():
+#     """Return a friendly HTTP greeting."""
+#     return 'Hello World!'
+```
+
+```sh
+# Use Cloud Shell built-in preview
+
+# Click on “Web Preview” -> Preview on port 8080
+```
+
+```sh
+# Deploy application to App Engine service
+
+gcloud app deploy
+
+# This app deploy command uses the app.yaml file to identify project configuration.
+# runtime: python39
+
+# App Engine files are stored in Cloud Storage
+
+# qwiklabs-gcp-03-37ce02dc1c8f.appspot.com
+# staging.qwiklabs-gcp-03-37ce02dc1c8f.appspot.com
+# us.artifacts.qwiklabs-gcp-03-37ce02dc1c8f.appspot.com
+```
+
+```sh
+# Refresh App Engine Dashboard to see deployed application Click on link
+```
+
+```sh
+# To disable application 
+
+App Engine -> Settings -> Disable application
+```
+
+## 7. Developing, Deploying, and Monitoring in the Cloud
+
+### 7.1. Development in the cloud
+
 Development in the Cloud
 You also have tools that are tightly integrated with GCP, and in this module, we will explain them.
 
-
 Cloud Source Repository
 Fully featured Git repository hosted on GCP
-
 
 * code is kept private for the GCP project 
 * uses IAM permissions to protect it 
@@ -947,6 +1022,9 @@ Create single-purpose functions that respond to events without a server of runti
 * Write code in JavaScript, execute in node.js environment 
 * Pay-per-use
 * Cloud Functions can trigger events in Cloud Storage, Cloud Pub/Sub, or on HTTP call.
+
+### 7.2. Deployment:Infrastructure as code
+
 Deployment: Infrastructure as a Service
 Deployment Manager
 Setting up your environment in GCP can entail many steps:
@@ -954,19 +1032,19 @@ Setting up your environment in GCP can entail many steps:
 * Setting up network and storage
 * Keeping track of their configurations
 
-
 You can do this all by hand, imperative way, but there is a better way for that, by using a template and specifying how the environment should look like in a declarative way.
-
 
 * Provides repeatable deployments
 * Create a .yaml template, describing your environment and use Deployment Manager to create resources
 * You can store and version control your deployment manager templates in Cloud Source Repositories
 * Infrastructure management service that automates the creation and management of your GCP resources for you.
+
+### 7.3. Monitoring:Proactive instrumentation
+
 Monitoring: Proactive Instrumentation
 You cannot run your application stably without monitoring it. 
 Monitoring lets you figure out if the changes you made were good or bad.
 It lets you respond with information rather than panic when your application is down.
-
 
 Stackdriver is a GCPs tool for monitoring, logging, and diagnostics:
 * Monitoring
@@ -974,7 +1052,6 @@ Stackdriver is a GCPs tool for monitoring, logging, and diagnostics:
 * Debug
 * Error Reporting
 * Trace
-
 
 Stackdriver gives you access to many kinds of signals from your:
 * Infrastructure platforms, 
@@ -984,9 +1061,7 @@ Stackdriver gives you access to many kinds of signals from your:
 * application tier, 
 * logs, metrics, and traces
 
-
 It gives you insight into your application’s health, performance, and availability, so if issues occur, you can fix them faster.
-
 
 Core components of Stackdriver:
 * Monitoring
@@ -1007,11 +1082,15 @@ Core components of Stackdriver:
    * Debug applications
 * Profiler
    * Continuous profiling of CPU and memory consumption
+
+### 7.4. Demonstration:Getting Started with Deployment Manager and Stackdriver
+
+### 7.5. GCP Fundamentals: Getting Started with Deployment Manager and Stackdriver
+
 Lab: Getting Started with Deployment Manager and Stackdriver
 Define a variable with preferred GCP zone
 $ export MY_ZONE=us-central1-f
 $ echo $DEVSHELL_PROJECT_ID
-
 
 Create .yaml file
 $ nano deploy.yaml
@@ -1061,10 +1140,11 @@ Set up Stackdriver Monitoring
 Stackdriver -> Monitoring
 Create Account -> Continue 
 Launch Monitoring -> Continue with trial
-Big Data and Machine Learning in the Cloud
+
+## 8. Big Data and Machine Learning in the Cloud
+
 Intro to Big Data and Machine Learning
 In the future, every company will be a data company! Making the fastest and best use of data is a critical source of competitive advantage.
-
 
 GCP provides a way for everybody to take advantage of Google investments in infrastructure and data processing innovation. GCP has automated the complexity of building and maintaining data and analytics systems.
 Google Cloud Big Data Platform
