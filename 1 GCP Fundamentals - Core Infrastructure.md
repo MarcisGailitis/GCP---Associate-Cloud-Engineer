@@ -1007,139 +1007,198 @@ App Engine -> Settings -> Disable application
 
 ### 7.1. Development in the cloud
 
-Development in the Cloud
 You also have tools that are tightly integrated with GCP, and in this module, we will explain them.
 
-Cloud Source Repository
+#### 7.1.1 Cloud Source Repository
+
 Fully featured Git repository hosted on GCP
 
-* code is kept private for the GCP project 
-* uses IAM permissions to protect it 
-* not to have to maintain git instance by yourself. 
-Cloud Functions
+- code is kept private for the GCP project
+- uses IAM permissions to protect it
+- not to have to maintain git instance by yourself.
+
+#### 7.1.2 Cloud Functions
+
 Create single-purpose functions that respond to events without a server of runtime
-* Image processing - user uploads an image, you process it and save it
-* Write code in JavaScript, execute in node.js environment 
-* Pay-per-use
-* Cloud Functions can trigger events in Cloud Storage, Cloud Pub/Sub, or on HTTP call.
 
-### 7.2. Deployment:Infrastructure as code
+- Image processing - user uploads an image, you process it and save it
+- Write code in JavaScript, execute in node.js environment
+- Pay-per-use
+- Cloud Functions can trigger events in Cloud Storage, Cloud Pub/Sub, or on HTTP call.
 
-Deployment: Infrastructure as a Service
-Deployment Manager
+### 7.2. Deployment: Infrastructure as code
+
+#### 7.2.1 Deployment Manager
+
 Setting up your environment in GCP can entail many steps:
-* Setting up compute instances
-* Setting up network and storage
-* Keeping track of their configurations
+
+- Setting up compute instances
+- Setting up network and storage
+- Keeping track of their configurations
 
 You can do this all by hand, imperative way, but there is a better way for that, by using a template and specifying how the environment should look like in a declarative way.
 
-* Provides repeatable deployments
-* Create a .yaml template, describing your environment and use Deployment Manager to create resources
-* You can store and version control your deployment manager templates in Cloud Source Repositories
-* Infrastructure management service that automates the creation and management of your GCP resources for you.
+- Provides repeatable deployments
+- Create a .yaml template, describing your environment and use Deployment Manager to create resources
+- You can store and version control your deployment manager templates in Cloud Source Repositories
+- Infrastructure management service that automates the creation and management of your GCP resources for you.
 
 ### 7.3. Monitoring:Proactive instrumentation
 
 Monitoring: Proactive Instrumentation
-You cannot run your application stably without monitoring it. 
-Monitoring lets you figure out if the changes you made were good or bad.
-It lets you respond with information rather than panic when your application is down.
+
+- You cannot run your application stably without monitoring it.
+- Monitoring lets you figure out if the changes you made were good or bad.
+- It lets you respond with information rather than panic when your application is down.
 
 Stackdriver is a GCPs tool for monitoring, logging, and diagnostics:
-* Monitoring
-* Logging
-* Debug
-* Error Reporting
-* Trace
+
+- Monitoring
+- Logging
+- Debug
+- Error Reporting
+- Trace
 
 Stackdriver gives you access to many kinds of signals from your:
-* Infrastructure platforms, 
-* VMS, 
-* containers, 
-* middle-were and 
-* application tier, 
-* logs, metrics, and traces
+
+- Infrastructure platforms
+- VMS
+- containers
+- middle-were and
+- application tier
+- logs, metrics, and traces
 
 It gives you insight into your application’s health, performance, and availability, so if issues occur, you can fix them faster.
 
 Core components of Stackdriver:
-* Monitoring
-   * Platform, system and application metrics
-   * Uptime/health checks
-   * Dashboards and alerts
-* Logging
-   * Platform, system and application logs
-   * Log search, view, filter, and export
-   * Log-based metrics
-* Trace
-   * Latency reporting and sampling
-   * pre-URL latency and statistics
-* Error Reporting
-   * Error notifications
-   * Error dashboard
-* Debugger
-   * Debug applications
-* Profiler
-   * Continuous profiling of CPU and memory consumption
+
+- Monitoring:
+  - Platform, system and application metrics
+  - Uptime/health checks
+  - Dashboards and alerts
+- Logging:
+  - Platform, system and application logs
+  - Log search, view, filter, and export
+  - Log-based metrics
+- Trace:
+  - Latency reporting and sampling
+  - pre-URL latency and statistics
+- Error Reporting:
+  - Error notifications
+  - Error dashboard
+- Debugger:
+  - Debug applications
+- Profiler:
+  - Continuous profiling of CPU and memory consumption
 
 ### 7.4. Demonstration:Getting Started with Deployment Manager and Stackdriver
 
 ### 7.5. GCP Fundamentals: Getting Started with Deployment Manager and Stackdriver
 
-Lab: Getting Started with Deployment Manager and Stackdriver
-Define a variable with preferred GCP zone
-$ export MY_ZONE=us-central1-f
-$ echo $DEVSHELL_PROJECT_ID
+```sh
+# Define a variable with preferred GCP zone and verify that DEVSHELL_PROJECT_ID is valid
 
-Create .yaml file
+export MY_ZONE=us-central1-a
+echo $DEVSHELL_PROJECT_ID
+```
+
+```sh
+# Create .yaml file
+
 $ nano deploy.yaml
+```
+
+```yaml
+# deploy.yaml
+
 resources:
 - name: my-vm
   type: compute.v1.instance
   properties:
     zone: ZONE
     machineType: zones/ZONE/machineTypes/n1-standard-1
-    metadata: 
+    metadata:
       items:
       - key: startup-script
-        value: “apt-get-update”
+        value: "apt-get update"
     disks:
     - deviceName: boot
       type: PERSISTENT
       boot: true
       autoDelete: true
-      initializeParams: 
-        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-9-strecch-v201709$
+      initializeParams:
+        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-9-stretch-v20201216
     networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/PROJCECT_ID/global/networks/defaults
-      accessConfig:
+    - network: https://www.googleapis.com/compute/v1/projects/PROJECT_ID/global/networks/default
+      accessConfigs:
       - name: External NAT
         type: ONE_TO_ONE_NAT
+```
 
+```sh
+# substitute Zone and Project_ID in .yaml file
 
-substitute Zone and Project_ID in .yaml file
-$ sed -i -e ‘s/PROJECT_ID/’$DEVSHELL_PROJECT_ID/ deploy.yaml
-$ sed -i -e ‘s/ZONE/’$MY_ZONE/ deploy.yaml
+sed -i -e "s/PROJECT_ID/$DEVSHELL_PROJECT_ID/" deploy.yaml
+sed -i -e "s/ZONE/$MY_ZONE/" deploy.yaml
+```
 
+```sh
+# Build a deployment from template
 
-Build a deployment from template
-$ gcloud deployment-manager create my-first-depl --config deploy.yaml
-Verify status
-$gcloud deployment-manager deployments list
+gcloud deployment-manager deployments create my-first-deployment --config deploy.yaml
+```
+
+```sh
+# Verify status
+
+gcloud deployment-manager deployments list
+```
+
 Check deployment in console
 Compute Engine -> VM instances -> my-vm is created
-Make a change to template’s startup script
-        value: “apt-get-update; apt-get install nginx-light -y”
-Update a deployment from template
-$ gcloud deployment-manager deployments update my-first-depl --config deploy.yaml
-Add CPU load to VM instance
-ssh into VM machine
-$ dd if=/dev/urandom | gzip -9 >> /dev/null & 
-Set up Stackdriver Monitoring
-Stackdriver -> Monitoring
-Create Account -> Continue 
-Launch Monitoring -> Continue with trial
+
+```sh
+# Make a change to template’s startup script
+
+sed -i -e "s/apt-get-update/apt-get-update; apt-get install nginx-light -/" deploy.yaml
+```
+
+```sh
+# Update a deployment from template
+
+gcloud deployment-manager deployments update my-first-deployment --config deploy.yaml
+```
+
+Enable Service account:
+
+Applications running on the VM use the service account to call Google Cloud APIs. Use Permissions on the console menu to create a service account or use the default service account if available.
+
+1. In the GCP Console, on the Navigation menu (Navigation menu), click Compute Engine > VM instances.
+2. Select the checkbox for my-vm and click on STOP.
+3. Click on STOP again to confirm.
+4. Click on the VM instance's name to open its VM instance details screen.
+5. Click on EDIT (pencil icon).
+6. Scroll down to the bottom of the page and select Compute Engine default service account from Service account dropdown.
+7. Select Allow full access to all Cloud APIs for Access scopes.
+8. Click on Save.
+9. Now, restart the VM by clicking on Start at the top of the VM instance details screen page.
+
+```sh
+# Add CPU load to VM instance
+# ssh into VM machine
+
+dd if=/dev/urandom | gzip -9 >> /dev/null &
+
+#  install both the Monitoring and Logging agents.
+curl -sSO https://dl.google.com/cloudagents/install-monitoring-agent.sh
+sudo bash install-monitoring-agent.sh
+curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
+sudo bash install-logging-agent.sh
+```
+
+Set up  Monitoring
+Monitoring -> Overview
+Dashboards -> VM instances
 
 ## 8. Big Data and Machine Learning in the Cloud
 
@@ -1151,11 +1210,6 @@ Google Cloud Big Data Platform
 Google Cloud’s big data services are fully managed and scalable. Integrated, serverless platform.
 Serverless = You do not have to worry about provisioning compute instances to run your jobs. The services are fully managed, and you pay only for the resources you consume.
 Integrated platform = GCP data services work together to help you create custom solutions
-
-
-
-
-  
 
 Cloud Dataproc
 Managed Hadoop MapReduce, Spark, Pig, and Hive service. 
