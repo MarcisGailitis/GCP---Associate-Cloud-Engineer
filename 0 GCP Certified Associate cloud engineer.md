@@ -5,15 +5,15 @@
 - <https://cloud.google.com/certification>
 - <https://cloud.google.com/certification/cloud-engineer>
 
-## Additional info:
+## Additional info
 
 - Length: Two hours
 - Registration fee: $125 (plus tax where applicable)
 
-## Courses:
+## Courses
 
 1. GCP Fundamentals - Core Infrastructure
-2. Essential Cloud Infrastructure: Foundation
+2. Essential Google Cloud Infrastructure: Foundation
 3. Essential Google Cloud Infrastructure: Core Services
 4. Elastic Google Cloud Infrastructure: Scaling & Automation
 5. Architecting with GKE: foundations(C1)
