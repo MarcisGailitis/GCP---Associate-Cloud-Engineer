@@ -8,34 +8,40 @@
 4. Virtual Machines
 5. Course Resources
 
-## 1. Introduction
+## 2. Introduction to GCP
 
+### 2.1. Overview
 
+### 2.2. Using GCP
 
-Introduction
-Course Introduction
-GCP encompasses three core features:
-* Infrastructure
-* Platform
-* Software
-Usually more than one solution for a task or application in GCP
-  
-
-
-
-GCP offers a range of compute services:
-* Compute Engine - IaaS
-* GKE - containers, to package code to use resource efficiently, Kubernetes to orchestrate code in containers
-* Application Engine - PaaS
-* Cloud Service - FaaS
-Introduction to Google Cloud
-Using Google Cloud
 Four ways to interact with GCP:
-* GCP Console - console.cloud.google.com
-* SDK - $ gcloud compute instances list
-   * Cloud Shell - temporary VM with 5 GB persistent disk with Cloud SDK preinstalled
-* REST-based API - OAuth 2
-* Mobile App
+
+- GCP Console - console.cloud.google.com
+- SDK - $ gcloud compute instances list
+  - Cloud Shell - temporary VM with 5 GB persistent disk with Cloud SDK preinstalled
+- REST-based API - OAuth 2
+- Mobile App
+
+### 2.3. Lab Intro: Console and Cloud Shell
+
+### 2.4. Getting Started With GCP And Qwiklabs
+
+### 2.5. Lab: Working with GCP Cloud Console and Cloud Shell
+
+### 2.6. Lab Review: Console and Cloud Shell
+
+### 2.7. Lab Intro: Infrastructure Preview
+
+### 2.8. Lab: Infrastructure Preview
+
+### 2.9. Lab Review: Infrastructure Preview
+
+### 2.10. Demo: Projects
+
+### 2.11. Review
+
+
+
 Lab: Conole and Cloud Shell
 Create Storage bucket using Console
 Open Storage -> Storage -> Bowser
