@@ -71,7 +71,7 @@ All data centers use 2% of the world's electricity.
 
 ### 1.10. Google offers a customer-friendly pricing
 
-- Sub-hour billing - for compute, data processing, and other services
+- Sub-hour billing - for the compute, data processing, and other services
 - Discounts for sustainable use - automatically applied to virtual machine use over 25% a month
 - Discounts for committed use - pay less for steady, long-term workloads
 - Discounts for pre-emptive use - pay less for interruptible workloads
@@ -123,7 +123,7 @@ Security is designed into Google’s technical infrastructure.
 
 ### 1.14. Budgets and Billing
 
-- Budgets & alerts, per billing account or per GCP project
+- Budgets & alerts, per billing account or GCP project
 - Billing export, export to BigQuery or Cloud Storage
 - Reports
 - Quotas, for resource consumption (rate quota, allocation quotas)
@@ -316,7 +316,7 @@ Cloud Storage, Cloud SQL, Cloud Spanner, Cloud Datastore, and Google Bigtable. Y
 
 ### 4.2. Cloud Storage
 
-Object storage is not the same as file storage, where you manage your data as a hierarchy of folders. Object storage is not the same as block storage, where the OS manages data as chunks of disk. Instead, object storage means you say to your storage ‘here, keep these bytes I give you’, and the storage lets you address it with a unique key. Often these unique keys are in a form of URLs, which means object storage interacts nicely with web technologies. Cloud storage works just like that, just better! Fully manages scalable service, so no need to provision capacity ahead of time.
+Object storage is not the same as file storage, where you manage your data as a hierarchy of folders. Object storage is not the same as block storage, where the OS manages data as chunks of a disk. Instead, object storage means you say to your storage "here, keep these bytes I give you", and the storage lets you address it with a unique key. Often these unique keys are in a form of URLs, which means object storage interacts nicely with web technologies. Cloud storage works just like that, just better! Fully manages scalable service, so no need to provision capacity ahead of time.
 
 Use Cloud Storage for:
 
@@ -355,7 +355,7 @@ Data to Cloud Storage:
 Other GCP services <-> Cloud Storage:
 
 - BigQuery, Cloud SQL – import/Export tables
-- App Engine – object storage, logs and Datastore backups
+- App Engine – object storage, logs, and Datastore backups
 - Compute Engine – Startup Scripts, CE images, and general object storage
 
 ### 4.4. Google Cloud Bigtable
@@ -384,7 +384,7 @@ Bigtable access:
 
 - Application API -  for example, HBase REST Server
 - Streaming - for example Spark Streaming
-- Batch processing - for example, Hadoop MapReduce, Dataflow or Spark
+- Batch processing - for example, Hadoop MapReduce, Dataflow, or Spark
 
 ### 4.5. Google Cloud SQL and Google Cloud Spanner
 
@@ -477,22 +477,22 @@ Kubernetes Engine is like PaaS in that it was built with the need of developers 
 
 #### 5.1.1. Containers
 
-IaaS let you share compute resources with others by virtualizing the hardware. Each VM has its own instance of an OS of your choice, and you can build and run applications on it, with access to memory, file systems, networking, etc. BUT flexibility comes with a cost, as the smallest unit of compute engine is VM, and with the application, there is also OS (GB ins size), and it can take minutes to boot up. So the scaling might be an issue, as it will contain the unneeded OS.
+IaaS let you share compute resources with others by virtualizing the hardware. Each VM has its instance of an OS of your choice, and you can build and run applications on it, with access to memory, file systems, networking, etc. BUT flexibility comes with a cost, as the smallest unit of compute engine is VM, and with the application, there is also OS (GB ins size), and it can take minutes to boot up. So the scaling might be an issue, as it will contain the unneeded OS.
 
-In PaaS, you get access to the family of service that apps need. So all you do is write your code in self-contained workloads, that use these services and include any dependent libraries. As demand for app increases, platform scales your app seamlessly, BUT you give up control of underlying server architecture.
+In PaaS, you get access to the family of services that apps need. So all you do is write your code in self-contained workloads, that use these services and include any dependent libraries. As demand for the app increases, the platform scales your app seamlessly, BUT you give up control of the underlying server architecture.
 
 That is where containers come in.
 
-Independent scalability of workloads like you get in PaaS and an abstraction layer of the OS and hardware like you get in an IaaS. Containers get you an invisible box around your code and it's dependencies, with limited access to underlying file system and hardware.
+Independent scalability of workloads like you get in PaaS and an abstraction layer of the OS and hardware like you get in an IaaS. Containers get you an invisible box around your code and its dependencies, with limited access to the underlying file system and hardware.
 A process is an instance of a running program. The container starts as quickly as a new process. Compare that to booting a new instance of an OS. All you need on each host is OS that supports containers and container runtime.
 
 **You are virtualizing the OS rather than the hardware**. **The environment scales like PaaS, it gives you almost the same flexibility as IaaS**.
 
-The container abstraction makes your code very portable, you can treat the OS and hardware as a black box. So you can move your code from dev to staging to prod. env. or from laptop to the cloud without changing or rebuilding it.
+The container abstraction makes your code very portable, you can treat the OS and hardware as a black box. So you can move your code from dev to staging to prod. env. or from the laptop to the cloud without changing or rebuilding it.
 
 If you want to scale a web server you can do so in seconds and deploy hundreds of them on a single host.
 
-You want to deploy your application using lots of containers, each performing their own function using a microservices pattern. The units of code in those containers can communicate with each other over some network. In this case, you have made an application modular. They deploy easily and scale independently. And the Host can scale up and down, start and stop containers, as demand for your app changes or as hosts fail and are replaced. A tool that does these tasks well is Kubernetes.
+You want to deploy your application using lots of containers, each performing its function using a microservices pattern. The units of code in those containers can communicate with each other over some network. In this case, you have made an application modular. They deploy easily and scale independently. And the Host can scale up and down, start and stop containers, as demand for your app changes or as hosts fail and are replaced. A tool that does these tasks well is Kubernetes.
 
 Kubernetes makes it easy to orchestrate many containers on many hosts, scale them, roll out new versions of them, or roll back changes.
 
@@ -543,7 +543,7 @@ ENTRYPOINT ["python3", "app.py"]
 ```sh
 # Build and run
 
-#builds the container and stores on a local system as a runnable image.
+#builds the container and stores it on a local system as a runnable image.
 docker build -t py-server 
 
 #to run the image
@@ -554,7 +554,7 @@ In the real world, you would upload the container to a container registry system
 
 ### 5.2. Introduction to Kubernetes and GKE
 
-Kubernetes is an open-source orchestrator for containers, so you can better manage and scale your applications. Kubernetes offers an API that let's control it's operations, through several utilities. Kubernetes lets you deploy containers on a set of nodes called a cluster.
+Kubernetes is an open-source orchestrator for containers, so you can better manage and scale your applications. Kubernetes offers an API that let's control its operations, through several utilities. Kubernetes lets you deploy containers on a set of nodes called a cluster.
 
 #### 5.2.1 What is a  cluster?
 
@@ -579,7 +579,7 @@ gcloud container clusters create k1
 
 #### 5.2.3 What is a pod?
 
-Whenever Kubernetes deploys a container or related containers it does so in a pod abstraction. A pod is the smallest deployable unit in Kubernetes. Think of a pod as a running process on your cluster, it could be one component of your application or even an entire application. If you have multiple containers per pod, they will automatically share networking, share disk storage. Each pod in Kubernetes gets a unique IP address and set of ports for your containers. As containers in pods can communicate with each other using the localhost network interface they do not care about on which nods they are deployed on.
+Whenever Kubernetes deploys a container or related containers it does so in a pod abstraction. A pod is the smallest deployable unit in Kubernetes. Think of a pod as a running process on your cluster, it could be one component of your application or even an entire application. If you have multiple containers per pod, they will automatically share networking, share disk storage. Each pod in Kubernetes gets a unique IP address and set of ports for your containers. As containers in pods can communicate with each other using the localhost network interface they do not care about which nods they are deployed on.
 
 ```sh
 # One way to run a container in a pod in Kubernetes is to use the kubectl run command.
@@ -589,9 +589,9 @@ kubectl run nginx --image=nginx:1.15.7
 
 Starts a deployment with a container running in a pod. The container running inside a pod is an image of an nginx server. Kubectl fetches the image & version from a Container Registry.
 
-#### 5.2.4 What is a deployment?
+#### 5.2.4 What is deployment?
 
-Deployment represents a group of replicas of the same pod. It keeps your pods running, even if a node on which some of them run on fails. You can use a deployment to contain a component of your application or even the entire application. To see the running pods run:
+Deployment represents a group of replicas of the same pod. It keeps your pods running, even if a node on which some of them run fails. You can use a deployment to contain a component of your application or even the entire application. To see the running pods run:
 
 ```sh
 kubectl get pods
@@ -620,7 +620,7 @@ kubectl get services
 ```
 
 ```sh
-# to scale deployment, three web servers in this case, all behind a service
+# to scale deployment, three web servers, in this case, all behind a service
 
 kubectl scale nginx --replicas=3
 ```
@@ -677,7 +677,7 @@ kubectl get deployments #status of deployment
 kubectl get services
 ```
 
-One attribute of deployment is its update strategy. A rolling update will create pods of the new version, one by one, waiting for each new version pod to become available, before destroying one of the old version pods. Rolling updates are a quick way to push out your application while spearing users of experiencing downtime.
+One attribute of deployment is its update strategy. A rolling update will create pods of the new version, one by one, waiting for each new version pod to become available, before destroying one of the old version pods. Rolling updates are a quick way to push out your application while spearing users from experiencing downtime.
 
 ```yaml
 # How to update the version of your application?
@@ -694,14 +694,14 @@ One attribute of deployment is its update strategy. A rolling update will create
 
 ### 5.3. Introduction to Hybrid and Multi-Cloud Computing (Anthos)
 
-Containers have become a popular way of breaking monolithic application down into micro-services so that they can be easily maintained and expanded. Traditionally, these systems have been hosted on-premises, somewhere in the company's network or company's data center (server update, installation, network changes, configuration, etc. might require from several months to years). Costly to upgrade, as upgrades are expensive and short lifecycle of the server.
+Containers have become a popular way of breaking monolithic application down into micro-services so that they can be easily maintained and expanded. Traditionally, these systems have been hosted on-premises, somewhere in the company's network or the company's data center (server update, installation, network changes, configuration, etc. might require from several months to years). Costly to upgrade, as upgrades are expensive and short lifecycle of the server.
 
 Modern distribution systems allow a more agile approach to managing your computing resources. It allows:
 
 - Move only some of your compute workload to the Cloud
 - Move at your own pace
 - Take advantage of clouds scalability and lower costs
-- Add specialized services to your compute resources stack (machine learning, content caching, data analysis, long term storage, IoT, etc.)
+- Add specialized services to your compute resources stack (machine learning, content caching, data analysis, long-term storage, IoT, etc.)
 
 Anthos is Google's modern solution for hybrid and multi-cloud systems and service management.
 
@@ -738,7 +738,7 @@ Both GKE and GKE On-Prem integrates with GCP Marketplace so that all of the clus
 
 #### 5.3.4 Marketplace applications are available to all clustersAnthos Service Mesh - Cloud Interconnect - Istio Open Source
 
-Service Meshes make apps more secure & observable. Enterprise applications might use 100s of microservices to handle computing workloads. Keeping track of all of these services and monitoring their health can quickly become a challenge. Anthos Service Mesh and Istio Open Source Service Meshes take all of these work of managing and securing your microservices. These service mesh layers can communicate across hybrid-network using Cloud Interconnect to sync and pass heir data.
+Service Meshes make apps more secure & observable. Enterprise applications might use 100s of microservices to handle computing workloads. Keeping track of all of these services and monitoring their health can quickly become a challenge. Anthos Service Mesh and Istio Open Source Service Meshes take all of these work of managing and securing your microservices. These service mesh layers can communicate across hybrid-network using Cloud Interconnect to sync and pass their data.
 
 #### 5.3.5 Stackdriver logging and Monitoring watch all sides
   
@@ -747,11 +747,11 @@ Stackdriver is built-in logging and monitoring solution for GCP. Stackdriver off
 #### 5.3.6 Configuration Manager is the single source of truth
 
 Lastly, Anthos Configuration Management provides a single source of truth for your cluster’s configuration.
-That source of truth is kept in a Policy Repository, which is actually a Git repository.
+That source of truth is kept in a Policy Repository, which is a Git repository.
 In this illustration, this repository happens to be located on-premises, but it can also be hosted in the cloud.
 The Anthos configuration Management agents use the Policy Repository to enforce configurations locally in each environment, managing the complexity across environments. Anthos Configuration Management also provides the ability to deploy code changes with a single repository commit. And the option to implement configuration inheritance, by using namespaces.
 
-### 5.5. Demo:Getting Started with Kubernetes Engine
+### 5.5. Demo: Getting Started with Kubernetes Engine
 
 ### 5.6. GCP Fundamentals: Getting Started with Kubernetes Engine
 
@@ -764,7 +764,7 @@ Open APIs and Services -> Dashboard:
 ```sh
 # start a cluster. Creates 2  Compute Engine 2 VM instances, 
 # also seen in GCE Instance Groups
-# also seend in GKE
+# also seen in GKE
 
 export MY_ZONE=us-central1-a
 gcloud container clusters create webfrontend --zone $MY_ZONE --num-nodes 2
@@ -802,7 +802,7 @@ kubectl scale deployment nginx --replicas 3
 ```
 
 ```sh
-# Now let’s look at new number of pods
+# Now let’s look at the new number of pods
 
 kubectl get pods
 ```
@@ -815,9 +815,9 @@ We have discussed two GCP products that provide compute infrastructure for appli
 
 - Compute Engine
 - Kubernetes Engine
-where you choose infrastructure of which your application runs (VMs for Compute, Containers for Kubernetes). If you do not want to focus on infrastructure at all, but want to focus on your code, use App Engine for that.
+where you choose the infrastructure of which your application runs (VMs for Compute, Containers for Kubernetes). If you do not want to focus on infrastructure at all, but want to focus on your code, use App Engine for that.
 
-PaaS = Platform as a Service. The App Engine manages the hardware and networking infrastructure, required to run the code. To deploy an application on App Engine, you just add your code to App Engine and App Engine service takes care of the rest.
+PaaS = Platform as a Service. The App Engine manages the hardware and networking infrastructure, required to run the code. To deploy an application on App Engine, you just add your code to App Engine and the App Engine service takes care of the rest.
 
 Built-in services:
 
@@ -855,12 +855,12 @@ Use App Engine’s standard environment runtime, provided by Google, to run your
 - PHP
 - Go
 
-If your application is in other languages, you will have to use App Engine Flexible environment.
+If your application is in other languages, you will have to use the App Engine Flexible Environment.
 
-If your application is not in sandbox mode (software independent of hardware, OS, or physical location of server):
+If your application is not in sandbox mode (software independent of hardware, OS, or physical location of the server):
 
 - no writing to the local file system, you will have to write to the DB system instead
-- request timeout in 60s
+- request timeout in 60 s
 - no third-party software (aka. no libraries))
 you will have to use App Engine’s flexible environment.
 
@@ -872,25 +872,25 @@ App Engine workflow:
 4. App Engine automatically scales & load balances them
 5. Application can make calls to services using APIs:
    1. NoSQL to make data persistent
-   2. caching of the data using memcached
-   3. searching, logging, user logging
+   2. caching of the data using Memcached
+   3. searching, logging, a user logging
    4. ability to launch actions, not triggered by user requests, like:
       1. task queues and
       2. task scheduler
 
 ### 6.3. Google App Engine Flexible Environment, Container
 
-If the standard environment is not for you, but you want to have the benefits of App Engine, use a flexible environment, where instead of a sandbox you can specify the container you App Engine runs in. You application runs inside a Docker Container on Google Compute Engine’s VM.
+If the standard environment is not for you, but you want to have the benefits of App Engine, use a flexible environment, where instead of a sandbox you can specify the container your App Engine runs in. Your application runs inside a Docker Container on Google Compute Engine’s VM.
 
 App Engine manages these Compute Engine VMs for you:
 
 - health checked
 - healed
 - you choose in which geographic location they are run in
-- critical, backwards compatible updates are automatically applied
+- critical, backward compatible updates are automatically applied
 So you can just focus on your code.
 
-App Engine flexible environment use standard runtime, can access App Engine services, like:
+App Engine flexible environment use standard runtime, it can access App Engine services, like:
 
 - Datastore
 - Memcache
@@ -899,14 +899,14 @@ App Engine flexible environment use standard runtime, can access App Engine serv
 
 ### 6.4. Google Cloud Endpoints and Apigee Edge
 
-Application Programming Interface (API) - Developers structure their code in a clean, well defined interface, that abstracts away needless details, and then they document that interface. That is an API. In order to add/remove features to an API as cleanly as possible, developers version their APIs.
+Application Programming Interface (API) - Developers structure their code in a clean, well-defined interface, that abstracts away needless details, and then they document that interface. That is an API. To add/remove features to an API as cleanly as possible, developers version their APIs.
 
 Two API management tools in GCP.
 
 Cloud Endpoint: helps you create and maintain an API.
 
 - Distributed API management through an API console
-- Expose your API using RESTful interface
+- Expose your API using a RESTful interface
 - Control access and validate calls with JSON Web Tokens and Google API key
 - Generate client libraries
 
@@ -919,7 +919,7 @@ Supported platforms:
 Apigee Edge Helps you secure and monetize APIs
 
 - A platform for making APIS available to your customers and partners
-- Contains analytics, monetization and developer portal
+- Contains analytics, monetization, and developer portal
 
 ### 6.5. Demonstration: Getting Started with App Engine
 
@@ -979,7 +979,7 @@ python main.py
 ```
 
 ```sh
-# Deploy application to App Engine service
+# Deploy the application to App Engine service
 
 gcloud app deploy
 
@@ -994,7 +994,7 @@ gcloud app deploy
 ```
 
 ```sh
-# Refresh App Engine Dashboard to see deployed application Click on link
+# Refresh App Engine Dashboard to see deployed application Click on the link
 ```
 
 ```sh
@@ -1036,7 +1036,7 @@ Setting up your environment in GCP can entail many steps:
 - Setting up network and storage
 - Keeping track of their configurations
 
-You can do this all by hand, imperative way, but there is a better way for that, by using a template and specifying how the environment should look like in a declarative way.
+You can do this all by hand, imperative way, but there is a better way for that, by using a template and specifying how the environment should look in a declarative way.
 
 - Provides repeatable deployments
 - Create a .yaml template, describing your environment and use Deployment Manager to create resources
@@ -1073,11 +1073,11 @@ It gives you insight into your application’s health, performance, and availabi
 Core components of Stackdriver:
 
 - Monitoring:
-  - Platform, system and application metrics
+  - Platform, system, and application metrics
   - Uptime/health checks
   - Dashboards and alerts
 - Logging:
-  - Platform, system and application logs
+  - Platform, system, and application logs
   - Log search, view, filter, and export
   - Log-based metrics
 - Trace:
@@ -1091,12 +1091,12 @@ Core components of Stackdriver:
 - Profiler:
   - Continuous profiling of CPU and memory consumption
 
-### 7.4. Demonstration:Getting Started with Deployment Manager and Stackdriver
+### 7.4. Demonstration: Getting Started with Deployment Manager and Stackdriver
 
 ### 7.5. GCP Fundamentals: Getting Started with Deployment Manager and Stackdriver
 
 ```sh
-# Define a variable with preferred GCP zone and verify that DEVSHELL_PROJECT_ID is valid
+# Define a variable with a preferred GCP zone and verify that DEVSHELL_PROJECT_ID is valid
 
 export MY_ZONE=us-central1-a
 echo $DEVSHELL_PROJECT_ID
@@ -1158,7 +1158,7 @@ Check deployment in console
 Compute Engine -> VM instances -> my-vm is created
 
 ```sh
-# Make a change to template’s startup script
+# Make a change to the template’s startup script
 
 sed -i -e "s/apt-get-update/apt-get-update; apt-get install nginx-light -/" deploy.yaml
 ```
@@ -1178,7 +1178,7 @@ Applications running on the VM use the service account to call Google Cloud APIs
 3. Click on STOP again to confirm.
 4. Click on the VM instance's name to open its VM instance details screen.
 5. Click on EDIT (pencil icon).
-6. Scroll down to the bottom of the page and select Compute Engine default service account from Service account dropdown.
+6. Scroll down to the bottom of the page and select Compute Engine default service account from the Service account dropdown.
 7. Select Allow full access to all Cloud APIs for Access scopes.
 8. Click on Save.
 9. Now, restart the VM by clicking on Start at the top of the VM instance details screen page.
@@ -1224,7 +1224,7 @@ Apache Hadoop is an open-source framework for big data. Based on the MapReduce p
 
 - Map function runs in parallel with a massive data set, to produce intermediate results
 - reduce function builds a final result set based on those intermediate results
-- Hadoop is used informally to encompass Apache Hadoop itself and it’s related projects, such as Spark, Pig, and Hive.
+- Hadoop is used informally to encompass Apache Hadoop itself and its related projects, such as Spark, Pig, and Hive.
 
 Cloud Dataproc is a fast, easy, managed way to run Hadoop and its projects on GCP.
 
@@ -1267,7 +1267,7 @@ Why use Cloud Dataflow?
 - ETL (extract/transfer/load) pipelines to move, filter, enrich, shape data
 - Data analysis: batch computation or continuous computation using streaming
 - Orchestration: creates pipelines that coordinate services, including external services
-- Integrates with GCP services, like Cloud Storage, Cloud Pub/Sub, BigQuery and BigTable
+- Integrates with GCP services, like Cloud Storage, Cloud Pub/Sub, BigQuery, and BigTable
 - Open-source Java and Python SDKs
 
 ### 8.4. BigQuery
@@ -1290,7 +1290,7 @@ Once it is into BigQuery:
 - Run super-fast SQL queries
 - against multiple terabytes of data
 - Using the processing power of Google’s infrastructure
-- You can read/write data in BigQuery via Cloud Dataflow, Hadoop and Spark
+- You can read/write data in BigQuery via Cloud Dataflow, Hadoop, and Spark
 
 ### 8.5. Cloud Pub/Sub and Cloud Datalab
 
@@ -1307,7 +1307,7 @@ Cloud Pub/sub is scalable, reliable messaging:
 
 Why Pub/Sub:
 
-- Building block for data ingestion in Dataflow, IoT, Marketing Analytics
+- A building block for data ingestion in Dataflow, IoT, Marketing Analytics
 - Foundation for Dataflow streaming
 - Push notifications for cloud-based applications
 - Connect applications across GCP (push/pull b/w Compute Engine and App Engine)
@@ -1317,19 +1317,19 @@ Why Pub/Sub:
 aka. Jupyter Notebooks,
 runs on Compute Engines VM
 
-- An interactive tool for large-scale data exploration, transformation, analysis and visualization
+- An interactive tool for large-scale data exploration, transformation, analysis, and visualization
 - Integrated, open-source (built on Jupyter Notebooks)
-- Analyze data in BigQuery, Compute Engine and Cloud Storage using Python, SQL, and JAvaScript
+- Analyze data in BigQuery, Compute Engine, and Cloud Storage using Python, SQL, and JAvaScript
 - Easily deploy models to BigQuery
 
 ### 8.6. Google Cloud Machine Learning Platform
 
-Machine Learning is one branch of the field of AI. It is a way of solving problems, without explicitly coding the solution. Instead coders built systems that improve themselves over time, through repeated exposure to sample data, which we call training data.
+Machine Learning is one branch of the field of AI. It is a way of solving problems, without explicitly coding the solution. Instead, coders built systems that improve themselves over time, through repeated exposure to sample data, which we call training data.
 
-Google machine-learning platform is available as a cloud service, so you can add innovative capabilities to your applications.
+Google's machine-learning platform is available as a cloud service, so you can add innovative capabilities to your applications.
 
 Cloud ML
-The platform provides modern machine-learning services with pre-trained models and a platform to generate your own tailored models. There is a range is services that stretches from highly general to the pre-customized.
+The platform provides modern machine-learning services with pre-trained models and a platform to generate your tailored models. There is a range is services that stretch from highly general to pre-customized.
 
 TensorFlow is an open-source software library, that is exceptionally well suited for machine-learning applications like neural networks.
 You can run TensorFlow wherever you like, but GCP is an ideal place for it because ML models need lots of computing resources and lots of training data.
@@ -1362,7 +1362,7 @@ Why use Cloud ML:
 - Highly accurate, even in a noisy environment
 - Access from any device
 - Uses ML models to reveal the structure and meaning of the text
-- Extract information about items mentioned in text documents, news articles and blog posts
+- Extract information about items mentioned in text documents, news articles, and blog posts
 
 #### 8.7.3. Cloud Translation API
 
@@ -1377,7 +1377,7 @@ Why use Cloud ML:
 - Flag inappropriate content
 - Support for a variety of video formats
 
-### 8.8. Demonstration:Getting Started with BigQuery
+### 8.8. Demonstration: Getting Started with BigQuery
 
 ### 8.9. GCP Fundamentals: Getting Started with BigQuery
 
@@ -1388,7 +1388,7 @@ Load data from Cloud Storage into BigQuery
 3. Create a table: name table: "access_log", use Google Cloud Storage location: "gs://cloud-training/gcpfci/access_log.csv"
 4. Click on the table name to view schema, preview to see data
 
-```sql
+```SQL
 -- Perform a query on the data using the BigQuery web UI
 
 select int64_field_6 as hour, count(*) as hit_count from log_data.access_log
