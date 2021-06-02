@@ -1202,173 +1202,249 @@ Dashboards -> VM instances
 
 ## 8. Big Data and Machine Learning in the Cloud
 
-Intro to Big Data and Machine Learning
+### 8.1. Introduction to Big Data and Machine Learning
+
 In the future, every company will be a data company! Making the fastest and best use of data is a critical source of competitive advantage.
 
-GCP provides a way for everybody to take advantage of Google investments in infrastructure and data processing innovation. GCP has automated the complexity of building and maintaining data and analytics systems.
-Google Cloud Big Data Platform
+GCP provides a way for everybody to take advantage of Google's investments in infrastructure and data processing innovation. GCP has automated the complexity of building and maintaining data and analytics systems.
+
+### 8.2. Google Cloud Big Data Platform
+
 Google Cloud’s big data services are fully managed and scalable. Integrated, serverless platform.
 Serverless = You do not have to worry about provisioning compute instances to run your jobs. The services are fully managed, and you pay only for the resources you consume.
 Integrated platform = GCP data services work together to help you create custom solutions
 
-Cloud Dataproc
-Managed Hadoop MapReduce, Spark, Pig, and Hive service. 
-Cloud Dataflow
-Stream and batch processing; unified and simplified pipelines
-BigQuery
-Analytics database; stream data at 100 000 rows per second
-Cloud Pub/Sub
-Scalable and flexible enterprise messaging
-Cloud Datalab
-Interactive data exploration
-Cloud Dataproc
+Cloud Dataproc | Cloud Dataflow | BigQuery | Cloud Pub/Sub | Cloud Datalab
+--- | --- | --- | --- | ---
+Managed Hadoop MapReduce, Spark, Pig, and Hive service | Stream and batch processing; unified and simplified pipelines | Analytics database; stream data at 100 000 rows per second | Scalable and flexible enterprise messaging | Interactive data exploration
+
+#### 8.2.1 Cloud Dataproc
+
 Apache Hadoop is an open-source framework for big data. Based on the MapReduce programming model:
-* Map function runs in parallel with a massive data set, to produce intermediate results, 
-* reduce function builds a final result set based on those intermediate results. 
-* Hadoop is used informally to encompass Apache Hadoop itself and it’s related projects, such as Spark, Pig, and Hive.
 
+- Map function runs in parallel with a massive data set, to produce intermediate results
+- reduce function builds a final result set based on those intermediate results
+- Hadoop is used informally to encompass Apache Hadoop itself and it’s related projects, such as Spark, Pig, and Hive.
 
-* Cloud Dataproc is a fast, easy, managed way to run Hadoop and its projects on GCP. 
-* Run-on Compute Engine’s VMs.
-* You can scale it up or down
-* Monitor your cluster using Stackdriver
-* Pay only for hardware (VMs) used while running the cluster
-* Preemptible instances (80% cheaper)
-* Spark and Spark SQL to perform data mining on cluster
-Cloud Dataflow
+Cloud Dataproc is a fast, easy, managed way to run Hadoop and its projects on GCP.
+
+- Run-on Compute Engine’s VMs.
+- You can scale it up or down
+- Monitor your cluster using Stackdriver
+- Pay only for hardware (VMs) used while running the cluster
+- Preemptible instances (80% cheaper)
+- Spark and Spark SQL to perform data mining on cluster
+
+### 8.3. Cloud Dataflow
+
 Dataproc is great when you have a dataset of known size. Or when you want to manage cluster size yourself.
 But what is your data shows up in real-time? Or it is in unpredictable size or rate?
-That is where Cloud Dataflow is a good choice. It is both:
-*  a unified programming model and 
-* a managed service.
 
+That is where Cloud Dataflow is a good choice. It is both:
+
+- a unified programming model and
+- a managed service.
 
 It lets you develop and execute a big range of data processing patterns:
-* extract, transform and load, 
-* batch computation, and continuous computation.
 
+- extract, transform and load,
+- batch computation, and continuous computation.
 
-* You use Dataflow to build data pipelines and the same pipelines work for both batch and streaming data.
-* No need to spin up a cluster or to size instances, 
-* Cloud Dataflow fully automated the management of whatever processing resources are required
-* Cloud Dataflow frees you from operational tasks, like resource management and performance optimization
+You use Dataflow to build data pipelines and the same pipelines work for both batch and streaming data.
 
+- No need to spin up a cluster or to size instances,
+- Cloud Dataflow fully automated the management of whatever processing resources are required
+- Cloud Dataflow frees you from operational tasks, like resource management and performance optimization
 
 Dataflow pipeline example:
-* Source - reads data from BigQuery table,
-* Transform - Processes it in a variety of ways (map + reduce operations)
-* Sink - writes output to Cloud Storage
 
+- Source - reads data from BigQuery table,
+- Transform - Processes it in a variety of ways (map + reduce operations)
+- Sink - writes output to Cloud Storage
 
 Why use Cloud Dataflow?
-* ETL (extract/transfor/load) pipelines to move, filter, enrich, shape data
-* Data analysis: batch computation or continuous computation using streaming
-* Orchestration: creates pipelines that coordinate services, including external services
-* Integrates with GCP services, like Cloud Storage, Cloud Pub/Sub, BigQuery and BigTable
-* Open-source Java and Python SDKs
-BigQuery
-Suppose instead of a dynamic pipeline, your data needs to run more in the way of a vast sea of data. You want to do ad hoc SQL queries on a massive data set. That is what BigQueryis for. 
-* It is Google’s fully managed Petabytes scale, low-cost analytics data warehouse.
-* No infrastructure to manage, so you can focus on analyzing data to find meaningful insights
-* Use familiar SQL
-* Pay-as-you-go model
 
+- ETL (extract/transfer/load) pipelines to move, filter, enrich, shape data
+- Data analysis: batch computation or continuous computation using streaming
+- Orchestration: creates pipelines that coordinate services, including external services
+- Integrates with GCP services, like Cloud Storage, Cloud Pub/Sub, BigQuery and BigTable
+- Open-source Java and Python SDKs
+
+### 8.4. BigQuery
+
+Suppose instead of a dynamic pipeline, your data needs to run more in the way of a vast sea of data. You want to do ad hoc SQL queries on a massive data set. That is what BigQuery is for.
+
+- It is Google’s fully managed Petabytes scale, low-cost analytics data warehouse.
+- No infrastructure to manage, so you can focus on analyzing data to find meaningful insights
+- Use familiar SQL
+- Pay-as-you-go model
 
 To get data into BigQuery:
-* Load it from Cloud Storage
-* Load it from Cloud Datastore
-* Strem it into BigQuery
 
+- Load it from Cloud Storage
+- Load it from Cloud Datastore
+- Stream it into BigQuery
 
 Once it is into BigQuery:
-* Run super-fast SQL queries 
-* against multiple terabytes of data
-* Using the processing power of Google’s infrastructure
-* You can read/write data in BigQuery via Cloud Dataflow, Hadoop and Spark
-Cloud Pub/Sub
-Pub = publishers
+
+- Run super-fast SQL queries
+- against multiple terabytes of data
+- Using the processing power of Google’s infrastructure
+- You can read/write data in BigQuery via Cloud Dataflow, Hadoop and Spark
+
+### 8.5. Cloud Pub/Sub and Cloud Datalab
+
+#### 8.5.1. Cloud Pub/Sub
+
+Pub = Publishers
 Sub = Subscribers
 
+Cloud Pub/sub is scalable, reliable messaging:
 
-Cloud Pub/sub is scalable, reliable messaging
-* Support many-to-many asynchronous messaging
-* Application components make push/pull subscriptions to topics
-* Includes support for offline consumers
-Why Pub/Sub
-* Building block for data ingestion in Dataflow, IoT, Marketing Analytics
-* Foundation for Dataflow streaming
-* Push notifications for cloud-based applications
-* Connect applications across GCP (push/pull b/w Compute Engine and App Engine)
-Cloud Datalab
+- Support many-to-many asynchronous messaging
+- Application components make push/pull subscriptions to topics
+- Includes support for offline consumers
 
+Why Pub/Sub:
+
+- Building block for data ingestion in Dataflow, IoT, Marketing Analytics
+- Foundation for Dataflow streaming
+- Push notifications for cloud-based applications
+- Connect applications across GCP (push/pull b/w Compute Engine and App Engine)
+
+#### 8.5.2. Cloud Datalab
 
 aka. Jupyter Notebooks,
 runs on Compute Engines VM
 
+- An interactive tool for large-scale data exploration, transformation, analysis and visualization
+- Integrated, open-source (built on Jupyter Notebooks)
+- Analyze data in BigQuery, Compute Engine and Cloud Storage using Python, SQL, and JAvaScript
+- Easily deploy models to BigQuery
 
-* An interactive tool for large-scale data exploration, transformation, analysis and visualization
-* Integrated, open-source (built on Jupyter Notebooks)
-* Analyze data in BigQuery, Compute Engine and Cloud Storage using Python, SQL, and JAvaScript
-* Easily deploy models to BigQuery
-Google Cloud Machine Learning Platform
-ML is one branch of the field of AI. It is a way of solving problems, without explicitly coding the solution. Instead coders built systems that improve themselves over time, through repeated exposure to sample data, which we call training data.
+### 8.6. Google Cloud Machine Learning Platform
 
+Machine Learning is one branch of the field of AI. It is a way of solving problems, without explicitly coding the solution. Instead coders built systems that improve themselves over time, through repeated exposure to sample data, which we call training data.
 
-Google machine-learning platform is available as a cloud service, so you can add innovative capabilities to your applications. 
-Cloud ML 
-The platform provides modern machine-learning services with pre-trained models and a platform to generate your own tailored models.
+Google machine-learning platform is available as a cloud service, so you can add innovative capabilities to your applications.
 
-
-There is a range is services that stretch from highly general to the pre-customized.
-
+Cloud ML
+The platform provides modern machine-learning services with pre-trained models and a platform to generate your own tailored models. There is a range is services that stretches from highly general to the pre-customized.
 
 TensorFlow is an open-source software library, that is exceptionally well suited for machine-learning applications like neural networks.
-You can run TensorFlow wherever you like, but GCP is an ideal place for it because ML models need lots of computing resources and lots of training data. 
-TensorFlow can take advantage of Tensor processing units - hardware devices designed to accelerate ML workloads with TensorFlow. GCP makes them available in the cloud with Compute Engine’s VMs. Each cloud TPU provides up to 180 teraflops of performance (MacBook Pro up to 4 teraflops). 
-Why use Cloud ML
-* For structured data:
-   * Classification and regression
-   * Recommendation
-   * Anomaly detection
-* For unstructured data:
-   * Image and video analytics
-   * Text analysis
-Machine Learning APIs
-Cloud Vision API
-Analyze Images with a simple Rest API
-* Logo detection, label detection, etc
-* Gain insight from images
-* Detect inappropriate content
-* Analyze sentiment
-* Extract text
+You can run TensorFlow wherever you like, but GCP is an ideal place for it because ML models need lots of computing resources and lots of training data.
 
+TensorFlow can take advantage of Tensor processing units - hardware devices designed to accelerate ML workloads with TensorFlow. GCP makes them available in the cloud with Compute Engine’s VMs. Each cloud TPU provides up to 180 teraflops of performance (MacBook Pro up to 4 teraflops).
 
-Cloud Natural Language (Speach) API
-* Can return text in real-time (80+ languages)
-* Highly accurate, even in a noisy environment
-* Access from any device
-* Uses ML models to reveal the structure and meaning of the text
-* Extract information about items mentioned in text documents, news articles and blog posts
-Cloud Translation API
-* Translate arbitrary strings b/w thousands of language pairs
-* Programmatically detect the language of a document
-* Support for dozens of languages
-Cloud Video Intelligence API
-* Annotate the content of videos
-* Detect scene changes
-* Flag inappropriate content
-* Support for a variety of video formats
-Lab: Getting Started with BigQuery
+Why use Cloud ML:
+
+- For structured data:
+  - Classification and regression
+  - Recommendation
+  - Anomaly detection
+- For unstructured data:
+  - Image and video analytics
+  - Text analysis
+
+### 8.7. Machine learning APIs
+
+#### 8.7.1. Cloud Vision API
+
+- Logo detection, label detection, etc
+- Gain insight from images
+- Detect inappropriate content
+- Analyze sentiment
+- Extract text
+
+#### 8.7.2. Cloud Natural Language (Speech) API
+
+- Can return text in real-time (80+ languages)
+- Highly accurate, even in a noisy environment
+- Access from any device
+- Uses ML models to reveal the structure and meaning of the text
+- Extract information about items mentioned in text documents, news articles and blog posts
+
+#### 8.7.3. Cloud Translation API
+
+- Translate arbitrary strings b/w thousands of language pairs
+- Programmatically detect the language of a document
+- Support for dozens of languages
+
+#### 8.7.4. Cloud Video Intelligence API
+
+- Annotate the content of videos
+- Detect scene changes
+- Flag inappropriate content
+- Support for a variety of video formats
+
+### 8.8. Demonstration:Getting Started with BigQuery
+
+### 8.9. GCP Fundamentals: Getting Started with BigQuery
+
 Load data from Cloud Storage into BigQuery
-Open BigQuery in GCP Console
-Create a new dataset, name a dataset, select location
-Add a table, use Google Cloud Storage location, select bucket; name table; use Schema
-Click on the table name to view schema, preview to see data
-Perform a query using BigQuery web user interface
-Open Compose Query
-select int64_field_6 as hour, count(*) as hitcount from logdata.accesslog
-    group by hour
-    order by hour
-Perform a query using CloudShell or SDK
-$ bq query “select string_field_10 as request, count(*) as requestcount from logdata.accesslog group by request order by requestcount desc”
-Review
+
+1. Open BigQuery in GCP Console
+2. Create a new dataset -> name a dataset: "log_data"  & select location: "US"
+3. Create a table: name table: "access_log", use Google Cloud Storage location: "gs://cloud-training/gcpfci/access_log.csv"
+4. Click on the table name to view schema, preview to see data
+
+```sql
+-- Perform a query on the data using the BigQuery web UI
+
+select int64_field_6 as hour, count(*) as hit_count from log_data.access_log
+group by hour
+order by hour
+```
+
+Row | hour | hit_count
+---: | ----: | ---:
+1 | 0 | 26983
+2 | 1 | 12287
+3 | 2 | 8824
+4 | 3 | 6607
+5 | 4 | 10519
+6 | 5 | 14581
+7 | 6 | 26634
+8 | 7 | 73708
+9 | 8 | 218842
+10 | 9 | 219769
+11 | 10 | 115119
+12 | 11 | 58151
+13 | 12 | 55623
+14 | 13 | 55625
+15 | 14 | 56057
+16 | 15 | 55675
+17 | 16 | 55573
+18 | 17 | 55740
+19 | 18 | 55800
+20 | 19 | 55935
+21 | 20 | 55996
+22 | 21 | 55797
+23 | 22 | 55778
+24 | 23 | 55755
+
+```sh
+# Perform a query on the data using the bq command
+
+bq query "select string_field_10 as request, count(*) as request_count from log_data.access_log group by request order by request_count desc"
+```
+
+Row | request | request_count
+---: | :---- | ---:
+1 | GET /store HTTP/1.0 | 337293
+2 | GET /index.html HTTP/1.0 | 336193
+3 | GET /products HTTP/1.0 | 280937
+4 | GET /services HTTP/1.0 | 169090
+5 | GET /products/desserttoppings HTTP/1.0 | 56580
+6 | GET /products/floorwaxes HTTP/1.0 | 56451
+7 | GET /careers HTTP/1.0 | 56412
+8 | GET /services/turnipwinding HTTP/1.0 | 56401
+9 | GET /services/spacetravel HTTP/1.0 | 56176
+10 | GET /favicon.ico HTTP/1.0 | 55845
+
+## 9. Summary and Review
+
+<!-- TODO compare compute options -->
+<!-- TODO compare load-balancing options -->
+<!-- TODO compare interconnect options -->
+<!-- TODO compare storage options -->
