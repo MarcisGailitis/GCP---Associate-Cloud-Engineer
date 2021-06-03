@@ -16,11 +16,16 @@
 
 Four ways to interact with GCP:
 
-- GCP Console - console.cloud.google.com
-- SDK - $ gcloud compute instances list
+- GCP Console - Web user interface - console.cloud.google.com
+- SDK - Command line interface - gcloud compute instances list
   - Cloud Shell - temporary VM with 5 GB persistent disk with Cloud SDK preinstalled
-- REST-based API - OAuth 2
-- Mobile App
+  - gcloud - for working with Compute Engine and many Google Cloud services
+  - gsutil - for working with Cloud Storage
+  - kubectl - for working with Google Kubernetes Engine and Kubernetes
+  - bq - for working with BigQuery
+  - cloudshell - to work with Cloud Shell utility
+- REST-based API - For custom applications (in: get, post, put, delete, out: JSON) -  OAuth 2
+- Mobile App - iOS & android- manage VMs, manage App Engine, manage billing
 
 ### 2.3. Lab Intro: Console and Cloud Shell
 
@@ -28,65 +33,75 @@ Four ways to interact with GCP:
 
 ### 2.5. Lab: Working with GCP Cloud Console and Cloud Shell
 
+```sh
+gsutil mb gs://<BUCKET_NAME>
+gsutil cp ‘my file.txt' gs://[BUCKET_NAME]
+```
+
+```sh
+# Create a persistent state in Cloud shell
+# Every time you close Cloud Shell and reopen it, a new VM is allocated, and
+# the environment variable you just set disappears.
+
+INFRACLASS_REGION=europe-west1
+echo $INFRACLASS_REGION
+
+mkdir infraclass
+touch infraclass/config
+echo INFRACLASS_REGION=$INFRACLASS_REGION >> ~/infraclass/config
+INFRACLASS_PROJECT_ID=qwiklabs-gcp-01-6b3d5788ca14
+echo INFRACLASS_PROJECT_ID=$INFRACLASS_PROJECT_ID >> ~/infraclass/config
+
+echo "source infraclass/config" >> .profile
+```
+
 ### 2.6. Lab Review: Console and Cloud Shell
 
 ### 2.7. Lab Intro: Infrastructure Preview
 
 ### 2.8. Lab: Infrastructure Preview
 
+Open Jenkins in the marketplace:
+Marketplace -> Jenkins Certified by Bitnami -> Launch -> Deploy
+Deployment Manager -> jenkins-1 is being deployed
+
+Visit the site
+ssh into service
+
+```sh
+sudo /opt/bitnami/ctlscript.sh restart
+```
+
 ### 2.9. Lab Review: Infrastructure Preview
 
 ### 2.10. Demo: Projects
 
-### 2.11. Review
-
-
-
-Lab: Conole and Cloud Shell
-Create Storage bucket using Console
-Open Storage -> Storage -> Bowser
-Create bucket -> Enter a globally unique name (GCP Project ID)
-Specify class, access, encryption
-Create
-Create Storage bucket using Cloud Shell
-$ gsutil mb gs://$DEVSHELL_PROJECT_ID
-$ gsutil cp file gs://<bucket_name>
-
-
-
-
-$ INFRACLASS_REGION=us-central1
-$ mkdir infraclass
-$ touch infraclass/config
-$ echo “INFRACLASS_REGION=$INFRACLASS_REGION” >> ~/infraclass/config
-$ nano .profile
-source infraclass/config
-Lab: Infrastructure
-Open Jenkins in the marketplace
-Marketplace -> Jenkins Certified by Bitnami -> Launch on Compute Engine
-Create New VM -> jenkins-1 -> Deploy
-Deployment Manager -> jenkins-1 is being deployed
-Visit the site
-ssh into service
-Demo: Projects
 Projects isolate related resources from one another
-Create a project in the console
-Click on existing project -> New Project
+
+1. Create a project in the Cloud Console
+IAM & Admin -> Manage Resources -> New Project
 Enter a project name -> Create
-Shut down a project in the console
-Click on the project -> Shut Down
+
+2. Shut down a project in the Cloud Console
+IAM & Admin -> Manage Resources -> Delete
 Project is deleted 30 days after shut down
 
+3. List active project ID in Cloud Shell
+`gcloud config list | grep project`
 
-See project ID in Cloud Shell
-$ gcloud config list | grep project
-Change project_id in Cloud Shell
-$ export PROJECT_1_ID=project_ID_from_GCP_Console
-$ gcloud config set project $PROJECT1_ID
-Virtual Networks
-Overview
+4. Change project_id in Cloud Shell
+`gcloud config set project $PROJECT1_ID`
+
+5. delete project in Cloud Shell
+`gcloud project delete $PROJECT1_ID`
+
+### 2.11. Review
+
+## 3. Virtual Networks
+
+
+
 Virtual Network = software-defined network in GCP. Thinking about resources as services, instead of hardware, will help you understand the available options.
-
 
 GCP consists of:
 * Regions (specific geographic location, where you can run your resources), divided smaller into zones.
@@ -96,13 +111,11 @@ GCP consists of:
 Virtual Private Cloud (VPC)
 Managed networking functionality for your cloud platform resources.
 
-
 With GCP you can:
 *  provision your resources, 
 * connect them, 
 * and isolate them from each other 
 in a virtual private cloud.
-
 
 VPC is a comprehensive set of Google-managed networking objects:
 * Projects - encompass every single service including networks
@@ -138,17 +151,9 @@ Expandible up to /16
 Full control of IP ranges
 REgional IP allocation
 Expandible to any RFC 1918 size
-	
-
-  
 
 Subnetwork
 VMs can be on the same subnet but in different zones.
-  
-
-
-
-  
 
 Four reserver IP addresses in the subnet 
 * .0 - reserved for network
@@ -156,7 +161,6 @@ Four reserver IP addresses in the subnet
 * Second to last address - broadcast address (?)
 * Last address - broadcast address
   
-
 Demo: expand a subnet
 Custom subnet with /29 mask, which provides you with 8 addresses, but from those 4 are reserved by GCP. When you create 5th VM, you will get an error msg - “IP Space is exhausted”, so you need to increase subnet capacity. To do that:
 Open either VPC Network in Navigation Menu or click on nic0 -> subnet -> edit /23 save.
