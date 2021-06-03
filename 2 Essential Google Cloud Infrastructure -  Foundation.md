@@ -99,39 +99,46 @@ Project is deleted 30 days after shut down
 
 ## 3. Virtual Networks
 
+### 3.01. Overview
 
-
-Virtual Network = software-defined network in GCP. Thinking about resources as services, instead of hardware, will help you understand the available options.
+Virtual Network = GCP uses a software-defined network that is built on a global fiber infrastructure. Thinking about resources as services, instead of a hardware, will help you understand the available options.
 
 GCP consists of:
-* Regions (specific geographic location, where you can run your resources), divided smaller into zones.
-* Points-of-Presence (PoPs)
-* Global private network
-* Services
-Virtual Private Cloud (VPC)
-Managed networking functionality for your cloud platform resources.
+
+- Regions (specific geographic location, where you can run your resources) are divided smaller into zones.
+- Points-of-Presence (PoPs) are where Google's network is connected to the rest of the internet.
+- Global private network
+- Services
+
+### 3.02. Virtual Private Cloud
+
+Virtual Private Cloud (VPC) - managed networking functionality for your cloud platform resources.
 
 With GCP you can:
-*  provision your resources, 
-* connect them, 
-* and isolate them from each other 
+
+- provision your resources
+- connect them
+- and isolate them from each other
 in a virtual private cloud.
 
 VPC is a comprehensive set of Google-managed networking objects:
-* Projects - encompass every single service including networks
-* Networks - default, auto or  custom mode
-* Subnetworks - allow you to divide or segregate your network
-* Regions - represents Google’s data centers
-* Zones - represents Google’s data centers
-* IP addresses - internal, external, range
-* VMs - configuring VM instances from a networking perspective
-* Routes
-* Firewall rules
-Projects, networks, and subnetworks
-Project
-* Associates objects and services with billing
-* Contains networks, that can be shared/peered
-Network
+
+- Projects - encompass every single service, including networks
+- Networks - default, auto or  custom mode
+- Subnetworks - allow you to divide or segregate your environment
+- Regions & Zones- represents Google’s data centers
+- IP addresses - internal, external, range
+- VMs - configuring VM instances from a networking perspective
+- Routes & Firewall rules
+
+### 3.03. Projects, networks, and subnetworks
+
+Project:
+
+- Associates objects and services with billing
+- Contains networks, that can be shared/peered
+
+Network:
 * Has no IP address range, but instead are simply a construct of all individual IP addresses and services within the network
 * Is global and spans all available regions
 * Contains regional subnetworks
@@ -152,7 +159,7 @@ Full control of IP ranges
 REgional IP allocation
 Expandible to any RFC 1918 size
 
-Subnetwork
+Subnetwork:
 VMs can be on the same subnet but in different zones.
 
 Four reserver IP addresses in the subnet 
@@ -161,10 +168,13 @@ Four reserver IP addresses in the subnet
 * Second to last address - broadcast address (?)
 * Last address - broadcast address
   
+### 3.04. Demo: Expand a Subnet
+
 Demo: expand a subnet
 Custom subnet with /29 mask, which provides you with 8 addresses, but from those 4 are reserved by GCP. When you create 5th VM, you will get an error msg - “IP Space is exhausted”, so you need to increase subnet capacity. To do that:
 Open either VPC Network in Navigation Menu or click on nic0 -> subnet -> edit /23 save.
 
+### 3.05. IP addresses
 
 IP addresses
 Internal IP:
@@ -178,14 +188,9 @@ External IP:
 * Reserved (static)
 * VM does not know external IP, it is mapped to the internal IP
 
+### 3.06. Demo: Internal and external IP
 
-
-
-
-
-
-
-Demo: internal and external IP
+emo: internal and external IP
 Compute Engine -> Create -> management, security, disc, networking (...) -> Networking:
 * Tags
 * Hostname
@@ -204,34 +209,31 @@ Compute Engine -> Create -> management, security, disc, networking (...) -> Netw
       * Ephemeral
       * Create an IP address
    * IP Forwarding
+
+### 3.07. Mapping IP addresses
+
 Mapping IP address
 External IPs are mapped to internal IPs. The external IP is mapped to VMs internal IP by VPC.
 
-
 $ ifconfig only shows the internal IP address
 
-
 DNS resolution for internal addresses
-
 
 Each instance has a hostname that can be resolved to an internal IP address:
 * The hostname is the same as instance name
 * FQDN is [hostname].[zone].c.[project-id].internal
    * Example: my-server.us.cental1-a.c.guestbook-151617.internal
 
-
 Name resolution is handled by internal DNS resolver:
 * Provided as part of Compute Engine (169.254.169.254)
 * Configured for use on instance via DHCP
 * Provided answer for internal/external addresses
-
 
 DNS resolution for external addresses
 * Instances with external IP addresses can allow connections from hosts outside the project
    * Users connect directly using external IP address
 * DNS records for external address ca be published using existing DNS servers
 * DNS zones can be hosted using Cloud DNS
-
 
 Cloud DNS
 * Google’s DNS server
@@ -244,16 +246,15 @@ Let you assign a range of IP addresses as aliases to a VM’s network interface,
 Useful, if you have multiple services running on VM and you want to assign a different IP address to each service. You can configure multiple IP addresses, representing containers or applications hosted in a VM, without having to define a separate network interface.
 You just draw the alias IP range from the local subnets primary or secondary CIDR ranges.
   
+### 3.08. Routes and firewall rules
 
 Routes and firewall rules
 A route is a mapping of an IP range to a destination.
-
 
 Every network has:
 * Routes, that let instances in a network send traffic directly to each other, even across subnets
 * A default route that directs packets to destinations that outside the network
 Firewall rules must also allow the packet.
-
 
 Routes map traffic to destination networks
 * Apply to traffic egressing a VM
@@ -263,12 +264,6 @@ Routes map traffic to destination networks
 * The destination is in CIDR notation
 * Traffic is ONLY delivered if it also matches a firewall rule
 
-
-.  
-  
-
-
-
 Firewall rules protect your VM instances from unapproved connections
 * VPC network functions as a distributed firewall
 * Firewall rules are applied to the network as a whole
@@ -276,20 +271,14 @@ Firewall rules protect your VM instances from unapproved connections
 * Firewall rules are stateful
 * Implied deny all ingress (inbound connections) and allow all egress (outbound connections)
 
-
-  
-
-  
-
-  
+### 3.09. Pricing
 
 Pricing
 Response to ingress = Egress = charge
-  
 
-  
+### 3.10. Lab Intro: VPC Networking
 
-  
+### 3.11. Lab: VPC Networking
 
 Lab: VPC Networking
 In this lab, you create an auto-mode VPC network, with firewall rules and two VM instances, then you convert the VPC network from auto-mode to custom-mode network, and create other custom-mode networks. + explore connectivity across networks.
@@ -312,7 +301,6 @@ Click on nic0, to see that instances are part of auto-network created earlier
 Check connectivity b/w instances
 Ssh in one of the machines and ping other machine’s IP address. 
 Instances are in 2 separate regions but in the same VPC network/subnet, so should be able to ping these addresses 
-
 
 $ ping -c 3 vm_ip_address
 $ ping -c 3 mynet-eu-vm
@@ -351,13 +339,17 @@ $ gcloud compute firewall-rules list --sort-by=NETWORK
 Create some more VM instances, 1st in console, 2nd in Cloud Shell
 vm1 name: nanagement-us-vm, network = managementnet
 
-
 $ gcloud compute instances create privatenet-us-vm --zone=us-central1-c --machine-type=f1-micro --subnet=privatesubnet-us
 Lis VM instances in Cloud Shell
 $ gcloud compute instances list --sort-by=ZONEw
 Check connectivity b/w machines
 * external ping works
 * internal ping does not work as machines are in different networks
+
+### 3.12. Lab Review: VPC Networking
+
+### 3.13. Common network designs
+
 Common network designs
 Increases availability with multiple zones
 For increased availability: two VMs are in different zones but in the same sub-network.
@@ -373,19 +365,13 @@ Internal IP addresses only, whenever possible.
 
 Cloud NAT or managed  Network Address Translation service. Provision VM machines without public IP addresses, while allowing access to the internet in a controlled manner. Cloud NAT gateway implements outbound net, not inbound net.
 
-
-  
-
-
-
-
-
 Private Google access to Google API and Services
 To allow VM instances that only have internal IP to access to reach external IP addresses of Google’s APIs and services. For example, you need to enable Private Google access to access Storage Bucket contents
 Google Private Access has no effect on instances with external P addresses.
-  
 
+### 3.14. Lab Intro: Implement Private Google Access and Cloud NAT
 
+### 3.15. Lab: Implement Private Google Access and Cloud NAT
 
 Lab: Implement Private Google Access and Cloud NAT
 Created an instance with no external IP address
@@ -467,7 +453,13 @@ Create
 Check VM access to the internet
 $ sudo apt-get update
 Success
-Virtual Machines
+
+### 3.16. Lab Review: Implement Private Google Access and Cloud NAT
+
+### 3.17. Review
+
+## 4. Virtual Machines
+
 Compute Engine
 VMs are the most common infrastructure component and consist of: 
 * vCPU,
