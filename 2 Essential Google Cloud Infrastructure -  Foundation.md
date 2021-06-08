@@ -114,12 +114,13 @@ GCP consists of:
 
 Virtual Private Cloud (VPC) - managed networking functionality for your cloud platform resources.
 
+VPC networks are by default isolated private networking domains. Therefore, no internal IP address communication is allowed between networks, unless you set up mechanisms such as VPC peering or VPN.
+
 With GCP you can:
 
 - provision your resources
-- connect them
-- and isolate them from each other
-in a virtual private cloud.
+- connect them and
+- isolate them from each other in a virtual private cloud.
 
 VPC is a comprehensive set of Google-managed networking objects:
 
@@ -133,239 +134,297 @@ VPC is a comprehensive set of Google-managed networking objects:
 
 ### 3.03. Projects, networks, and subnetworks
 
-Project:
+#### 3.03.1. Project
 
 - Associates objects and services with billing
-- Contains networks, that can be shared/peered
+- Contains networks (up to 5), that can be shared/peered
 
-Network:
-* Has no IP address range, but instead are simply a construct of all individual IP addresses and services within the network
-* Is global and spans all available regions
-* Contains regional subnetworks
-* Is available as the default, auto, or custom mode.
-Default mode
-	Auto mode
-	Custom mode
-	Every project
-One Subnet per region
-Default firewall rules
-	Default network
-One subnet per region
-Regional IP allocation
-Fixed /20 subnetwork per region
-Expandible up to /16
-	No default subnets created
-Full control of IP ranges
-REgional IP allocation
-Expandible to any RFC 1918 size
+#### 3.03.2. Networks
 
-Subnetwork:
-VMs can be on the same subnet but in different zones.
+- Has no IP address range, but instead are simply a construct of all individual IP addresses and services within the network
+- Is global and spans all available regions
+- Contains regional subnetworks
+- Is available as the default, auto, or custom mode.
 
-Four reserver IP addresses in the subnet 
-* .0 - reserved for network
-* .1 - reserved for subnet’s gateway
-* Second to last address - broadcast address (?)
-* Last address - broadcast address
-  
+VPC Network Types:
+
+- Default:
+  - Every project
+  - **One Subnet per region**
+  - Default firewall rules
+- Auto Mode:
+  - Default network
+  - **One subnet per region**
+  - Regional IP allocation
+  - Fixed /20 subnetwork per region
+  - Expandible up to /16
+- Custom Mode:
+  - **No default subnets created**
+  - Full control of IP ranges
+  - Regional IP allocation
+  - Expandible to any RFC 1918 size
+
+![Network isolate systems](./img/14_30_41.png)
+
+![Google's VPC is global](./img/14_34_03.png)
+
+#### 3.03.3. Subnetworks
+
+![Subnetworks cross zones](./img/14_34_54.png)
+
+Four reserver IP addresses in the subnet:
+
+- .0 - reserved for network
+- .1 - reserved for subnet’s gateway
+- Second to last address - broadcast address (?)
+- Last address - broadcast address
+
+![Expand subnets w/o re-creating instances](./img/14_39_02.png)
+
 ### 3.04. Demo: Expand a Subnet
 
-Demo: expand a subnet
-Custom subnet with /29 mask, which provides you with 8 addresses, but from those 4 are reserved by GCP. When you create 5th VM, you will get an error msg - “IP Space is exhausted”, so you need to increase subnet capacity. To do that:
-Open either VPC Network in Navigation Menu or click on nic0 -> subnet -> edit /23 save.
+1. Custom subnet with /29 mask, which provides you with 8 addresses, but from those 4 are reserved by GCP.
+2. When you create 5th VM, you will get an error msg - “IP Space is exhausted”, so you need to increase subnet capacity.
+3. To do that: Open either VPC Network in Navigation Menu or click on nic0 -> subnet -> edit /23 (500+ instances) save.
+4. Retry on Compute Engine instances
 
 ### 3.05. IP addresses
 
-IP addresses
 Internal IP:
-* Allocated from subnet range to VMs by DHCP
-* DHCP leave is renewed every 24 hours
-* VM name + IP is registered with network-scope DNS
 
+- Allocated from subnet range to VMs by DHCP
+- DHCP lease is renewed every 24 hours
+- VM name + IP is registered with network-scope DNS
 
 External IP:
-* Assigned from the pool (ephemeral)
-* Reserved (static)
-* VM does not know external IP, it is mapped to the internal IP
+
+- Assigned from the pool (ephemeral)
+- Reserved (static)
+- VM does not know external IP, it is mapped to the internal IP
 
 ### 3.06. Demo: Internal and external IP
 
-emo: internal and external IP
 Compute Engine -> Create -> management, security, disc, networking (...) -> Networking:
-* Tags
-* Hostname
-* Network Interfaces:
-   * Network
-   * Subnet 
-      * /20 = over 4 000 IP addresses
-      * /23 = 500 (?) IP addresses
-      * /29 = 8 IP addresses
-   * Internal IP
-      * Ephemeral auto
-      * Ephemeral custom
-      * Reserve static internal IP
-   * External IP
-      * None - if instances do not need to have an IP address
-      * Ephemeral
-      * Create an IP address
-   * IP Forwarding
+
+- Tags
+- Hostname
+- Network Interfaces:
+  - Network
+  - Subnet:
+    - /20 = over 4 000 IP addresses
+    - /23 = 500 (510) IP addresses
+    - /29 = 8 IP addresses
 
 ### 3.07. Mapping IP addresses
 
-Mapping IP address
-External IPs are mapped to internal IPs. The external IP is mapped to VMs internal IP by VPC.
-
-$ ifconfig only shows the internal IP address
+The external IP is mapped to VMs internal IP by VPC. `sudo /sbin/ifconfig` only shows the internal IP address
 
 DNS resolution for internal addresses
 
 Each instance has a hostname that can be resolved to an internal IP address:
-* The hostname is the same as instance name
-* FQDN is [hostname].[zone].c.[project-id].internal
-   * Example: my-server.us.cental1-a.c.guestbook-151617.internal
+
+- The hostname is the same as instance name
+- FQDN is [hostname].[zone].c.[project-id].internal
+- Example: my-server.us.cental1-a.c.guestbook-151617.internal
 
 Name resolution is handled by internal DNS resolver:
-* Provided as part of Compute Engine (169.254.169.254)
-* Configured for use on instance via DHCP
-* Provided answer for internal/external addresses
 
-DNS resolution for external addresses
-* Instances with external IP addresses can allow connections from hosts outside the project
-   * Users connect directly using external IP address
-* DNS records for external address ca be published using existing DNS servers
-* DNS zones can be hosted using Cloud DNS
+- Provided as part of Compute Engine (169.254.169.254)
+- Configured for use on instance via DHCP
+- Provided answer for internal/external addresses
 
-Cloud DNS
-* Google’s DNS server
-* Translate domain names into IP addresses
-* Low latency
-* High availability
-* UI, command line, or API
-Alias IP ranges
-Let you assign a range of IP addresses as aliases to a VM’s network interface, using alias IP ranges.
-Useful, if you have multiple services running on VM and you want to assign a different IP address to each service. You can configure multiple IP addresses, representing containers or applications hosted in a VM, without having to define a separate network interface.
+DNS resolution for external addresses:
+
+- Instances with external IP addresses can allow connections from hosts outside the project
+  - Users connect directly using external IP address
+- DNS records for external address can be published using existing DNS servers
+- DNS zones can be hosted using Cloud DNS
+
+#### 3.07.1. Cloud DNS
+
+- Google’s DNS server
+- Translate domain names into IP addresses
+- Low latency
+- High availability (100% uptime !!!)
+- UI, command line, or API
+
+#### 3.07.2. Alias IP ranges
+
+Let you assign a range of IP addresses as aliases to a VM’s network interface, using alias IP ranges. Useful, if you have multiple services running on VM and you want to assign a different IP address to each service.
+
+You can configure multiple IP addresses, representing containers or applications hosted in a VM, without having to define a separate network interface.
 You just draw the alias IP range from the local subnets primary or secondary CIDR ranges.
-  
+
+![Alias IP ranges](./img/15_24_04.png)
+
 ### 3.08. Routes and firewall rules
 
-Routes and firewall rules
+#### 3.08.1. Routes
+
 A route is a mapping of an IP range to a destination.
 
 Every network has:
-* Routes, that let instances in a network send traffic directly to each other, even across subnets
-* A default route that directs packets to destinations that outside the network
+
+- Routes, that let instances in a network send traffic directly to each other, even across subnets
+- A default route that directs packets to destinations that outside the network
 Firewall rules must also allow the packet.
 
-Routes map traffic to destination networks
-* Apply to traffic egressing a VM
-* Forward traffic to the most specific route
-* Are created when subnets are created
-* Enable VMs on the same network to communicate
-* The destination is in CIDR notation
-* Traffic is ONLY delivered if it also matches a firewall rule
+Routes map traffic to destination networks:
 
-Firewall rules protect your VM instances from unapproved connections
-* VPC network functions as a distributed firewall
-* Firewall rules are applied to the network as a whole
-* Connections are allowed or denied at the instance level
-* Firewall rules are stateful
-* Implied deny all ingress (inbound connections) and allow all egress (outbound connections)
+- Apply to traffic egressing a VM
+- Forward traffic to the most specific route
+- Are created when subnets are created
+- Enable VMs on the same network to communicate
+- The destination is in CIDR notation
+- Traffic is ONLY delivered if it also matches a firewall rule
+
+![Routes](./img/15_28_29.png)
+
+Firewall rules protect your VM instances from unapproved connections:
+
+- VPC network functions as a distributed firewall
+- Firewall rules are applied to the network as a whole
+- Connections are allowed or denied at the instance level
+- Firewall rules are stateful
+- Implied deny all ingress (inbound connections) and allow all egress (outbound connections)
 
 ### 3.09. Pricing
 
-Pricing
-Response to ingress = Egress = charge
+Use GCP Pricing Calculator
 
 ### 3.10. Lab Intro: VPC Networking
 
 ### 3.11. Lab: VPC Networking
 
-Lab: VPC Networking
-In this lab, you create an auto-mode VPC network, with firewall rules and two VM instances, then you convert the VPC network from auto-mode to custom-mode network, and create other custom-mode networks. + explore connectivity across networks.
-Explore the default network
+In this lab, you create an auto-mode VPC network, with firewall rules and two VM instances, then you convert the VPC network from auto-mode to custom-mode network, and create other custom-mode networks + explore connectivity across networks.
+
+![Network Diagram](./img/15_42_22.png)
+
+#### 3.11.1. Explore the default network
+
 Navigation Menu -> Networking -> VPC Network, Routes, Firewall rules
 Every Project has a default network unless your Org. policy prevents it.
-Delete existing Firewall rules, VPC Networks & Routes
-Select all -> Delete
-Without VPC network you will not be able to create any VM instance, containers or App Engine apps
-No local network available
-Create auto-mode network
-Networking -> VPC Network -> Create
-* Add VPC Network name: mynetwork
-* Subnet creation mode: Automatic
-* Firewall rules: select all to apply
-Create
-Create 2 VM instances in Console
+
+#### 3.11.2. Delete existing Firewall rules, VPC Networks & Routes
+
+Firewall -> Select all -> Delete
+VPC networks -> default -> Delete VPC network
+
+Without VPC network you will not be able to create any VM instance, containers or App Engine apps.
+
+#### 3.11.3. Create auto-mode network
+
+Networking -> VPC Network -> Create:
+
+- Add VPC Network name: mynetwork
+- Subnet creation mode: Automatic
+- Firewall rules: select all to apply
+- Create
+
+#### 3.11.4. Create 2 VM instances in Console
+
 One called mynet-us-vm in us-central1-c, other called mynet-eu-vm in europe-west1-c
 Click on nic0, to see that instances are part of auto-network created earlier
 Check connectivity b/w instances
-Ssh in one of the machines and ping other machine’s IP address. 
-Instances are in 2 separate regions but in the same VPC network/subnet, so should be able to ping these addresses 
 
-$ ping -c 3 vm_ip_address
-$ ping -c 3 mynet-eu-vm
-$ ping -c 3 external_ip_address
-Convert auto-mode to custom-mode
+#### 3.11.5. SSH in one of the machines and ping other machine’s hostname, internal, external IP address
+
+Instances are in 2 separate regions but in the same VPC network/subnet, so should be able to ping these addresses.
+
+```sh
+ping -c 3 10.132.0.2
+ping -c 3 35.205.212.243
+ping -c 3 mynet-eu-vm.europe-west1-c
+```
+
+#### 3.11.6. Convert auto-mode to custom-mode
+
 Networking -> VPC Network -> mynetwork -> Edit -> subnet creation mode: Custom
-Create another VPC Network using Console
-Networking -> VPC Network -> Create:
-* Add name: managementnet
-* Subnet creation mode: custom
-* Add subnet name: managementsubnet-us
-* Add region: us-cental1
-* Add IP address range: 10.130.0.0/20
-* Click on the equivalent command line, to see Cloud Shell commands
-* Create
-Create another VPC Networks using Cloud Shell
-$ gcloud compute networks create privatenet --subnet-mode=custom
-$ gcloud compute networks subnets create privatesubnet-us --network=privatenet --region=us-central1 --range=172.16.0.0/24
-$ gcloud compute networks subnets create privatesubnet-eu --network=privatenet --region=europe-west1 --range=172.20.0.0/20
-List networks/subnets in Cloud Shell
-$ gcloud compute networks list
-$ gcloud compute networks subnets list --sort-by=NETWORK
-Create Firewall rule in Console
-Networking -> VPC Network -> Firewall Rules -> Create firewall rule:
-Add Name: managementnet-allows-icmp-ssh-rdp
-Select network: namagementnet
-Targets: all instances in the network
-Source IP Range: 0.0.0.0/0 to select all addresses
-Allow protocols and ports:
-* tcp: 22, 3389 
-* Other protocols: icmp
-Create Firewall rule in Cloud Shell
-$ gcloud compute firewall-rules create privatenet-allow-icmp-ssh-rdp --direction=INGRESS --priority=1000 --network=privatenet --action=ALLOW --rules=icmp,tcp:22,tcp:3389 --source-range=0.0.0.0/0
-List firewall rules in Cloud shell
-$ gcloud compute firewall-rules list --sort-by=NETWORK
-Create some more VM instances, 1st in console, 2nd in Cloud Shell
-vm1 name: nanagement-us-vm, network = managementnet
 
-$ gcloud compute instances create privatenet-us-vm --zone=us-central1-c --machine-type=f1-micro --subnet=privatesubnet-us
-Lis VM instances in Cloud Shell
-$ gcloud compute instances list --sort-by=ZONEw
-Check connectivity b/w machines
-* external ping works
-* internal ping does not work as machines are in different networks
+#### 3.11.7. Create managementnet VPC Network using Console
+
+Networking -> VPC Network -> Create:
+
+- Add name: managementnet
+- Subnet creation mode: custom
+- Add subnet name: managementsubnet-us
+- Add region: us-cental1
+- Add IP address range: 10.130.0.0/20
+- Create
+
+#### 3.11.8. Create another VPC Networks using Cloud Shell
+
+```sh
+gcloud compute networks create privatenet --subnet-mode=custom
+gcloud compute networks subnets create privatesubnet-us --network=privatenet --region=us-central1 --range=172.16.0.0/24
+gcloud compute networks subnets create privatesubnet-eu --network=privatenet --region=europe-west1 --range=172.20.0.0/20
+```
+
+#### 3.11.9. List networks/subnets in Cloud Shell
+
+```sh
+gcloud compute networks list
+gcloud compute networks subnets list --sort-by=NETWORK
+```
+
+#### 3.11.10. Create Firewall rule in Console
+
+Networking -> VPC Network -> Firewall Rules -> Create firewall rule:
+
+- Add Name: managementnet-allows-icmp-ssh-rdp
+- Select network: managementnet
+- Targets: all instances in the network
+- Source IP Range: 0.0.0.0/0 to select all addresses
+- Allow protocols and ports:
+  - tcp: 22, 3389
+  - Other protocols: icmp
+
+#### 3.11.11. Create Firewall rule in Cloud Shell
+
+```sh
+gcloud compute firewall-rules create privatenet-allow-icmp-ssh-rdp --direction=INGRESS --priority=1000 --network=privatenet --action=ALLOW --rules=icmp,tcp:22,tcp:3389 --source-ranges=0.0.0.0/0
+
+```
+
+#### 3.11.12. List firewall rules in Cloud shell
+
+```sh
+gcloud compute firewall-rules list --sort-by=NETWORK
+```
+
+#### 3.11.13. Create some more VM instances, 1st in console, 2nd in Cloud Shell
+
+vm1 name: management-us-vm, network = managementnet
+
+```sh
+gcloud compute instances create privatenet-us-vm --zone=us-central1-c --machine-type=f1-micro --subnet=privatesubnet-us --image-family=debian-10 --image-project=debian-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=privatenet-us-vm
+```
+
+#### 3.11.14. List VM instances in Cloud Shell
+
+```sh
+gcloud compute instances list --sort-by=ZONE
+```
+
+#### 3.11.15. Check connectivity b/w machines
+
+- You can ping the external IP address of all VM instances, even though they are in either a different zone or VPC network. This confirms that public access to those instances is only controlled by the ICMP firewall rules that you established earlier.
+- You cannot ping the internal IP address of managementnet-us-vm and privatenet-us-vm because they are in separate VPC networks from the source of the ping (mynet-us-vm).
 
 ### 3.12. Lab Review: VPC Networking
 
 ### 3.13. Common network designs
 
-Common network designs
-Increases availability with multiple zones
-For increased availability: two VMs are in different zones but in the same sub-network.
+![Increases availability with multiple zones](./img/17_23_54.png)
   
+![Globalization with multiple regions](./img/17_25_38.png)
 
-Globalization with multiple regions
-Different VMs in different regions, combined not with sub-network, but with Global Load Balancer
-  
+![Cloud NAT provides internet access to private instances](./img/17_26_47.png)
 
-Cloud NAT provides internet access to private instances
-Internal IP addresses only, whenever possible.
+Cloud NAT or managed  Network Address Translation service. Provision VM machines without public IP addresses, while allowing access to the internet in a controlled manner. Cloud NAT is a regional resource. You can configure it to allow traffic from all ranges of all subnets in a region, from specific subnets in the region only, or from specific primary and secondary CIDR ranges only. The Cloud NAT gateway implements outbound NAT, but not inbound NAT. In other words, hosts outside of your VPC network can only respond to connections initiated by your instances; they cannot initiate their own, new connections to your instances via NAT.
 
+![Private Google access to Google API and Services](./img//17_28_25.png)
 
-Cloud NAT or managed  Network Address Translation service. Provision VM machines without public IP addresses, while allowing access to the internet in a controlled manner. Cloud NAT gateway implements outbound net, not inbound net.
-
-Private Google access to Google API and Services
 To allow VM instances that only have internal IP to access to reach external IP addresses of Google’s APIs and services. For example, you need to enable Private Google access to access Storage Bucket contents
 Google Private Access has no effect on instances with external P addresses.
 
@@ -373,85 +432,124 @@ Google Private Access has no effect on instances with external P addresses.
 
 ### 3.15. Lab: Implement Private Google Access and Cloud NAT
 
-Lab: Implement Private Google Access and Cloud NAT
-Created an instance with no external IP address
-Accessed it using Cloud IAP
-Enable Private Google Access
-Configure NAT Gateway
-Check that VM can access Google API and Services and other external addresses
+Implement Private Google Access and Cloud NAT for a VM instance that doesn't have an external IP address. Then, you verify access to public IP addresses of Google APIs and services and other connections to the internet.
 
+VM instances without external IP addresses are isolated from external networks. Using Cloud NAT, these instances can access the internet for updates and patches, and in some cases, for bootstrapping. As a managed service, Cloud NAT provides high availability without user management and intervention.
 
-VMs w/o external IP are isolated from the external network. Using cloud NAT these instances can access the internet.
-Create a VPC network
+#### 3.15.1. Create a VPC network
+
 Navigation menu -> networking -> VPC network -> VPC Networks -> Create VPC Network
-* Name: privatenet
-* Subnet creation mode: custom
-* Subnet: privatenet-us
-* Region: us-central1
-* IP address range: 10.130.0.0/20
-* Private Google Access: off
-Done, Create
-Create a Firewall rule
-To allow ssh to the instance
+
+- Name: privatenet
+- Subnet creation mode: custom
+- Subnet: privatenet-us
+- Region: us-central1
+- IP address range: 10.130.0.0/20
+- Private Google Access: off
+- Done, Create
+
+#### 3.15.2. Create a Firewall rule, To allow ssh to the instance
+
 Navigation menu -> networking -> VPC network -> Firewall rules -> Create Firewall rule
-* Name: privatenet-allow-ssh
-* Network: privatenet
-* Targets: all instances in the network
-* Source IP ranges: 25.235.240.0/20 # we are gonna give it a very specific range. And that is because we are using the Cloud IAP tunnel.  And because of that, we can limit the CIDR range.
-* Specific  protocols and ports: tcp: 22
-Create
-Create VM instance
+
+- Name: privatenet-allow-ssh
+- Network: privatenet
+- Targets: all instances in the network
+- Source IP ranges: 25.235.240.0/20 # we are gonna give it a very specific range. And that is because we are using the Cloud IAP tunnel.  And because of that, we can limit the CIDR range.
+- Specific  protocols and ports: tcp: 22
+- Create
+
+#### 3.15.3. Create VM instance
+
 Navigation menu -> Compute -> Compute Engine -> VM instances -> Create
-* Name: vm-internal
-* Region: us-central1
-* Zone: us-cetral1-c
-* Network interfaces: privatenet
-* External IP: None
-Done, Create
-Ssh into Instance, check connectivity to the internet
-As simple ssh would not work for us, we gonna use Cloud Shell to IAP tunnel
-Open Cloud Shell -> Continue
-$ gcloud config set project [PROJECT_ID]
-$ gcloud compute ssh vm-internal --zone us-central1-c --tunnel-through-iap
-$ ping -c 3 www.google.com 
-No connection
-$ sudo apt-get update
-No connection
-$ exit
-Create Bucket in Cloud Storage, copy the file into it
+
+- Name: vm-internal
+- Region: us-central1
+- Zone: us-central1-c
+- Network interfaces: privatenet
+- External IP: None
+- Done, Create
+
+#### 3.15.4. SSH into Instance, check connectivity to the internet
+
+When instances do not have external IP addresses, they can only be reached by other instances on the network via a managed VPN gateway or via a Cloud IAP tunnel. Cloud IAP enables context-aware access to VMs via SSH and RDP without bastion hosts.
+
+Open Cloud Shell -> Continue:
+
+```sh
+gcloud compute ssh vm-internal --zone us-central1-c --tunnel-through-iap
+```
+
+```sh
+ping -c 3 www.google.com
+sudo apt-get update
+
+# No connection
+```
+
+#### 3.15.5. Create Bucket in Cloud Storage, copy the file into it
+
 Navigation Menu -> Storage -> Storage -> Browser -> Create Bucket
-* Name: Project ID
-Create
 
+- Name: Project ID
+- Create
 
-$ gsutil cp gs://cloud-training/gcpret/private/access.svg gs://Project ID
-Check access Cloud Storage bucket from Cloud Shell
-$ gsutil cp gs://Project ID/*.scg .
-success
-Check access Cloud Storage bucket from VM
-$ gcloud compute ssh vm-internal --zone us-central1-c --tunnel-through-iap
-$ gsutil cp gs://Project ID/*.scg . 
-Fail
-Enable Private Google access for privatenet-us subnet
+```sh
+gsutil cp gs://cloud-training/gcpnet/private/access.svg gs://[my_bucket]
+```
+
+#### 3.15.6. Check access Cloud Storage bucket from Cloud Shell
+
+```sh
+gsutil cp gs://[my_bucket]/*.svg .
+
+# success
+```
+
+#### 3.15.7. Check access Cloud Storage bucket from VM
+
+```sh
+gsutil cp gs://[my_bucket]/*.svg .
+
+# Fail
+```
+
+#### 3.15.8. Enable Private Google access for privatenet-us subnet
+
 Navigation menu -> networking -> VPC network -> VPC Networks -> privatenet -> privatenet-us -> Edit
-* Private Google access: On
-Save
-Check access Cloud Storage bucket from VM
-$ gcloud compute ssh vm-internal --zone us-central1-c --tunnel-through-iap
-$ gsutil cp gs://Project ID/*.scg . 
-Success
-Configure Cloud Gateway to access the internet
+
+- Private Google access: On
+- Save
+
+#### 3.15.9. Check access Cloud Storage bucket from VM
+
+```sh
+gsutil cp gs://[my_bucket]/*.svg .
+
+# success
+```
+
+#### 3.15.10. Configure Cloud Gateway to access the internet
+
 Navigation menu -> Networking -> Network Services -> Cloud NAT -> Get Started
-* Gateway Name: nat-config
-* VPC Network: privatenet
-* Region: us-central1
-* Cloud Router: create a new router
-   * Name: nat-router
-   * Create
-* NAT mapping: Allows you to choose subnets to map to NAT gateway
-Create
-Check VM access to the internet
-$ sudo apt-get update
+
+- Gateway Name: nat-config
+- VPC Network: privatenet
+- Region: us-central1
+- Cloud Router: create a new router
+  - Name: nat-router
+  - Create
+- NAT mapping: Allows you to choose subnets to map to NAT gateway
+- Create
+
+#### 3.15.11. Check VM access to the internet
+
+```sh
+sudo apt-get update
+
+# success
+```
+
 Success
 
 ### 3.16. Lab Review: Implement Private Google Access and Cloud NAT
