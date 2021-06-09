@@ -16,7 +16,7 @@
 Four ways to interact with GCP:
 
 - GCP Console - Web user interface - console.cloud.google.com
-- SDK - Command line interface - gcloud compute instances list
+- SDK - Command-line interface - gcloud compute instances list
   - Cloud Shell - temporary VM with 5 GB persistent disk with Cloud SDK preinstalled
   - gcloud - for working with Compute Engine and many Google Cloud services
   - gsutil - for working with Cloud Storage
@@ -38,7 +38,7 @@ gsutil cp ‘my file.txt' gs://[BUCKET_NAME]
 ```
 
 ```sh
-# Create a persistent state in Cloud shell
+# Create a persistent state in the Cloud shell
 # Every time you close Cloud Shell and reopen it, a new VM is allocated, and
 # the environment variable you just set disappears.
 
@@ -100,7 +100,7 @@ Project is deleted 30 days after shut down
 
 ### 3.01. Overview
 
-Virtual Network = GCP uses a software-defined network that is built on a global fiber infrastructure. Thinking about resources as services, instead of a hardware, will help you understand the available options.
+Virtual Network = GCP uses a software-defined network that is built on global fiber infrastructure. Thinking about resources as services, instead of hardware, will help you understand the available options.
 
 GCP consists of:
 
@@ -124,7 +124,7 @@ With GCP you can:
 VPC is a comprehensive set of Google-managed networking objects:
 
 - Projects - encompass every single service, including networks
-- Networks - default, auto or  custom mode
+- Networks - default, auto, or custom mode
 - Subnetworks - allow you to divide or segregate your environment
 - Regions & Zones- represents Google’s data centers
 - IP addresses - internal, external, range
@@ -182,8 +182,8 @@ Four reserver IP addresses in the subnet:
 
 ### 3.04. Demo: Expand a Subnet
 
-1. Custom subnet with /29 mask, which provides you with 8 addresses, but from those 4 are reserved by GCP.
-2. When you create 5th VM, you will get an error msg - “IP Space is exhausted”, so you need to increase subnet capacity.
+1. Custom subnet with /29 mask, which provides you with 8 addresses, but from those wight four are reserved by GCP.
+2. When you create the 5th VM, you will get an error msg - “IP Space is exhausted”, so you need to increase subnet capacity.
 3. To do that: Open either VPC Network in Navigation Menu or click on nic0 -> subnet -> edit /23 (500+ instances) save.
 4. Retry on Compute Engine instances
 
@@ -222,11 +222,11 @@ DNS resolution for internal addresses
 
 Each instance has a hostname that can be resolved to an internal IP address:
 
-- The hostname is the same as instance name
+- The hostname is the same as the instance name
 - FQDN is [hostname].[zone].c.[project-id].internal
 - Example: my-server.us.cental1-a.c.guestbook-151617.internal
 
-Name resolution is handled by internal DNS resolver:
+Name resolution is handled by an internal DNS resolver:
 
 - Provided as part of Compute Engine (169.254.169.254)
 - Configured for use on instance via DHCP
@@ -235,7 +235,7 @@ Name resolution is handled by internal DNS resolver:
 DNS resolution for external addresses:
 
 - Instances with external IP addresses can allow connections from hosts outside the project
-  - Users connect directly using external IP address
+  - Users connect directly using an external IP address
 - DNS records for external address can be published using existing DNS servers
 - DNS zones can be hosted using Cloud DNS
 
@@ -265,7 +265,7 @@ A route is a mapping of an IP range to a destination.
 Every network has:
 
 - Routes, that let instances in a network send traffic directly to each other, even across subnets
-- A default route that directs packets to destinations that outside the network
+- A default route that directs packets to destinations that are outside the network
 Firewall rules must also allow the packet.
 
 Routes map traffic to destination networks:
@@ -309,7 +309,7 @@ Every Project has a default network unless your Org. policy prevents it.
 Firewall -> Select all -> Delete
 VPC networks -> default -> Delete VPC network
 
-Without VPC network you will not be able to create any VM instance, containers or App Engine apps.
+Without a VPC network, you will not be able to create any VM instance, containers, or App Engine apps.
 
 #### 3.11.3. Create auto-mode network
 
@@ -323,7 +323,7 @@ Networking -> VPC Network -> Create:
 #### 3.11.4. Create 2 VM instances in Console
 
 One called mynet-us-vm in us-central1-c, other called mynet-eu-vm in europe-west1-c
-Click on nic0, to see that instances are part of auto-network created earlier
+Click on nic0, to see that instances are part of the auto-network created earlier
 Check connectivity b/w instances
 
 #### 3.11.5. SSH in one of the machines and ping other machine’s hostname, internal, external IP address
@@ -538,7 +538,7 @@ Navigation menu -> Networking -> Network Services -> Cloud NAT -> Get Started
 - Cloud Router: create a new router
   - Name: nat-router
   - Create
-- NAT mapping: Allows you to choose subnets to map to NAT gateway
+- NAT mapping allows you to choose subnets to map to the NAT gateway
 - Create
 
 #### 3.15.11. Check VM access to the internet
@@ -690,7 +690,7 @@ preemption | automatic | ~30 sec | running -> N/A
 
 No charge for stopped VM:
 
-- Charges for attached disks an IPs
+- Charges for attached disks
 
 Actions:
 
@@ -756,7 +756,7 @@ Machine Types:
 ### 4.09. Compute pricing
 
 - Per-second billing, minimum of 1 minute:
-  - vCPUs, GPUs and GB of Memory
+  - vCPUs, GPUs, and GB of Memory
 - Resource-based pricing:
   - Each vCPU and each GB on Mem is billed separately
 - Discounts (types cannot be combined):
@@ -811,7 +811,7 @@ What is an image:
 #### 4.12.1. Boot disk
 
 - VM comes with a single root persistent disk
-- Image is loaded onto root disk during first boot
+- Image is loaded onto the root disk during the first boot
   - Bootable: you can attach to a VM and oot from it
   - Durable: can survive VM terminate
 - Some OS images are customized for Compute Engine
@@ -822,7 +822,7 @@ What is an image:
 Networking storage appearing as a block device:
 
 - Attached to a VM through the network interface
-- Durable: storage, can survive VM terminate
+- Durable: storage can survive VM terminate
 - Bootable: you can attach to a VM and boot from it
 - Snapshots: incremental backups
 - Performance: Scales with size
@@ -879,7 +879,7 @@ Move an instance to a new zone, manually (b/w regions):
 
 1. Snapshot all Persistent Disks the source VM
 2. Create new Persistent Disks in the destination zone, restored from snapshots
-3. Create a new VM in destination zone, and attach new persistent disks
+3. Create a new VM in the destination zone, and attach new persistent disks
 4. Assign static IP to new VM
 5. Update references to VM
 6. Delete snapshot, original Persistent Disks, and original VM
@@ -927,7 +927,7 @@ Navigation menu -> Compute -> Compute Engine -> VM instances -> Create:
 - Networking -> Network interface -> External IP -> Create IP address -> Name:  mc-server-ip
 - Create
 
-#### 4.15.1.2. Ssh and prepare data disk (create dir, format and mount disk)
+#### 4.15.1.2. Ssh and prepare data disk (create dir, format, and mount disk)
 
 ```sh
 sudo mkdir -p /home/minecraft
