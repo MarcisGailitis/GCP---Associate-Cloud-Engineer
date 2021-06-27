@@ -27,16 +27,16 @@ For example, I have the privilege of Compute viewer - read-only access to get an
 
 #### 2.02.1. Cloud IAM objects
   
-- Organization - root node, represents your company. Roles at this level are inherited by all resources under the organisation.
+- Organization - root node, represents your company. Roles at this level are inherited by all resources under the organization.
   - Folders - could represent your department
     - Projects - represent a trust boundary within your company, services within the same project have a default level of trust.
       - Resources - each resource has exactly one parent
 
 Policies (Roles, Members) - can be set at any level.
 
-Child policies cannot restrict access granted at the parent level. Therefore it is a best practice to follow the principle of least privilege. Always select the smallest scope that is necessary for the task to reduce your exposure to risk.
+Child policies cannot restrict access granted at the parent level. Therefore it is a best practice to follow the principle of least privilege. Always select the smallest scope that is necessary for the task to reduce your risk exposure.
 
-If you change the resource hierarchy, the policy hierarchy also changes. For example, moving a project to a different organisation will update projects IAM policy to inherit from the new organization’s Cloud IAM policy.
+If you change the resource hierarchy, the policy hierarchy also changes. For example, moving a project to a different organization will update the project's IAM policy to inherit from the new organization’s Cloud IAM policy.
 
 ### 2.03. Organization
 
@@ -54,8 +54,8 @@ If you change the resource hierarchy, the policy hierarchy also changes. For exa
   - Control the lifecycle of Google Workspace or Cloud Identity account and Organization resource
 - **Organization admin**:
   - Define IAM policies
-  - Determine the structure the resource hierarchy
-  - Delegate responsibility for components such as networking, billing and REsource Hierarchy through IAM roles
+  - Determine the structure of the resource hierarchy
+  - Delegate responsibility for components such as networking, billing, and Resource Hierarchy through IAM roles
 - Does not include roles for other actions, such as creating folders, org. Admin must assign additional roles to their account
 
 #### 2.03.2. Folders
@@ -130,7 +130,7 @@ Apply to a particular GCP service in a project. Offer more fine-grained permissi
 The permissions themselves are classes and methods in APIs.
 
 - Compute Engine IAM roles:
-  - Compute Admin - Full control od all Compute Engine resources (compute.*)
+  - Compute Admin - Full control of all Compute Engine resources (compute.*)
   - Network Admin - Permissions to create, modify, and delete networking resources, except for firewall rules and SSL certificates
   - Storage Admin - permissions to create, modify and delete disks, images, and snapshots
 
@@ -162,15 +162,15 @@ Specify instance Operator Role
 
 ### 2.06. Members
 
-Define “who” part of Cloud IAM.
+Define the “who” part of Cloud IAM.
 
 Five different types of members:
 
-- **Google Account** - Developer, administrator, or any other person that interacts with GCP. Any email address that is associated with Google account ban be an identity.
+- **Google Account** - Developer, administrator, or any other person that interacts with GCP. Any email address that is associated with the Google account ban be an identity.
 - **Service Account** - An account that belongs to your application, instead of the individual end-user. You can create as many service accounts as needed.
-- **Google Group** - Named collection of Google accounts and/or Service accounts. Every group has a unique email address, associated with the group. Google Groups are a convenient way to apply an access policy to a collection of users. You can add/change access controls for a whole group at once, instead of changing access control one at the time for individual users or service accounts.
+- **Google Group** - Named collection of Google accounts and/or Service accounts. Every group has a unique email address, associated with the group. Google Groups are a convenient way to apply an access policy to a collection of users. You can add/change access controls for a whole group at once, instead of changing access control one at a time for individual users or service accounts.
 - **G Suite Domain** - Represent your organization’s internet domain name, for example, example.com. When you add a user to your G Suite Domain, a new account is created for the user, for example, user@example.com.
-- **Cloud Identity Domain** - GCP customers that are not G Suite customers, can get the same capabilities through **Cloud Identity**. Cloud Identity lets you manage users and groups, using the Google Admin console, without benefits like Gmail, docs, calendar, etc. Cloud Identity is available in free and premium editions. Premium adds features for mobile device management.You can not use Cloud IAM to manage users or groups, instead you can use Cloud Identity for that.
+- **Cloud Identity Domain** - GCP customers that are not G Suite customers, can get the same capabilities through **Cloud Identity**. Cloud Identity lets you manage users and groups, using the Google Admin console, without benefits like Gmail, docs, calendar, etc. Cloud Identity is available in free and premium editions. Premium adds features for mobile device management. You can not use Cloud IAM to manage users or groups, instead, you can use Cloud Identity for that.
   - If you have an existing Active Directory or LDAP, you can use **Google Cloud Directory Sync** to get users and groups in GCP.
 
 ### 2.07. Service Accounts
@@ -249,7 +249,7 @@ Cloud Identity-Aware Proxy (Cloud IAP):
 
 - Enforces access control policies for applications and resources:
   - Identity-based access control
-  - Central authorization layers for applications access by HTTPs
+  - Central authorization layers for applications access by HTTPS
 - Cloud IAM is applied after authentication. So you can use application-level access control, instead of relying on network-level firewalls.
 
 ### 2.09. Lab Intro: Cloud IAM
@@ -320,7 +320,7 @@ Grant Compute Engine access:
 
 #### 2.11.4.7. Explore the Service Account User role
 
-Create new VM using the service account:
+Create a new VM using the service account:
 
 - Service Account: read-bucket-objects
 - Create
@@ -360,9 +360,9 @@ It did not have permission to write objects, so you got a "403 access denied" me
 
 ### 3.01. Overview
 
-Every application needs to store data. Whether it is business data, media to be streamed or sensor data from devices.
+Every application needs to store data. Whether it is business data, media to be streamed, or sensor data from devices.
 
-From application point technology stores and retrieves the data, whether it is a database or object store is less important than whether that service supports application requirements for efficiently storing and retrieving the data given its characteristics.
+From an application point technology stores and retrieves the data, whether it is a database or object store is less important than whether that service supports application requirements for efficiently storing and retrieving the data given its characteristics.
 
 ![Storage and database services](./img/03/13_48_39.png)
 
@@ -396,8 +396,8 @@ Features:
 
 Storage classes:
 
-- Standard - "Hot" data and/or stored only brief period of time like data-intensive computations:
-- Nearline – infrequently accessed data like backup, long-tail multimedia content and data archiving
+- Standard - "Hot" data and/or stored only brief period like data-intensive computations:
+- Nearline – infrequently accessed data like a backup, long-tail multimedia content, and data archiving
 - Coldline – infrequently accessed data that you read/modify at most 1x quarter
 - Archive – Data archiving, online backup, and disaster recovery
 
@@ -432,15 +432,15 @@ Access control:
   - Scope - who has access, examples:
     - collab@gmail.com
     - allUsers (anyone on the internet)
-    - allAuthenticatedUsers (anyone authenticated with google account)
+    - allAuthenticatedUsers (anyone authenticated with a Google account)
   - Permission - what level of access (owner, write, read)
 - Signed URL - Signed and Timed Cryptographic Key
   - “Valet key” access to buckets and objects via ticket
     - The ticket is a cryptographically signed URL
     - Time-limited
     - Operations specified in the ticket: HTTP GET, PUT, DELETE (not POST)
-    - Any user with URL can invoke permitted operations
-  - Example using private account key and gsutil: gsutil signurl -d 10m path/to/privatekey.p12 gs://bucket/object
+    - Any user with a URL can invoke permitted operations
+  - Example using private account key and gsutil: `gsutil signurl -d 10m path/to/privatekey.p12 gs://bucket/object`
     - Signed Policy Document - Control File Upload Policy
 
 ### 3.03. Cloud Storage Features
@@ -452,7 +452,7 @@ Access control:
   - Examples:
     - Downgrade storage class on objects older than 1 year
     - Delete objects created before specific data
-    - Keep only 3 most recent versions
+    - Keep only the 3 most recent versions
 - Object Versioning:
   - Objects are immutable
   - Object versioning allows maintaining a history of modification of objects
@@ -486,7 +486,7 @@ Download a sample file using CURL and make two copies:
 export BUCKET_NAME_1=<enter bucket name 1 here>
 echo $BUCKET_NAME_1
 
-# Run the following command to download a sample fil
+# Run the following command to download a sample file
 curl https://hadoop.apache.org/docs/current/\
 hadoop-project-dist/hadoop-commom/\
 ClusterSetup.html > setup.html
@@ -584,7 +584,7 @@ cat acl3.txt
 ]
 ```
 
-Delete the local file and copy back from Cloud Storage:
+Delete the local file and copy it back from Cloud Storage:
 
 ```sh
 rm setup.html
@@ -617,7 +617,7 @@ gsutil cp setup2.html gs://$BUCKET_NAME_1/
 gsutil cp setup3.html gs://$BUCKET_NAME_1/
 ```
 
-In GCP Console You will see that files are encypted `The target object is encrypted by a customer-supplied encryption key.`
+In GCP Console You will see that files are encrypted `The target object is encrypted by a customer-supplied encryption key.`
 
 Delete local files, copy new files, and verify encryption
 
@@ -764,8 +764,8 @@ Cloud SQL services:
 - Backups services
 - import/export
 - Scaling:
-  - Up: machine capacity
-  - Out: replicas
+  - Up - machine capacity
+  - Out - replicas
 
 ![Connecting to a Cloud SQL instance](./img/03/16_16_25.png)
   
@@ -866,9 +866,9 @@ Cloud Spanner combines the benefits of relational DB structure with a non-relati
 
 ### 3.13. Cloud Firestore (Cl)
 
-Highly scalable no-SQL document database. Cloud Firestore is next-gen Cloud Datastore.
+Highly scalable no-SQL document database. Cloud Firestore is a next-gen Cloud Datastore.
 
-- Simplifies storing, syncing and querying data
+- Simplifies storing, syncing, and querying data
 - Mobile, web, IoT at a global scale
 - Live sync and offline support
 - Security features
@@ -1067,7 +1067,7 @@ Review payment method:
 
 ### 4.07. Lab Intro: Examining Billing Data with BigQuery
 
-### 4.08. Lab: Examining Billing data with BigQuery
+### 4.08. Lab: Examining Billing Data with BigQuery
 
 In this lab, you learn how to perform the following tasks:
 
@@ -1227,7 +1227,7 @@ Monitoring is at the base of SRE, which is a discipline, which applies aspects o
 Monitoring:
 
 - Dynamic config and intelligent defaults
-- Platform, system and application metrics
+- Platform, system, and application metrics
   - Ingests data: metrics, events, metadata
   - Generates insights through dashboards, charts, alerts
 - Uptime/health checks – uptime checks test the availability of your public services
@@ -1356,7 +1356,7 @@ Monitoring -> Uptime Check -> Create Uptime Check:
 
 ### 5.07. Logging
 
-- Platform, systems and applications logs
+- Platform, systems, and applications logs
   - API to write logs
   - 30-day retention
 - Log search/view/filter
@@ -1383,7 +1383,7 @@ Aggregates and displays errors for running cloud services:
 
 - Error notifications
 - Errors dashboards
-- Go, Java, .NET, Node.js, PHP, Python and Ruby
+- Go, Java, .NET, Node.js, PHP, Python, and Ruby
 - App Engine, Apps script, Compute Engine, Cloud functions, Cloud run, GKE, Amazon EC2
 
 ### 5.09. Tracing
@@ -1397,7 +1397,7 @@ Tracing system:
 Collects latency sampling:
 
 - Application Engine
-- Google HTTPs load balancers
+- Google HTTPS load balancers
 - Applications instrumented with Stackdriver Trace SDKs
 
 ### 5.10. Debugging
