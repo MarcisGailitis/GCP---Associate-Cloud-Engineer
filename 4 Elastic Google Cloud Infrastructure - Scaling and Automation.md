@@ -1,4 +1,4 @@
-﻿# Elastic Google Cloud Infrastructure: Scaling and Automation
+﻿# 4. Elastic Google Cloud Infrastructure: Scaling and Automation
 
 ## Table of contents
 
@@ -34,7 +34,7 @@ To create a connection b/w two VPN Gateways, you must establish 2 VPN Tunnels. e
   
 BGP = Border Gateway Protocol. Allows routes to be updated and exchanged without changing the tunnel configuration.
 
-### 2.03. Lab Intro:Virtual Private Networks (VPN)
+### 2.03. Lab Intro: Virtual Private Networks (VPN)
 
 ### 2.04. Getting Started With GCP And Qwiklabs
 
@@ -42,7 +42,7 @@ BGP = Border Gateway Protocol. Allows routes to be updated and exchanged without
 
 - Configure VPN connections b/w two networks, with subnets in different regions,
 - Configure VPN tunnel
-- verify connection by pinging internal IP addresses
+- verify the connection by pinging internal IP addresses
 
 #### 2.05.1. Explore the networks and instances
 
@@ -125,7 +125,7 @@ Create the vpn-2 gateway and tunnel2to1:
 
 #### 2.05.3. Verify VPN connectivity
 
-### 2.06. Lab Review:Virtual Private Networks (VPN)
+### 2.06. Lab Review: Virtual Private Networks (VPN)
 
 ### 2.07. Cloud Interconnect and Peering
 
@@ -134,14 +134,14 @@ Create the vpn-2 gateway and tunnel2to1:
 - Dedicated connections provide a direct connection to Google’s network
 - Shared connection provides access to Google’s network via a partner.
 
-- Layer 2 connection uses a VLAN, that pipes directly into GCP environment, providing connectivity to internal IP addresses
+- Layer 2 connection uses a VLAN, that pipes directly into the GCP environment, providing connectivity to internal IP addresses
 - Layer 3 connection provides access to GSuite, Youtube, and GCP APIs using public IP addresses.
 
 ### 2.08. Cloud Interconnect
 
 ![Dedicated Interconnect](./img/04/14_51_50.png)
 
-Dedicated Interconnect provides direct physical connections b/w on-prem network and GCP network.
+Dedicated Interconnect provides direct physical connections b/w the on-prem network and GCP network.
   
 To use dedicated interconnect, your network must physically meet Google’s network in a supported co-location facility.
 
@@ -191,7 +191,7 @@ When you use Shared VPC you designate a project as a host project and attach one
   
 VPC peering, in contrast, allows private connectivity across two VPC networks, regardless of whether they belong in the same project or organization.
 
-Each VPC network will have firewall rules, defining which traffic is allowed/denied b/w networks. For VPC peering to be established, the 1st network’s admin needs to peer its network with 2nd network, and 2nd network’s admin needs to peer it with 1st network. When both peering connections are created, the VPC peering session becomes active and routes are exchanged. This allows VMs to communicate using private IP addresses.
+Each VPC network will have firewall rules, defining which traffic is allowed/denied b/w the networks. For VPC peering to be established, the 1st network’s admin needs to peer its network with the 2nd network, and the 2nd network’s admin needs to peer it with the 1st network. When both peering connections are created, the VPC peering session becomes active and routes are exchanged. This allows VMs to communicate using private IP addresses.
 
 VPC  peering is a decentralized approach to multi-project networking, as each VPC network may remain under the control of separate admin groups and maintain its global firewall and routing tables.
 
@@ -226,7 +226,7 @@ Managed instance groups:
 - Deploy **identical instances** based on **instance template**
 - Instance groups can be resized
 - The Manager ensures all instances are running
-- Typically used with autoscaler
+- Typically used with auto-scaler
 - Can be single zone or regional
 
 Compute Engine -> Instance Template -> Cerate Instance Template:
@@ -380,7 +380,7 @@ Navigation menu -> Compute -> Compute Engine -> Images -> Create image
 Configure an instance template and create instance groups:
 
 - Navigation menu -> Compute -> Compute Engine -> Instance templates
-- Create instance template
+- Create an Instance template
 - Name: mywebserver-template.
 - Machine type: f1-micro
 - Boot disk -> Change -> Click Custom images -> mywebserver -> Select
@@ -391,12 +391,12 @@ Configure an instance template and create instance groups:
 Create the managed instance groups:
 
 - Navigation menu ->  Compute -> Compute Engine -> Instance groups
-- Create Instance group
+- Create an Instance group
 - Name: us-central1-mig
 - Location: Multiple zones
 - Region: us-central1
 - Instance template: mywebserver-template
-- Autoscaling : On
+- Auto-scaling: On
 - Autoscaling policy: HTTP load balancing utilization
 - Target HTTP load balancing utilization: 80
 - Minimum number of instances: 1
@@ -415,7 +415,7 @@ Create the managed instance groups:
 
 Navigation menu ->  Networking -> Network Services -> Load balancing
 
-- Create load balancer
+- Create a load balancer
 - HTTP(S) Load Balancing -> Start configuration
 - From Internet to my VMs -> Continue
 - Name: http-lb
@@ -580,7 +580,7 @@ Navigation menu -> Networking -> VPC network -> Firewall -> Create Firewall Rule
 
 #### 3.15.2. Create a NAT configuration using Cloud Router
 
-The Google Cloud VM backend instances that you setup will not be configured with external IP addresses. You will setup the Cloud NAT service to allow these VM instances to send outbound traffic only through the Cloud NAT, and receive inbound traffic through the load balancer.
+The Google Cloud VM backend instances that you set up will not be configured with external IP addresses. You will set up the Cloud NAT service to allow these VM instances to send outbound traffic only through the Cloud NAT, and receive inbound traffic through the load balancer.
 
 Create the Cloud Router instance:
 
@@ -657,7 +657,7 @@ Create the managed instance groups:
 Create the managed instance groups:
 
 - Navigation menu -> Compute -> Compute Engine  ->  Instance groups
-- Create Instance group
+- Create an Instance group
 - Name: instance-group-1
 - Location: Single-zone
 - Region: us-central1
@@ -671,7 +671,7 @@ Create the managed instance groups:
 - Create
 
 - Navigation menu -> Compute -> Compute Engine  ->  Instance groups
-- Create Instance group
+- Create an Instance group
 - Name: instance-group-2
 - Location: Single-zone
 - Region: us-central1
@@ -708,7 +708,7 @@ curl 10.10.20.2
 curl 10.10.30.2
 ```
 
-```html
+```HTML
 <h1>Internal Load Balancing Lab</h1>
 <h2>Client IP</h2>
 Your IP address : 10.10.20.50
@@ -718,7 +718,7 @@ Server Hostname: instance-group-1-xxxx
 Region and Zone: us-central1-a
 ```
 
-```html
+```HTML
 <h1>Internal Load Balancing Lab</h1>
 <h2>Client IP</h2>
 Your IP address : 10.10.20.50
@@ -735,7 +735,7 @@ Configure the internal load balancer to balance traffic between the two backends
 Start the configuration:
 
 - Navigation menu  -> Network Services  ->  Load balancing
-- Create load balancer
+- Create a load balancer
 - TCP Load Balancing -> Start configuration
 - Only between my VMs (makes this load balancer internal. This choice requires the backends to be in a single region (us-central1) and does not allow offloading TCP processing to the load balancer)
 - Name: my-ilb
@@ -764,7 +764,7 @@ Start the configuration:
 - Static IP address: Let me choose
 - Custom IP address:10.10.30.5
 - Click Reserve.
-- Ports : 80.
+- Ports: 80.
 - Click Done
 
 - Click Review and finalize.
@@ -826,12 +826,12 @@ The deployment manager uses APIs of underlying services to deploy your resources
 
 It is useful to parameterize your configuration with templates.
 
-Each resource must contain a name, type and properties.
+Each resource must contain a name, type, and properties.
 
 For the name, we are using an environment variable to get the name from the top-level configuration, which makes this template more flexible.
 By definition, an auto mode network automatically creates a subnetwork in each region, which is why we are creating autoCreateSubnetworks value as true.
 
-Using the self-link reference for the network name ensures that the VPC Network is created before firewall rule.
+Using the self-link reference for the network name ensures that the VPC Network is created before the firewall rule.
 This is very important because the deployment manager creates all the resources in parallel unless you use references.
 You would get an error, without the reference, because firewall rules cannot be created w/o an existing network.
 
@@ -876,7 +876,7 @@ resources:
     Port: [80]
 ```
 
-Because firewall rules depend on their network, you are using the $(ref.mynetwork.selfLink) reference to instruct Deployment Manager to resolve these resources in a dependent order. Specifically, the network is created before the firewall rule. By default, Deployment Manager creates all resources in parallel, so there is no guarantee that dependent resources are created in the correct order unless you use references
+Because firewall rules depend on their network, you are using the $(ref.mynetwork.selfLink) reference to instruct the Deployment Manager to resolve these resources in a dependent order. Specifically, the network is created before the firewall rule. By default, Deployment Manager creates all resources in parallel, so there is no guarantee that dependent resources are created in the correct order unless you use references
 
 There are other infrastructure automation tools that you can use in GCP, like, Terraform, Chef, puppet, Ansible, or Packer. All of these tools allow you to treat your Infrastructure as Code.
 
@@ -1093,10 +1093,10 @@ If something goes wrong with the preview or creation of the deployment, try to u
 
 ### 4.08. Google Cloud Marketplace
 
-- Deploy production-grade solution
+- Deploy a production-grade solution
 - single bill for GCP and third party services
 - Manage solutions using Deployment Manager
-- Notifications when security update is available
+- Notifications when a security update is available
 - Direct access to partner support
 
 ### 4.09. Demo: Launch on Google Cloud Marketplace
@@ -1114,7 +1114,7 @@ Managed service - exists on a continuum b/w PaaS and SaaS.
 
 ### 05.02. BigQuery
 
-GCP's serverless, highly scalable and cost-effective cloud data warehouse:
+GCP's serverless, highly scalable, and cost-effective cloud data warehouse:
 
 - fully managed
 - petabyte scale
@@ -1139,7 +1139,7 @@ Use Cloud Dataflow to execute a wide variety of data processing patterns:
 
 Dataprep by Trifacta: Visual data exploration, cleaning, and processing.
 
-Use Cloud Dataprep to visually explore, clean an prepare data for analysis and machine learning:
+Use Cloud Dataprep to visually explore, clean, and prepare data for analysis and machine learning:
 
 - Serverless, works at any scale
 - Suggests ideal data transformations
@@ -1155,7 +1155,7 @@ Dataproc: Managed Apache Hadoop and Apache Spark.
 Cloud Dataproc is a service for running Apache Spark and Apache Hadoop clusters:
 
 - Low cost
-- Super fast to start, scale and shut down
+- Super fast to start, scale, and shut down
 - Integrated with GCP
 - Managed service
 - Simple and familiar
