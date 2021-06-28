@@ -904,7 +904,7 @@ Persistent disk snapshots:
 
 Snapshots are different from custom images, which are used to create instances or configure instance templates. Snapshots are useful for periodic backup of the data on your persistent disks. Snapshots are incremental and automatically compressed, so you can create regular snapshots on a persistent disk faster and at a much lower cost than if you regularly created a full image of a disk.
 
-![Resize persistent disk](13_00_19.png)
+![Resize persistent disk](./img/02/13_00_19.png)
 
 ### 4.14. Lab Intro: Working with Virtual Machines
 
