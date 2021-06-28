@@ -1,113 +1,135 @@
-# Preparing for the Google Cloud Associate Cloud Engineer Exam
+# 6. Preparing for the Google Cloud Associate Cloud Engineering Exam
 
-## 0 About the Associate Cloud Engineer Certification
+## Table of Contents
 
-### Devising a study strategy
+1. Welcome to preparing for the ACE
+2. About the ACE Certification
+3. Setting up a Cloud solutions Environment
+4. Planning and Configuring a Cloud Solution
+5. Deploying and Implementing a Cloud Solution
+6. Ensuring the Successful operation iof a Cloud Solution
+7. Configuring Access andSecurity
+8. Course Resources
 
-1 Understand the scope of the exam you plan to take
+## 2. About the ACE Certification
+
+### 2.1. About Google Cloud certification
+
+### 2.2. Devising a study strategy
+
+#### 2.2.1 Understand the scope of the exam you plan to take
 
 Associate Cloud Engineer (ACE):
 
-* Build
-* Deploy
-* Manage
+- Build
+- Deploy
+- Manage
 
 ACE exam test:
 
-* Setting up  a cloud solution environment
-* Planning and configuring a cloud solution
-* Deploying and implementing a cloud solution
-* Ensuring successful operation of a cloud solution
-* Configuring access and security
+- Setting up a cloud solution environment
+- Planning and configuring a cloud solution
+- Deploying and implementing a cloud solution
+- Ensuring successful operation of a cloud solution
+- Configuring access and security
 
-### Devising a study strategy, cont1
+#### 2.2.2 Gather your list of resources
 
-2 Gather your list of resources
 Exam guide: <https://cloud.google.com/certification/guides/cloud-engineer>
 
-### Devising a study strategy, cont2
+Practice exam: <https://cloud.google.com/certification/sample-questions/cloud-engineer>
 
-3 Find out know you know and make note of what you do not
+Online labs and quests:
+
+- <https://google.qwiklabs.com/quests/23>
+- <https://google.qwiklabs.com/quests/24>
+
+#### 2.2.3 Find out know you know and make note of what you do not
+
 Use exam guide for that
 
-4 put it all together into a plan you can commit to!
+#### 2.2.4 put it all together into a plan you can commit to
 
-### Are you ready
+### 2.5. Are you ready?
 
 45 min or less, 80% of practice exam
 
-## 1 Setting up a cloud solution environment
+### 2.6. Taking the exam
 
-### Welcome to Module 2
+### 2.7. Resource links for Module 1
 
-1 Assess your skill level
-2 Update the plan
-3 Create a list uf resources
+## 3. Setting up a Cloud Solution Environment
 
-### 1.1 About cloud projects and accounts, pt1
+### 3.1. Welcome to Module 2
 
-* Creating projects
-* Assign user to predefined IAM role
-* Link users to G Suite identities
-* Enabling APIs withing projects
-* Provisioning one or more Stackdriver accounts
+### 3.2. About cloud projects and accounts, pt1
 
-* Creating projects
-  * Resource Hierarchy basics
-  * GCP services are associated with project
-  * Creating project: ID, name (mutable), number
-  * Folders group project and policies
+- Creating projects
+- Assign user to predefined IAM role
+- Link users to G Suite identities
+- Enabling APIs withing projects
+- Provisioning one or more Stackdriver accounts
 
-* Assign user to predefined IAM role
-  * Permission hierarchy
-  * Understanding roles in GCP
-  * IAM primitive roles, to a project
-  * IAM predefined roles, to a resource
-  * predefined > primitive
+- Creating projects
+  - Resource Hierarchy basics
+  - GCP services are associated with project
+  - Creating project: ID, name (mutable), number
+  - Folders group project and policies
 
-* Link users to G Suite identities
-  * Managing your GCP admin users
-  * Gmail accounts
-  * G Suite
-  * Cloud Identity
+- Assign user to predefined IAM role
+  - Permission hierarchy
+  - Understanding roles in GCP
+  - IAM primitive roles, to a project
+  - IAM predefined roles, to a resource
+  - predefined > primitive
 
-* Enabling APIs withing projects
-  * RESTful APIs Enable through GCP Console
-  * APIs Explorer
+- Link users to G Suite identities
+  - Managing your GCP admin users
+  - Gmail accounts
+  - G Suite
+  - Cloud Identity
 
-* Provisioning one or more Stackdriver accounts
-  * Stackdriver
-  * Build-in monitoring (Compute, Kubernetes, SQL, App Engine, etc)
-  * Stackdriver logs (Admin log 400 days, Data log 30 days)
+- Enabling APIs withing projects
+  - RESTful APIs Enable through GCP Console
+  - APIs Explorer
 
-### 1.2 Billing management overview
+- Provisioning one or more Stackdriver accounts
+  - Stackdriver
+  - Build-in monitoring (Compute, Kubernetes, SQL, App Engine, etc)
+  - Stackdriver logs (Admin log 400 days, Data log 30 days)
 
-* Creating one or more billing accounts
-* Linking projects to a billing account
-* Establishing billing budgets and alerts
-* Setting up billing exports to estimate daily/monthly charges
+### 3.3. About cloud projects and accounts, pt2
 
-### 1.3 Command line interface
+### 3.4. About cloud projects and accounts, pt3
 
-* Cloud Shell on GCP Console
-* Google Cloud SDK
+### 3.5. Billing management overview
 
-### Lab: Tour Qwiklabs and the Google Cloud Platform [ACE]
+- Creating one or more billing accounts
+- Linking projects to a billing account
+- Establishing billing budgets and alerts
+- Setting up billing exports to estimate daily/monthly charges
 
-* Learn about the Qwiklabs platform and identify key features of a lab environment.
-* Learn about (and possibly purchase) Qwiklabs credits and launch an instance of a lab.
-* Learn how to access the GCP console with specific credentials.
-* Learn about GCP projects and identify common misconceptions that surround them.
-* Learn how to use the GCP navigation menu to identify types of GCP services.
-* Learn about primitive roles and use the Cloud IAM service to inspect actions available to specific users.
-* Learn about Cloud Shell and run commands that use the gcloud toolkit.
-* Learn about the API library and examine its chief features.
-* Use tools that are pre-installed in Cloud Shell and run commands like touch, nano, and cat to create, edit, and output the content of files.
+### 3.6. Command line interface
+
+- Cloud Shell on GCP Console
+- Google Cloud SDK
+
+### 3.7. Lab: Tour Qwiklabs and the Google Cloud Platform
+
+- Learn about the Qwiklabs platform and identify key features of a lab environment.
+- Learn about (and possibly purchase) Qwiklabs credits and launch an instance of a lab.
+- Learn how to access the GCP console with specific credentials.
+- Learn about GCP projects and identify common misconceptions that surround them.
+- Learn how to use the GCP navigation menu to identify types of GCP services.
+- Learn about primitive roles and use the Cloud IAM service to inspect actions available to specific users.
+- Learn about Cloud Shell and run commands that use the gcloud toolkit.
+- Learn about the API library and examine its chief features.
+- Use tools that are pre-installed in Cloud Shell and run commands like touch, nano, and cat to create, edit, and output the content of files.
 
 This is an introductory level lab and the first lab you should take if you're unfamiliar with GCP or Qwiklabs. If you are already experienced with Qwiklabs and the Google Cloud Platform Console, check out the following labs:
 
-* Getting Started with Cloud Shell and gcloud
-* Creating a Virtual Machine
+- Getting Started with Cloud Shell and gcloud
+- Creating a Virtual Machine
 
 ## 2 Planning and configuring a cloud solution
 
@@ -154,9 +176,9 @@ Warehouse scale database, SQL + workloads
 
 ### 2.4 Planning and configuring network resources
 
-* Differentiating load balancing options - Load Balancing is when you have two ore more identical servers or server clusters, that have been cerated so that if the load becomes too great or if one ore more servers should fail, the remainder can assist with or take over handling the load. This is one way to create applications and services that are highly available. Load balancing allows multiple servers or clusters of servers to function as a single computing resource. Load balancers can also be configured to add or remove these servers or server clusters from the system to better meet demand. This is known as autoscaling.
-* Identifying resource locations in a network for availability
-* Configuring Cloud DNS
+- Differentiating load balancing options - Load Balancing is when you have two ore more identical servers or server clusters, that have been cerated so that if the load becomes too great or if one ore more servers should fail, the remainder can assist with or take over handling the load. This is one way to create applications and services that are highly available. Load balancing allows multiple servers or clusters of servers to function as a single computing resource. Load balancers can also be configured to add or remove these servers or server clusters from the system to better meet demand. This is known as autoscaling.
+- Identifying resource locations in a network for availability
+- Configuring Cloud DNS
 
 #### Load Balancing overview
 
@@ -171,36 +193,36 @@ INSERT PICTURE!!!
 
 #### Global vs. Regional Load Balancing
 
-* Global (for globally distributed users and instances)
-  * Global HTTP(S)
-  * Global SSL Proxy
-  * Global TCP Proxy
-* REgional (for regionally concentrated users and instances)
-  * Regional Network TCP/UPD
-  * Regional Internal TCP/UDP
+- Global (for globally distributed users and instances)
+  - Global HTTP(S)
+  - Global SSL Proxy
+  - Global TCP Proxy
+- REgional (for regionally concentrated users and instances)
+  - Regional Network TCP/UPD
+  - Regional Internal TCP/UDP
 
 #### External vs. internal
 
-* External (traffic coming in from GCP network):
-  * Global HTTP(S)
-  * Global SSL Proxy
-  * Global TCP Proxy
-  * Regional Network TCP/UPD
-* Internal (traffic within GCP network)
-  * Regional Internal TCP/UDP
+- External (traffic coming in from GCP network):
+  - Global HTTP(S)
+  - Global SSL Proxy
+  - Global TCP Proxy
+  - Regional Network TCP/UPD
+- Internal (traffic within GCP network)
+  - Regional Internal TCP/UDP
 
 ### Lab: Set Up Network and HTTP Load Balancers
 
 In this hands-on lab, you'll learn the differences between a network load balancer and a HTTP load balancer. This lab takes you through the setup of the following load balancers:
 
-* L3 Network Load Balancer
-* L7 HTTP(s) Load Balancer
+- L3 Network Load Balancer
+- L7 HTTP(s) Load Balancer
 
 #### What you'll do
 
-* Setup a network load balancer.
-* Setup a HTTP(s) load balancer.
-* Get hands-on experience learning the differences between network load balancers and HTTP load balancers.
+- Setup a network load balancer.
+- Setup a HTTP(s) load balancer.
+- Get hands-on experience learning the differences between network load balancers and HTTP load balancers.
 
 #### 0 setup
 
@@ -215,15 +237,15 @@ $ gcloud config set compute/region us-central1
 
 To simulate serving from a cluster of machines, create a simple cluster of Nginx web servers to serve static content using Instance Templates and Managed Instance Groups:
 
-* Instance Templates define the look of every virtual machine in the cluster (disk, CPUs, memory, etc)
-* Managed Instance Groups instantiate a number of virtual machine instances using the Instance Template
+- Instance Templates define the look of every virtual machine in the cluster (disk, CPUs, memory, etc)
+- Managed Instance Groups instantiate a number of virtual machine instances using the Instance Template
 
 To create the Nginx web server clusters, create the following:
 
-* A startup script to be used by every virtual machine instance to setup Nginx server upon startup
-* An instance template to use the startup script
-* A target pool
-* A managed instance group using the instance template
+- A startup script to be used by every virtual machine instance to setup Nginx server upon startup
+- An instance template to use the startup script
+- A target pool
+- A managed instance group using the instance template
 
 ##### 1.1 create a startup script
 
@@ -365,28 +387,28 @@ gcloud compute forwarding-rules list
 
 ### 3.1 Deploying and implementing compute resources
 
-* Launching a compute instance using GCP Console and Cloud SDK
-* Creating an autoscaled managed instance group using an instance template
-* Generating/uploading a custom SSH key for instances
-* Configuring a VM for Stackdriver monitoring and logging
-* Assessing compute quotas and requesting increases
-* Installing the Stackdriver Agent for monitoring and logging
+- Launching a compute instance using GCP Console and Cloud SDK
+- Creating an autoscaled managed instance group using an instance template
+- Generating/uploading a custom SSH key for instances
+- Configuring a VM for Stackdriver monitoring and logging
+- Assessing compute quotas and requesting increases
+- Installing the Stackdriver Agent for monitoring and logging
 
 #### Managed instance groups
 
-* autohealing
-* regional (multi-zone)
-* load-balancing
-* Autoscaling
-* Auto-updating
-* stateless serving
-* Batch workload
+- autohealing
+- regional (multi-zone)
+- load-balancing
+- Autoscaling
+- Auto-updating
+- stateless serving
+- Batch workload
 
 ### 3.2 Deploying and implementing Kubernetes resources
 
-* deploying a Kubernetes Engine cluster
-* Deploying a container app to Kubernetes Engine using pods
-* Configuring Kubernetes Engine application monitoring and logging
+- deploying a Kubernetes Engine cluster
+- Deploying a container app to Kubernetes Engine using pods
+- Configuring Kubernetes Engine application monitoring and logging
 
 #### What are containers
 
@@ -413,8 +435,8 @@ At its highest level, Kubernetes is a set of APIs that you can use to deploy con
 
 The system is divided in to:
 
-* a set of master components that run as a control plane
-* and a set of nodes that run containers.
+- a set of master components that run as a control plane
+- and a set of nodes that run containers.
 
 in Kubernetes, a node represents a computing instance, like a machine. In GCP nodes are VMs running in Compute Engine.
 
@@ -441,36 +463,36 @@ kubectl get pods
 
 ### 3.3 Deploying App Engine and Cloud Function resources
 
-* Deploying an application to App Engine (scaling configuration, versions and traffic splitting)
-* Deploying a Cloud function, that receives Google cloud events (Cloud Pub/Sub events, Cloud Storage object change notification events)
+- Deploying an application to App Engine (scaling configuration, versions and traffic splitting)
+- Deploying a Cloud function, that receives Google cloud events (Cloud Pub/Sub events, Cloud Storage object change notification events)
 
 #### App Engine Standard
 
-* Easily deploy
-* Autoscale
-* Free daily quota
-* usage-based pricing
-* SDK
-* Requirements:
-  * Specific versions of Java, Python, PHP, and Go
+- Easily deploy
+- Autoscale
+- Free daily quota
+- usage-based pricing
+- SDK
+- Requirements:
+  - Specific versions of Java, Python, PHP, and Go
 Constraints:
   *no writing to local files
-  * all requests timeout after 60sec
-  * limits on 3rd party software
+  - all requests timeout after 60sec
+  - limits on 3rd party software
 
 #### Cloud Functions
 
-* Lightweight, event based, async compute solution
-* Create single-purpose functions that respond to events w/o a server or runtime
-* Event examples:
-  * new instance cerates
-  * file added to Cloud Storage
-* Written in Javascript, Python, Go
+- Lightweight, event based, async compute solution
+- Create single-purpose functions that respond to events w/o a server or runtime
+- Event examples:
+  - new instance cerates
+  - file added to Cloud Storage
+- Written in Javascript, Python, Go
 
 ### 3.4 Deploying and implementing data solutions
 
-* Initializing data systems with products (Cloud SQL, Cloud Spanner, Cloud Datastore, Cloud Bigtable, BigQuery, Cloud Pub/Sub, Cloud Dataproc, Cloud Storage)
-* Loading data (Command line upload, API trf, Import/export, load data from Cloud Storage, streaming data to Cloud Pub/Sub)
+- Initializing data systems with products (Cloud SQL, Cloud Spanner, Cloud Datastore, Cloud Bigtable, BigQuery, Cloud Pub/Sub, Cloud Dataproc, Cloud Storage)
+- Loading data (Command line upload, API trf, Import/export, load data from Cloud Storage, streaming data to Cloud Pub/Sub)
 
 #### Initializing data systems with products
 
@@ -480,17 +502,17 @@ Constraints:
 
 ### 3.5 Deploying and implementing networking resources
 
-* Creating a VPC with subnets (automode vs. custom-mode VPC, Shared VPC)
-* Launching a Compute engine instances with custom network configuration (internal only IP address, Google private access, Static external/private IP, network tags)
-* Creating ingress and egress firewall rules for a VPC (IP subnets, Tags, Service accounts)
-* Creating a VPN b/w a Google VPC and an external network using Cloud VPN
-* Creating a load balancer to distribute application network traffic to an application (Global HTTP, Global SSL, Regional Internal)
+- Creating a VPC with subnets (automode vs. custom-mode VPC, Shared VPC)
+- Launching a Compute engine instances with custom network configuration (internal only IP address, Google private access, Static external/private IP, network tags)
+- Creating ingress and egress firewall rules for a VPC (IP subnets, Tags, Service accounts)
+- Creating a VPN b/w a Google VPC and an external network using Cloud VPN
+- Creating a load balancer to distribute application network traffic to an application (Global HTTP, Global SSL, Regional Internal)
 
 #### Creating a VPC with subnets
 
-* VPC Networks are global, subnets are regional
-* Each VPC network is contained in a GCP project
-* automode (automatic subnets) vs. custom-mode VPC (manual subnets)
+- VPC Networks are global, subnets are regional
+- Each VPC network is contained in a GCP project
+- automode (automatic subnets) vs. custom-mode VPC (manual subnets)
 
 ### DEMO: Creating an automode VPC network with a subnet demo
 
@@ -519,8 +541,8 @@ Marketplace -> Deployment Manager -> Compute Engine
 
 ### 3.7 Deploying an application using Deployment Manager
 
-* Developing Deployment Manager templates to automate deployment of an application
-* Launching a deployment Manager template to provision GCP resources and configure an application automatically
+- Developing Deployment Manager templates to automate deployment of an application
+- Launching a deployment Manager template to provision GCP resources and configure an application automatically
 
 ### LAB: Deployment Manager - Full Production
 
@@ -557,16 +579,16 @@ $ cd nodejs/python
 
 frontend.py includes frontend.py.schema, which creates an instance template based on container_instance_template.py.
 
-* This template is used to create a managed instance group and an autoscaler. The template also creates:
-* a network load balancer that has a forwarding rule with a single public IP address.
-* A target pool that refers to the managed instance group.
-* A health check attached to the target pool.
+- This template is used to create a managed instance group and an autoscaler. The template also creates:
+- a network load balancer that has a forwarding rule with a single public IP address.
+- A target pool that refers to the managed instance group.
+- A health check attached to the target pool.
 
 nodejs.py includes nodejs.py.schema, which brings the frontend and backend templates together.
 
-* Note that the frontend is frontend.py.
-* The backend is /common/python/container_vm.py.
-* This is a VM running a Docker container with MySQL, so it doesn't require a custom template.
+- Note that the frontend is frontend.py.
+- The backend is /common/python/container_vm.py.
+- This is a VM running a Docker container with MySQL, so it doesn't require a custom template.
 
 #### 4 Customize the Deployment
 
@@ -609,13 +631,13 @@ Navigation menu > Monitoring
 
 Cloud Monitoring > Uptime Checks > Create Uptime Check
 
-* Title: Check1
-* Check Type: TCP
-* Resource Type: URL
-* Hostname: <your forwarding address>
-* Port: 8080
-* Response content contains the text: <leave blank>
-* Check every: 1 minute
+- Title: Check1
+- Check Type: TCP
+- Resource Type: URL
+- Hostname: <your forwarding address>
+- Port: 8080
+- Response content contains the text: <leave blank>
+- Check every: 1 minute
 Test -> Save
 
 #### 8 Configure an alerting policy and notification
