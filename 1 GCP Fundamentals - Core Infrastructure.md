@@ -29,7 +29,7 @@ GCP offers four main types of services:
 - Big Data
 - Machine learning
 
-### 1.3. What is cloud computing?
+### 1.3. What is Cloud Computing?
 
 - On-demand self-service - no human interaction is needed to get resources
 - Broad network access - access from anywhere
@@ -39,7 +39,9 @@ GCP offers four main types of services:
 
 ### 1.4. How did we get here?
 
-Physical/colo (user configures, manages and maintains) -> Virtualized ((user configures, provider manages and maintains) -> Serverless (fully automated)
+1. Physical/colo - user configured, managed and maintained
+2. Virtualized - user configured; provider managed and maintained
+3. Serverless - fully automated
 
 ### 1.5. Every company is an IT/data company
 
@@ -62,7 +64,7 @@ Multi-Region | Region | Zone
 Europe | Europe-west2 | Europe-west2-a, Europe-west2-b, Europe-west2-b
 
 Multi-region = Google Cloud Storage allows placing data within Europe multi-region.
-Region = Independent geographical areas. At least 15 regions for GCP. Under 5ms b/w zones in the same region.
+Region = Independent geographical areas. At least 15 regions for GCP. Under 5 ms b/w zones in the same region.
 Zone = Deployment Area for GCP resources. Not strictly a data center, as it may not correspond to the physical building.
 
 ### 1.9. Environmental responsibility
@@ -72,15 +74,15 @@ All data centers use 2% of the world's electricity.
 ### 1.10. Google offers a customer-friendly pricing
 
 - Sub-hour billing - for the compute, data processing, and other services
-- Discounts for sustainable use - automatically applied to virtual machine use over 25% a month
-- Discounts for committed use - pay less for steady, long-term workloads
-- Discounts for pre-emptive use - pay less for interruptible workloads
+- **Discounts for sustainable use** - automatically applied to virtual machine use over 25% a month
+- **Discounts for committed use** - pay less for steady, long-term workloads
+- **Discounts for pre-emptive use** - pay less for interruptible workloads
 - Custom VM instance types - pay only for the resources you need for your application
 
 ### 1.11. Open APIs
 
 - GCP is compatible with open-source services
-- GCP uses Open-source for a rich ecosystem
+- GCP uses open-source for a rich ecosystem
 - Multi-vendor-friendly technologies
 
 ### 1.12. Why choose Google Cloud Platform
@@ -125,7 +127,7 @@ Security is designed into Google’s technical infrastructure.
 
 - Budgets & alerts, per billing account or GCP project
 - Billing export, export to BigQuery or Cloud Storage
-- Reports
+- Reports, visual tool that allows to monitor the spenditure.
 - Quotas, for resource consumption (rate quota, allocation quotas)
 
 ## 2. Getting Started with Google Cloud Platform
@@ -133,7 +135,7 @@ Security is designed into Google’s technical infrastructure.
 ### 2.1. Introduction
 
 You use Projects to organize workloads in GCP.
-You use IAM to control who can do what. You use several interfaces to connect.
+You use IAM to control `who-can do-what`. You use several interfaces to connect.
 Projects are the main way to group related resources, with common business objectives. The Principle of Least Privilege, to have as few privileges as possible to do their jobs.
 
 Customer managed vs. Google Managed security for the principle of least privilege.
@@ -151,7 +153,7 @@ Four ways to interact with GCPs management layer:
 All the resources you use (VMs, Cloud Storage buckets, tables in BigQuery) are organized in projects. Projects might be organized in folders.
 Resources -> Projects -> Folders (Nested Folders) -> Organization Node.
 
-<!-- TODO add resource hierarchy image -->
+![Resource Hierarchy](15_50_39.png)
 
 Projects, Folders, and Org Node are all places, where policies can be applied. Policies are inherited downwards in the hierarchy.
 
@@ -178,7 +180,7 @@ IAM resource hierarchy:
 - Resources inherit policies from parent
 - Less restrictive parent policy overrides a more restrictive resource policy
 
-<!-- TODO example IAM resource hierarchy  -->
+![IAM resource hierarchy](15_57_25.png)
 
 ### 2.3. Identity and Access Management (IAM)
 
