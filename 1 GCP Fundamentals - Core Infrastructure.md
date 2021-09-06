@@ -153,7 +153,7 @@ Four ways to interact with GCPs management layer:
 All the resources you use (VMs, Cloud Storage buckets, tables in BigQuery) are organized in projects. Projects might be organized in folders.
 Resources -> Projects -> Folders (Nested Folders) -> Organization Node.
 
-![Resource Hierarchy](15_50_39.png)
+![Resource Hierarchy](./img/01/15_50_39.png)
 
 Projects, Folders, and Org Node are all places, where policies can be applied. Policies are inherited downwards in the hierarchy.
 
@@ -180,7 +180,7 @@ IAM resource hierarchy:
 - Resources inherit policies from parent
 - Less restrictive parent policy overrides a more restrictive resource policy
 
-![IAM resource hierarchy](15_57_25.png)
+![IAM resource hierarchy](./img/01/15_57_25.png)
 
 ### 2.3. Identity and Access Management (IAM)
 
@@ -201,7 +201,6 @@ IAM roles:
 - Compute Engine’s InstanceAdmin Role: (start, stop, list, get, delete, setMachine type)
 - Custom role: Compute Engine’s InstanceOperator Role: (start, stop, list, get)
 - Service Account for server-to-server interactions - what if you want to permit a compute engine VM rather than a person. (app on VM needs to store data in Google Cloud Storage)
-<!-- TODO example service account and IAM  -->
 
 ### 2.5. Interacting with Google Cloud Platform
 
@@ -236,7 +235,8 @@ Compute Engine & VMs.
 - You can provision GCP resources, connect them or isolate them
 - VPC Networks are global, subnets are regional.
 - Load balancing
-<!-- TODO GCP VPC network  -->
+
+![GCP VPC network](./img/01/17_33_20.png)
 
 ### 3.3. Compute Engine
 
@@ -248,7 +248,7 @@ Compute Engine & VMs.
 ### 3.4. Important VPC capabilities
 
 - Routing tables, to forward traffic from one instance to another within the same network, across subnets
-- Use its global distributed firewall to control what network is allowed
+- Use its global distributed firewall to control what network traffic is allowed
 - Shared VPC to share a network with other GCP projects
 - VPC Peering to interconnect networks in GCP projects
 - Cloud Load Balancing:
@@ -259,7 +259,7 @@ Compute Engine & VMs.
   - No pre-warming
   - Global HTTP/S, Global SSL, Global TCP, Regional, Regional Internal (load balancing of traffic inside a VPC)
 - Cloud DNS
-- Cloud CDN (Content Delivery Network) for lower latency
+- Cloud CDN (Content Delivery Network) for lower latency:
   - Use Google’s globally distributed edge caches to cache content close to your users
 - Interconnect options:
   - VPN - Secure multi-Gbps connection over VPN tunnels
@@ -307,10 +307,10 @@ curl my-vm-1.us-central1-a
 
 Different applications and workloads require different storage database solutions:
 
-- Video to be stream
-- Sensor data from devices
-- Customer account balance
-- Game data
+- video to be stream
+- sensor data from devices
+- customer account balance
+- game data
 
 You can store data on your VMs persistent disk. But, GCP has other storage options, for structured, unstructured, transactional, and relational data.
 
@@ -318,7 +318,7 @@ Cloud Storage, Cloud SQL, Cloud Spanner, Cloud Datastore, and Google Bigtable. Y
 
 ### 4.2. Cloud Storage
 
-Object storage is not the same as file storage, where you manage your data as a hierarchy of folders. Object storage is not the same as block storage, where the OS manages data as chunks of a disk. Instead, object storage means you say to your storage "here, keep these bytes I give you", and the storage lets you address it with a unique key. Often these unique keys are in a form of URLs, which means object storage interacts nicely with web technologies. Cloud storage works just like that, just better! Fully manages scalable service, so no need to provision capacity ahead of time.
+Object storage is not the same as file storage, where you manage your data as a hierarchy of folders. Object storage is not the same as block storage, where the OS manages data as chunks of a disk. Instead, object storage means you say to your storage "here, keep these bytes I give you", and the storage lets you address it with a unique key. Often these unique keys are in a form of URLs, which means object storage interacts nicely with web technologies. Cloud storage works just like that, just better! Fully managed scalable service, so no need to provision capacity ahead of time.
 
 Use Cloud Storage for:
 
@@ -326,7 +326,7 @@ Use Cloud Storage for:
 - storing data for archival and disaster recovery
 - distributing large data objects to end-users via direct download.
 
-Cloud storage is not a file system, each object has a URL. It’s ok to use file/folder informally to describe objects, but it is not a file system! Cloud Storage is comprised of buckets, you create/configure/use them to hold objects. Objects are immutable, so you create new versions of them if you modify them. Cloud Storage always encrypts your data on the server-side.
+Cloud storage is not a file system, each object has a URL. It’s ok to use file/folder informally to describe objects, but it is not a file system! Cloud Storage is comprised of buckets, you create/configure/use them to hold objects. Objects are immutable, so you create new versions of them if you need to modify them. Cloud Storage always encrypts your data on the server-side.
 
 Cloud Storage: buckets & objects
 
@@ -362,7 +362,7 @@ Other GCP services <-> Cloud Storage:
 
 ### 4.4. Google Cloud Bigtable
 
-Fully managed NoSQL (persistent has table), “big data” or “wide-column” database service.
+Fully managed NoSQL (persistent has table), “big data” wide-column database service.
 SQL = same columns for each row. NoSQL = not all rows have the same nr of columns.
 
 Cloud Bigtable:
@@ -413,7 +413,7 @@ Cloud Spanner:
 
 ### 4.6. Google Cloud Datastore
 
-Google Cloud Datastore
+Google Cloud Datastore:
 
 - Highly scalable NoSQL database choice
 - Designed for application backends
@@ -429,7 +429,7 @@ Use cases:
 
 Tech. Details | Cloud Storage | Cloud SQL | Cloud Spanner | Cloud Datastore | BigTable | BigQuery
 --- | --- | ---- | --- | --- | --- | ---
-Type | Blob storage | Relational SQL | Relational SQL | NoSQL | NoSQL | Relational SQL
+Type | Blob storage | Relational SQL | Relational SQL | NoSQL Document  | NoSQL wide column | Relational SQL
 Transactions | No | Yes | Yes | Yes | Single-row | No
 Complex Queries | No | Yes | Yes | No | No | Yes
 Capacity | Petabytes | Terabytes | Petabytes | Terabytes | Petabytes | Petabytes
@@ -455,9 +455,11 @@ gsutil cp gs://cloud-training/gcpfci/my-excellent-blog.png my-excellent-blog.png
 gsutil cp my-excellent-blog.png gs://$DEVSHELL_PROJECT_ID/my-excellent-blog.png
 ```
 
+```sh
 gsutil mb -l location name
-location = regional/multi-regional
-name = globally unique name, like gcp_project_id, Cloud Shell variable for project_id gs://$DEVSHELL_PROJECT_ID
+# location = regional/multi-regional
+# wname = globally unique name, like gcp_project_id, Cloud Shell variable for project_id gs://$DEVSHELL_PROJECT_ID
+```
 
 ```sh
 # Access Control List of the object you just created so that it is readable by everyone
@@ -474,7 +476,7 @@ Compute Engine |Kubernetes Engine | App engine
 IaaS | | PaaS
 Servers, file systems, networking | | Present runtimes, managed services
 
-Kubernetes Engine is like IaaS in that it saves you infrastructure shores.
+Kubernetes Engine is like IaaS in that it saves you infrastructure chores.
 Kubernetes Engine is like PaaS in that it was built with the need of developers in mind.
 
 #### 5.1.1. Containers
@@ -532,7 +534,7 @@ uwsgi==2.0.15
 
 FROM ubuntu:18.10
 RUN apt-get update -y && \
-         apt-get install -y python3-pip python3-dev
+    apt-get install -y python3-pip python3-dev
 COPY requirements.txt /app/requirements.txt
 WORKDIR /app
 RUN pip3 install -r requirements.txt
@@ -560,7 +562,7 @@ Kubernetes is an open-source orchestrator for containers, so you can better mana
 
 #### 5.2.1 What is a  cluster?
 
-Master + nodes (VMs)
+Master + Nodes (VMs)
 
 Cluster is a set of:
 
@@ -581,7 +583,7 @@ gcloud container clusters create k1
 
 #### 5.2.3 What is a pod?
 
-Whenever Kubernetes deploys a container or related containers it does so in a pod abstraction. A pod is the smallest deployable unit in Kubernetes. Think of a pod as a running process on your cluster, it could be one component of your application or even an entire application. If you have multiple containers per pod, they will automatically share networking, share disk storage. Each pod in Kubernetes gets a unique IP address and set of ports for your containers. As containers in pods can communicate with each other using the localhost network interface they do not care about which nods they are deployed on.
+Whenever Kubernetes deploys a container or related containers it does so in a **pod** abstraction. **A pod is the smallest deployable unit in Kubernetes**. Think of a pod as a running process on your cluster, it could be one component of your application or even an entire application. If you have multiple containers per pod, they will automatically share networking, share disk storage. Each pod in Kubernetes gets a unique IP address and set of ports for your containers. As containers in pods can communicate with each other using the localhost network interface they do not care about which nods they are deployed on.
 
 ```sh
 # One way to run a container in a pod in Kubernetes is to use the kubectl run command.
@@ -610,7 +612,7 @@ kubectl expose deployments nginx --port=80 --type=LoadBalancer
 Service is the fundamental way Kubernetes represents load balancing. You requested Kubernetes to attach an external load balancer with a public IP address to your service so that others outside the cluster can access it. In GKE this kind of load balancer is a Network LoadBalancer. This is one of the managed load balancing services that compute engine makes available to VMs. GKE makes it easy to use it with containers. Everyone accessing the public IP will be routed to a pod behind the service.
 
 So, what is a service?
-A service group a set of pods together and provides a stable endpoint for them.
+A service groups a set of pods together and provides a stable endpoint for them.
 
 Why do you need a service? Why not just use the pod's IP address directly?
 Yes, but it would make a management problem. As deployments create and destroy pods, pods get their IP addresses, but those IP addresses don't remain stable over time. Services provide that stable endpoint you need.
@@ -715,8 +717,6 @@ Anthos is Google's modern solution for hybrid and multi-cloud systems and servic
   - Migrating applications from VMs into your clusters
   - Maintaining consistent policies across all clusters, whether on-premises or in the Cloud
 
-<!-- TODO GKE for production-ready apps -->
-
 #### 5.3.1 GKE is a managed prod. ready env. for deploying containerized applications
 
 Includes:
@@ -738,7 +738,7 @@ GKE counterpart on the on-premises network is GKE On-Prem:
 
 Both GKE and GKE On-Prem integrates with GCP Marketplace so that all of the clusters on the network have access to the same repository of containerized applications. This allows you to use the same configurations on both sides of the network, reducing the time spent developing applications. Wite once, replicate anywhere.
 
-#### 5.3.4 Marketplace applications are available to all clustersAnthos Service Mesh - Cloud Interconnect - Istio Open Source
+#### 5.3.4 Marketplace applications are available to all clusters Anthos Service Mesh - Cloud Interconnect - Istio Open Source
 
 Service Meshes make apps more secure & observable. Enterprise applications might use 100s of microservices to handle computing workloads. Keeping track of all of these services and monitoring their health can quickly become a challenge. Anthos Service Mesh and Istio Open Source Service Meshes take all of these work of managing and securing your microservices. These service mesh layers can communicate across hybrid-network using Cloud Interconnect to sync and pass their data.
 
@@ -752,6 +752,8 @@ Lastly, Anthos Configuration Management provides a single source of truth for yo
 That source of truth is kept in a Policy Repository, which is a Git repository.
 In this illustration, this repository happens to be located on-premises, but it can also be hosted in the cloud.
 The Anthos configuration Management agents use the Policy Repository to enforce configurations locally in each environment, managing the complexity across environments. Anthos Configuration Management also provides the ability to deploy code changes with a single repository commit. And the option to implement configuration inheritance, by using namespaces.
+
+![Anthos](./img/01/15_27_00.png)
 
 ### 5.5. Demo: Getting Started with Kubernetes Engine
 
@@ -817,6 +819,7 @@ We have discussed two GCP products that provide compute infrastructure for appli
 
 - Compute Engine
 - Kubernetes Engine
+
 where you choose the infrastructure of which your application runs (VMs for Compute, Containers for Kubernetes). If you do not want to focus on infrastructure at all, but want to focus on your code, use App Engine for that.
 
 PaaS = Platform as a Service. The App Engine manages the hardware and networking infrastructure, required to run the code. To deploy an application on App Engine, you just add your code to App Engine and the App Engine service takes care of the rest.
@@ -1013,7 +1016,7 @@ You also have tools that are tightly integrated with GCP, and in this module, we
 
 #### 7.1.1 Cloud Source Repository
 
-Fully featured Git repository hosted on GCP
+Fully featured Git repository hosted on GCP:
 
 - code is kept private for the GCP project
 - uses IAM permissions to protect it
@@ -1021,7 +1024,7 @@ Fully featured Git repository hosted on GCP
 
 #### 7.1.2 Cloud Functions
 
-Create single-purpose functions that respond to events without a server of runtime
+Create single-purpose functions that respond to events without a server of runtime:
 
 - Image processing - user uploads an image, you process it and save it
 - Write code in JavaScript, execute in node.js environment
@@ -1045,11 +1048,9 @@ You can do this all by hand, imperative way, but there is a better way for that,
 - You can store and version control your deployment manager templates in Cloud Source Repositories
 - Infrastructure management service that automates the creation and management of your GCP resources for you.
 
-### 7.3. Monitoring:Proactive instrumentation
+### 7.3. Monitoring: Proactive instrumentation
 
-Monitoring: Proactive Instrumentation
-
-- You cannot run your application stably without monitoring it.
+- You cannot run your application without monitoring it.
 - Monitoring lets you figure out if the changes you made were good or bad.
 - It lets you respond with information rather than panic when your application is down.
 
@@ -1252,7 +1253,7 @@ It lets you develop and execute a big range of data processing patterns:
 - extract, transform and load,
 - batch computation, and continuous computation.
 
-You use Dataflow to build data pipelines and the same pipelines work for both batch and streaming data.
+You use Dataflow to build data pipelines and the same pipelines work for both batch and streaming data:
 
 - No need to spin up a cluster or to size instances,
 - Cloud Dataflow fully automated the management of whatever processing resources are required
@@ -1330,8 +1331,7 @@ Machine Learning is one branch of the field of AI. It is a way of solving proble
 
 Google's machine-learning platform is available as a cloud service, so you can add innovative capabilities to your applications.
 
-Cloud ML
-The platform provides modern machine-learning services with pre-trained models and a platform to generate your tailored models. There is a range is services that stretch from highly general to pre-customized.
+Cloud ML platform provides modern machine-learning services with pre-trained models and a platform to generate your tailored models. There is a range is services that stretch from highly general to pre-customized.
 
 TensorFlow is an open-source software library, that is exceptionally well suited for machine-learning applications like neural networks.
 You can run TensorFlow wherever you like, but GCP is an ideal place for it because ML models need lots of computing resources and lots of training data.
@@ -1445,8 +1445,3 @@ Row | request | request_count
 10 | GET /favicon.ico HTTP/1.0 | 55845
 
 ## 9. Summary and Review
-
-<!-- TODO compare compute options -->
-<!-- TODO compare load-balancing options -->
-<!-- TODO compare interconnect options -->
-<!-- TODO compare storage options -->
