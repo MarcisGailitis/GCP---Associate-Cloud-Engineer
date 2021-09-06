@@ -169,6 +169,8 @@ VPC Network Types:
 
 #### 3.03.3. Subnetworks
 
+VPC = glbal, subnets = regional resources, which is the reason why you need to specify a zone, when creating VM (as subnet is not enough).
+
 ![Subnetworks cross zones](./img/02/14_34_54.png)
 
 Four reserver IP addresses in the subnet:
