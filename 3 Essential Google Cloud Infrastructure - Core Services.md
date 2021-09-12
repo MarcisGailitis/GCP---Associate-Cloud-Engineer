@@ -12,12 +12,11 @@
 
 ### 2.01. Overview
 
-Overview
 Cloud Identity and Access Management (IAM). A sophisticated system, built on top of e-mail like address names, job type roles, and granular permissions.
 
 ### 2.02. Cloud IAM
 
-Who - what - where
+Who -> can do what  -? on which resource
 
 - Who - person, group, or application
 - Can do what - specific privileges or actions
@@ -97,7 +96,7 @@ Three types of rules:
 
 #### 2.04.1. Primitive role (basic)
 
- are original roles available in the GCP console. Broad roles, affect all resources in that project. Offer fixed, coarse-grained levels of access:
+Are original roles available in the GCP console. Broad roles, **affect all resources in that project**. Offer fixed, coarse-grained levels of access:
 
 - **Owner**
   - Add/remove members
@@ -117,7 +116,7 @@ Three types of rules:
 
 #### 2.04.2. Predefined roles
 
-Apply to a particular GCP service in a project. Offer more fine-grained permissions on particular services
+Applied to a particular GCP service in a project. Offer more fine-grained permissions on particular services
 
 - InstanceAdmin Role:
   - Compute.instances.delete
@@ -1019,7 +1018,7 @@ Setting a budget lets you track how your spending is growing towards that amount
 - First, you specify a **budget name** and select the project this budget applies to.
 - Then you can set the **budget amount**, or match it to a previous month spent.
 - Then you can set **budget alerts**, which sent emails to billing admins after the spend exceeds the alert amount.
-- In addition to email, you can use Cloud Pub/Sub notifications to receive spend updates. You can even create a Cloud Function that listens to a specific topic to automate cost management.
+- **In addition to email, you can use Cloud Pub/Sub notifications to receive spend updates. You can even create a Cloud Function that listens to a specific topic to automate cost management**.
 
 Another way to optimize your GCP spend is to use labels. For example, you could label VM instances that are spread across diff. regions. Label your resources and export billing data to BigQuery to analyze your spending.
 
@@ -1031,7 +1030,6 @@ FROM `project.dataset.table`
 GROUP BY labels;
 ```
 
-Visualize GCP spend with Data Studio
 You can even visualize spend over time with Data Studio, which turns data into dashboards, which are easy to read, easy to share, and fully customizable.
 
 ### 4.06. Demo: Billing Administration
