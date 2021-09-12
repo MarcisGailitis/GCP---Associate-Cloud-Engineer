@@ -1112,6 +1112,10 @@ Managed service - exists on a continuum b/w PaaS and SaaS.
 - <https://cloud.google.com/architecture/data-lifecycle-cloud-platform#processing_large-scale_data>
 - <https://trends.google.com/trends/explore?date=today%205-y&q=Dataproc,Dataprep,Dataflow>
 
+- DataFlow = Apache Beam (batch and stream processing) = automatic provisioning of clusters
+- DataProc = Apache Spark and Apache Hadoop clusters = manual provisioning of clusters for specific dependencies
+- DataPrep = TriFacta (visualisations)
+
 ### 05.02. BigQuery
 
 GCP's serverless, highly scalable, and cost-effective cloud data warehouse:
