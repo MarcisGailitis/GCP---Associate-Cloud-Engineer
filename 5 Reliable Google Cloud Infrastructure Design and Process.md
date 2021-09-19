@@ -1,4 +1,4 @@
-# 7. Reliable Google Cloud Infrastructure: Design and Process
+# 5. Reliable Google Cloud Infrastructure: Design and Process
 
 ## Table of Contents
 
@@ -78,7 +78,7 @@ KPI != Goal:
 
 ### 3.1. Microservices
 
-![Microservices](./img/07/15_23_46.png)
+![Microservices](./img/05/15_23_46.png)
 
 Microservices divide a large program into multiple smaller, independent services.
 
@@ -105,9 +105,9 @@ The key difference between **stateful** and **stateless** microservices is that:
 - stateless microservices don’t store data on the host, whereas
 - stateful microservices require some kind of storage on the host who serves the requests.
 
-![Stateful vs stateless](./img/07/15_41_36.png)
+![Stateful vs stateless](./img/05/15_41_36.png)
 
-![General solution for large-scale cloud-based systems](./img/07/15_43_56.png)
+![General solution for large-scale cloud-based systems](./img/05/15_43_56.png)
 
 ### 3.2. Microservices 12-factor app
 
@@ -265,7 +265,7 @@ Strong consistency options:
 
 ### 5.2. Choosing GCP storage and data solutions
 
-![Storage and database decision chart](./img/07/11_58_46.png)
+![Storage and database decision chart](./img/05/11_58_46.png)
 
 ## 6. Google Cloud and Hybrid Network Architecture
 
@@ -286,7 +286,7 @@ Cloud CDN for lower latency and decreased egress cost. Caches static content wor
 
 ## 7. Deploying Applications to Google Cloud
 
-![Choosing a GCP deployment platform](./img/07/12_50_42.png)
+![Choosing a GCP deployment platform](./img/05/12_50_42.png)
 
 ### 7.1. GCP IaaS
 
@@ -388,7 +388,7 @@ Cloud CDN for lower latency and decreased egress cost. Caches static content wor
 
 ### 10.2. Cost Planning
 
-![Capacity planning is a continuous cycle](./img/07/10_36_38.png)
+![Capacity planning is a continuous cycle](./img/05/10_36_38.png)
 
 - preemptible + auto-healing to re-create VMs
 - keep machines close to your data!!!
