@@ -1,4 +1,4 @@
-# 6. Preparing for the Google Cloud Associate Cloud Engineering Exam
+# 11. Preparing for the Google Cloud Associate Cloud Engineering Exam
 
 ## Table of Contents
 
