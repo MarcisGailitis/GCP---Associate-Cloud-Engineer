@@ -449,7 +449,7 @@ gsutil -m cp -r gs://spls/gsp114/sample-app.tar .
 
 # Unpack 
 mkdir sample-app
-tar xvf sample-app.tar -C ./sample-app
+tar -xvf sample-app.tar -C ./sample-app
 cd sample-app
 
 # Configure Git and Cloud Source Repo
