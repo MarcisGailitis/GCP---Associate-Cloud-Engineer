@@ -1,0 +1,34 @@
+{
+    "grammarly.overrides": [
+        {
+            "files": [
+                "**/7 Reliable Google Cloud Infrastructure Design and Process.md"
+            ],
+            "config": {
+                "audience": "general",
+                "dialect": "american",
+                "domain": "technical",
+                "emotions": [
+                    "neutral"
+                ],
+                "goals": [
+                    "inform"
+                ]
+            }
+        },
+        {
+            "files": [
+                "**/8 Architecting with Google Kubernetes Engine Production.md"
+            ],
+            "config": {
+                "audience": "general",
+                "dialect": "american",
+                "domain": "general",
+                "emotions": [],
+                "goals": [
+                    "inform"
+                ]
+            }
+        }
+    ]
+}
