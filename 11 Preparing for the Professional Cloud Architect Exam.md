@@ -1,4 +1,4 @@
-# 12. Preparing for the Professional Cloud Architect Exam
+# 11. Preparing for the Professional Cloud Architect Exam
 
 ## Table of Contents
 
